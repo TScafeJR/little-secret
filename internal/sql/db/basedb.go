@@ -1,0 +1,12 @@
+package db
+
+import (
+	"context"
+	"database/sql"
+
+	csql "github.com/TScafeJR/pro-juice/internal/sql"
+)
+
+type BaseServiceDB interface {
+	BeginTx(ctx context.Context, ops *sql.TxOptions) (csql.Transaction, error)
+}
