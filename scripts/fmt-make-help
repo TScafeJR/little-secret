@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+while (<ARGV>) {
+    next unless m/^##/;
+    s/^##$/=========================/;
+    s/^##//;
+    print;
+}
+

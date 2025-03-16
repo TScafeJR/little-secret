@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+push(){
+  npx supabase db push
+}
+
+createMigration(){
+	echo -n "Enter your desired migration name: "
+  read migrationName
+
+  MIGRATION_NAME=$migrationName yarn run supabase:create-migration
+}
+
+"$@"

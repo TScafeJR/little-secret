@@ -1,4 +1,4 @@
-package main
+package gameservice
 
 import (
 	"log"
@@ -8,21 +8,10 @@ import (
 )
 
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true }, // Allow all origins for demo
+	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
-func main() {
-	http.HandleFunc("/ws", handleWebSocket)      // WebSocket endpoint
-	log.Fatal(http.ListenAndServe(":8080", nil)) // Start HTTP server
-}
-
-var rooms = make(map[string]map[*websocket.Conn]bool) // roomID -> set of connections
-
-func generateNewRoomCode() string {
-	return "ROOM123"
-}
-
-func handleWebSocket(w http.ResponseWriter, r *http.Request) {
+func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Upgrade error:", err)
@@ -52,10 +41,10 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		roomID = generateNewRoomCode() // create a new room if none provided
 	}
 	// Register connection in the room set
-	if rooms[roomID] == nil {
-		rooms[roomID] = make(map[*websocket.Conn]bool)
+	if s.Rooms[roomID] == nil {
+		s.Rooms[roomID] = make(map[*websocket.Conn]bool)
 	}
-	rooms[roomID][conn] = true
+	s.Rooms[roomID][conn] = true
 
 	// Inform the client of the roomID (if newly created) or successful join
 	response := map[string]string{"type": "roomJoined", "room": roomID}

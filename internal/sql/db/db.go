@@ -7,7 +7,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	csql "github.com/TScafeJR/pro-juice/internal/sql"
+	csql "github.com/TScafeJR/little-secret/internal/sql"
 )
 
 // New returns a new DB object that uses a given sql.DB and has the prepared
@@ -20,7 +20,7 @@ func New(db *sqlx.DB) *DB {
 }
 
 // DB is a wrapper around sql.DB to aid in managing prepared
-// statements and transactions.
+// statements and tranasctions.
 type DB struct {
 	DB    *sqlx.DB
 	stmts map[interface{}]*sql.Stmt

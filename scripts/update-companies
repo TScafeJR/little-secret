@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+./scripts/with-env .env-local 'go run cmd/cli/main.go tasks emails'

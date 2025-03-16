@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	csql "github.com/TScafeJR/pro-juice/internal/sql"
+	csql "github.com/TScafeJR/little-secret/internal/sql"
 )
 
 type BaseServiceDB interface {

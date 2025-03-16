@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+BIN_NAME="pro-juice"
+LOC="/usr/local/bin/$BIN_NAME"
+
+make go-build-cli && \
+sudo mv cli $LOC  && \
+PROG=$BIN_NAME source "$PWD/cmd/cli/autocomplete/zsh_complete";

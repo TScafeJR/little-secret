@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+
+MAIN_BRANCH="main"
+
+prune_branches(){
+  # Get the name of the current branch
+  current_branch=$(git symbolic-ref --short HEAD)
+
+  if [ "$current_branch" != "$MAIN_BRANCH" ]; then
+      echo "You must be on the $MAIN_BRANCH branch to run this script. Remember to commit you changes first."
+      exit 1
+  fi
+
+  # Get a list of all branches
+  branches=$(git branch | grep -v "\*" | tr -d ' ')
+
+  # Iterate over all branches
+  for branch in $branches
+  do
+      # Only delete the branch if it's not the current one
+      if [ "$branch" != "$current_branch" ]; then
+          git branch -D $branch
+      fi
+  done
+}
+
+remove_js_files(){
+  # Set the base directory
+  base_dir="packages/app"
+
+  # Find all .js files recursively in the base directory
+  find "$base_dir" -name "*.js" | while read js_file; do
+      # Remove the .js extension from the file path
+      base_name="${js_file%.js}"
+      # Check if there is a corresponding .ts or .tsx file
+      ts_file="$base_name.ts"
+      tsx_file="$base_name.tsx"
+      if [[ -f "$ts_file" ]] || [[ -f "$tsx_file" ]]; then
+          # If a .ts or .tsx file exists with the same name, delete the .js file
+          rm -f "$js_file"
+          echo "Deleted: $js_file"
+      fi
+  done
+}
+
+"$@"
