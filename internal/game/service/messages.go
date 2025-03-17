@@ -1,6 +1,7 @@
 package gameservice
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/TScafeJR/little-secret/internal/common"
@@ -10,8 +11,9 @@ import (
 )
 
 type Message struct {
-	Type   game.Event `json:"type"`
-	RoomID string     `json:"roomID"`
+	Type   game.Event `json:"type,omitzero"`
+	RoomID string     `json:"roomID,omitzero"`
+	Phase  game.Phase `json:"phase,omitzero"`
 }
 
 func (s *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
@@ -22,10 +24,12 @@ func (s *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
 	}
 }
 
-func ParseMessage(message []byte) (map[string]string, error) {
-	parsedMessage := make(map[string]string)
-	parsedMessage[string(message)] = string(message)
-	return parsedMessage, nil
+func ParseMessage(message []byte) (Message, error) {
+	var m Message
+	if err := json.Unmarshal(message, &m); err != nil {
+		return Message{}, fmt.Errorf("json.Unmarshal(): %w", err)
+	}
+	return m, nil
 }
 
 func getGameFromRoomID(roomID string) *game.Game {
@@ -38,16 +42,16 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		return fmt.Errorf("ParseMessage(): %w", err)
 	}
 
-	switch g := game.Event(m["type"]); g {
+	switch g := m.Type; g {
 	case game.StartGameEvent:
-		gID, ok := m["roomID"]
-		if !ok {
-			return fmt.Errorf("roomID not found in message")
+		gID := m.RoomID
+		if gID == "" {
+			return fmt.Errorf("roomID is required to start a game")
 		}
-		g := getGameFromRoomID(gID)
-		s.startGame(g)
+		foundGame := getGameFromRoomID(gID)
+		s.startGame(foundGame)
 	default:
-		return fmt.Errorf("unknown message type: %s", m["type"])
+		return fmt.Errorf("unknown message type: %s", m.Type)
 	}
 
 	return nil
@@ -62,28 +66,28 @@ func (s *GameService) HandleIncomingMessage(conn *websocket.Conn, messageType in
 	return nil
 }
 
-func (s *GameService) startGame(game *game.Game) {
-	common.Shuffle(game.Players)
-	game.Players[0].Role = "Spy Pup"
-	game.Players[0].SecretWord = "" // Spy has no word
-	game.Players[1].Role = "Confused Kitten"
-	game.Players[1].SecretWord = game.DecoyWord
-	for i := 2; i < len(game.Players); i++ {
-		game.Players[i].Role = "Good Kitten"
-		game.Players[i].SecretWord = game.SecretWord
+func (s *GameService) startGame(g *game.Game) {
+	common.Shuffle(g.Players)
+	g.Players[0].Role = game.GoodKittenRole
+	g.Players[0].SecretWord = "" // Spy has no word
+	g.Players[1].Role = game.SpyKittenRole
+	g.Players[1].SecretWord = g.DecoyWord
+	for i := 2; i < len(g.Players); i++ {
+		g.Players[i].Role = game.ConfusedKittenRole
+		g.Players[i].SecretWord = g.SecretWord
 	}
-	game.Phase = "discussion"
+	g.Phase = "discussion"
 	// Notify each player of their role and secret word
-	for _, p := range game.Players {
+	for _, p := range g.Players {
 		privateMsg := map[string]string{
 			"type": "roleAssignment",
-			"role": p.Role,
+			"role": string(p.Role),
 			"word": p.SecretWord,
 		}
 		p.Conn.WriteJSON(privateMsg)
 	}
 	// Broadcast to room that the discussion phase has started
-	s.broadcastToRoom(game, map[string]string{"type": "phase", "phase": "discussion"})
+	s.broadcastToRoom(g, map[string]string{"type": "phase", "phase": "discussion"})
 }
 
 func (s *GameService) tallyVotes(game *game.Game) {
@@ -111,7 +115,7 @@ func (s *GameService) tallyVotes(game *game.Game) {
 	revealMsg := map[string]string{
 		"type":   "elimination",
 		"player": eliminatedPlayer.Name,
-		"role":   eliminatedPlayer.Role,
+		"role":   string(eliminatedPlayer.Role),
 	}
 	s.broadcastToRoom(game, revealMsg)
 	// handleEliminationOutcome(game, eliminatedPlayer)
