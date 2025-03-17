@@ -18,20 +18,20 @@ import (
 )
 
 func ServeWeb(c srvcfg.Cfg) error {
-	_, closeFn, err := NewServer(c)
+	_, services, closeFn, err := NewServer(c)
 	if err != nil {
 		return fmt.Errorf("NewServer()", err)
 	}
 	defer closeFn()
 	router := chi.NewRouter()
 	router.Use(
-		requestLogger(c.Logger),
+		requestLogger(c.Logger.Named("http_router")),
 		middleware.Compress(5),
 		middleware.Recoverer,
 	)
 
 	if err = routes.AddRoutes(router, routes.Services{
-		GameService: nil,
+		GameService: &services.GameService,
 	}); err != nil {
 		return fmt.Errorf("routes.AddRoutes(): %w", err)
 	}

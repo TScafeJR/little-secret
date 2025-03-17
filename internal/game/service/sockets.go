@@ -1,10 +1,11 @@
 package gameservice
 
 import (
-	"log"
 	"net/http"
 
+	"github.com/TScafeJR/little-secret/internal/game"
 	"github.com/gorilla/websocket"
+	"go.uber.org/zap"
 )
 
 var upgrader = websocket.Upgrader{
@@ -14,40 +15,46 @@ var upgrader = websocket.Upgrader{
 func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println("Upgrade error:", err)
+		s.logger.Error("upgrader.Upgrade()", zap.Error(err))
 		return
 	}
-	log.Println("New client connected")
+
+	s.logger.Info("New client connected")
 
 	defer conn.Close()
 	for {
 		messageType, message, err := conn.ReadMessage()
 		if err != nil {
-			log.Println("read error:", err)
-			break // Exit loop on error (client disconnected or error)
-		}
-		log.Printf("Received: %s\n", message)
-		// Here you would process the message and possibly respond or broadcast.
-		// For simplicity, we could echo the message back:
-		if err := conn.WriteMessage(messageType, message); err != nil {
-			log.Println("write error:", err)
+			s.logger.Error("conn.ReadMessage", zap.Error(err))
 			break
 		}
+
+		if err = s.HandleIncomingMessage(conn, messageType, message); err != nil {
+			s.logger.Error("s.HandleIncomingMessage", zap.Error(err))
+			break
+		}
+
+	}
+}
+
+func (s *GameService) checkRoom(r *http.Request, conn *websocket.Conn) {
+	roomID := r.URL.Query().Get("room")
+
+	if roomID == "" {
+		roomID = generateNewRoomCode()
 	}
 
-	// ... after upgrading to conn:
-	roomID := r.URL.Query().Get("room") // e.g. ws://server/ws?room=ROOM123
-	if roomID == "" {
-		roomID = generateNewRoomCode() // create a new room if none provided
-	}
-	// Register connection in the room set
 	if s.Rooms[roomID] == nil {
 		s.Rooms[roomID] = make(map[*websocket.Conn]bool)
 	}
 	s.Rooms[roomID][conn] = true
 
-	// Inform the client of the roomID (if newly created) or successful join
 	response := map[string]string{"type": "roomJoined", "room": roomID}
 	conn.WriteJSON(response)
-	// Continue with reading loop as above...
+}
+
+func (m *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
+	for conn := range m.Rooms[game.RoomID] {
+		conn.WriteJSON(msg)
+	}
 }

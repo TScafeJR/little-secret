@@ -1,6 +1,8 @@
 package srv
 
 import (
+	"fmt"
+
 	"github.com/TScafeJR/little-secret/internal/server"
 	"github.com/TScafeJR/little-secret/internal/server/srvcfg"
 	"github.com/urfave/cli/v2"
@@ -16,11 +18,6 @@ var localCommand = &cli.Command{
 			Usage:   "Public HTTP Port",
 			EnvVars: []string{"PORT"},
 		},
-		&cli.BoolFlag{
-			Name:    "disable_grpc_web_proxy",
-			Usage:   "useful while developing with grpcurl",
-			EnvVars: []string{"DISABLE_GRPC_WEB_PROXY"},
-		},
 		&cli.StringFlag{
 			Name:    "db_uri",
 			Usage:   "postgres db uri",
@@ -28,7 +25,10 @@ var localCommand = &cli.Command{
 		},
 	},
 	Action: func(c *cli.Context) error {
-		logger, _ := zap.NewDevelopment()
+		logger, err := zap.NewDevelopment()
+		if err != nil {
+			return fmt.Errorf("zap.NewDevelopment(): %w", err)
+		}
 		defer logger.Sync()
 
 		allowedOrigins := make([]string, 0)
@@ -36,7 +36,7 @@ var localCommand = &cli.Command{
 		config := srvcfg.Cfg{
 			PublicPort:     c.Int("public_http_port"),
 			AllowedOrigins: allowedOrigins,
-			Logger:         logger,
+			Logger:         logger.Named("app"),
 			StaticFilePath: "./public/build",
 			DbUri:          c.String("db_uri"),
 		}

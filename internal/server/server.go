@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	game "github.com/TScafeJR/little-secret/internal/game/service"
 	"github.com/TScafeJR/little-secret/internal/server/srvcfg"
 	"github.com/TScafeJR/little-secret/internal/service"
 	"github.com/TScafeJR/little-secret/internal/storage/sqldb"
@@ -23,14 +24,18 @@ type Server struct {
 	db     service.DB
 }
 
-func NewServer(cfg srvcfg.Cfg) (*Server, CloseFn, error) {
+type Services struct {
+	game.GameService
+}
+
+func NewServer(cfg srvcfg.Cfg) (*Server, *Services, CloseFn, error) {
 	if err := cfg.Validate(); err != nil {
-		return nil, nil, err
+		return nil, nil, nil, fmt.Errorf("cfg.Validate(): %w", err)
 	}
 
 	dbPool, err := sqlx.Open("pgx", cfg.DbUri)
 	if err != nil {
-		return nil, nil, fmt.Errorf("sql.Open(): %w", err)
+		return nil, nil, nil, fmt.Errorf("sql.Open(): %w", err)
 	}
 
 	// Enables internal randomness pool to be used in the heap. Improves throughput of generation.
@@ -38,13 +43,23 @@ func NewServer(cfg srvcfg.Cfg) (*Server, CloseFn, error) {
 
 	db, err := sqldb.New(dbPool)
 	if err != nil {
-		return nil, nil, fmt.Errorf("sqldb.New(): %w", err)
+		return nil, nil, nil, fmt.Errorf("sqldb.New(): %w", err)
+	}
+
+	gameservice, err := game.New(&game.ServiceCfg{
+		Logger: cfg.Logger.Named("game_service"),
+	})
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("game.New(): %w", err)
 	}
 
 	return &Server{
 			logger: cfg.Logger,
 			db:     db,
-		}, func() {
+		}, &Services{
+			GameService: *gameservice,
+		},
+		func() {
 			dbPool.Close()
 		}, nil
 }

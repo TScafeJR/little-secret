@@ -16,6 +16,7 @@ func (s Services) Validate() error {
 	if s.GameService == nil {
 		return errors.New("s.GameService cannot be nil")
 	}
+	return nil
 }
 
 func AddRoutes(router *chi.Mux, services Services) error {
@@ -28,5 +29,7 @@ func AddRoutes(router *chi.Mux, services Services) error {
 }
 
 func addWebSocketRoutes(router *chi.Mux, services Services) {
-	router.Route("/ws", services.GameService.HandleWebSocket)
+	router.Route("/ws", func(r chi.Router) {
+		r.Get("/", services.GameService.HandleWebSocket)
+	})
 }
