@@ -13,8 +13,10 @@ require (
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/pkg/errors v0.9.1
+	github.com/streamingfast/logging v0.0.0-20230608130331-f22c91403091
 	github.com/urfave/cli/v2 v2.27.6
 	go.uber.org/zap v1.27.0
+	golang.org/x/term v0.30.0
 	google.golang.org/api v0.226.0
 	google.golang.org/genproto v0.0.0-20250313205543-e70fdf4c4cb4
 )
@@ -35,6 +37,8 @@ require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
+	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect

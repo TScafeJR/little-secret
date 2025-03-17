@@ -1,12 +1,15 @@
 package srv
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/TScafeJR/little-secret/internal/server"
 	"github.com/TScafeJR/little-secret/internal/server/srvcfg"
+	"github.com/streamingfast/logging"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"golang.org/x/term"
 )
 
 var localCommand = &cli.Command{
@@ -25,10 +28,10 @@ var localCommand = &cli.Command{
 		},
 	},
 	Action: func(c *cli.Context) error {
-		logger, err := zap.NewDevelopment()
-		if err != nil {
-			return fmt.Errorf("zap.NewDevelopment(): %w", err)
-		}
+		isTTY := term.IsTerminal(int(os.Stderr.Fd()))
+		logStdoutWriter := zapcore.Lock(os.Stderr)
+
+		logger := zap.New(zapcore.NewCore(logging.NewEncoder(4, isTTY), logStdoutWriter, zapcore.DebugLevel), zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
 		defer logger.Sync()
 
 		allowedOrigins := make([]string, 0)
