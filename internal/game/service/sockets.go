@@ -3,7 +3,6 @@ package gameservice
 import (
 	"net/http"
 
-	"github.com/TScafeJR/little-secret/internal/game"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 )
@@ -29,19 +28,24 @@ func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
+		s.checkRoom(r, conn)
+
 		if err = s.HandleIncomingMessage(conn, messageType, message); err != nil {
 			s.logger.Error("s.HandleIncomingMessage", zap.Error(err))
 			break
 		}
-
 	}
+}
+
+func (s *GameService) logWriteError(e error) {
+	s.logger.Error("conn.WriteJSON", zap.Error(e))
 }
 
 func (s *GameService) checkRoom(r *http.Request, conn *websocket.Conn) {
 	roomID := r.URL.Query().Get("room")
 
 	if roomID == "" {
-		roomID = generateNewRoomCode()
+		roomID = s.generateNewRoomCode()
 	}
 
 	if s.Rooms[roomID] == nil {
@@ -50,11 +54,7 @@ func (s *GameService) checkRoom(r *http.Request, conn *websocket.Conn) {
 	s.Rooms[roomID][conn] = true
 
 	response := map[string]string{"type": "roomJoined", "room": roomID}
-	conn.WriteJSON(response)
-}
-
-func (m *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
-	for conn := range m.Rooms[game.RoomID] {
-		conn.WriteJSON(msg)
+	if err := conn.WriteJSON(response); err != nil {
+		s.logWriteError(err)
 	}
 }

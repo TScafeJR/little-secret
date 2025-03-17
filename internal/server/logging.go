@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/TScafeJR/little-secret/internal/uuid"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -40,6 +41,7 @@ func requestLogger(logger *zap.Logger) func(next http.Handler) http.Handler {
 				zap.String("request.remote", r.RemoteAddr),
 				zap.String("request.uri", r.RequestURI),
 				zap.String("request.method", r.Method),
+				zap.String("request.trace_id", uuid.CreateUUID().String()),
 				zap.Int("response.status", ww.Status()),
 				zap.Int("response.bytes_written", ww.BytesWritten()),
 			}
@@ -107,10 +109,7 @@ func (b limitBuffer) Write(p []byte) (n int, err error) {
 	if b.Buffer.Len() >= b.limit {
 		return len(p), nil
 	}
-	limit := b.limit
-	if len(p) < limit {
-		limit = len(p)
-	}
+	limit := min(len(p), b.limit)
 	return b.Buffer.Write(p[:limit])
 }
 

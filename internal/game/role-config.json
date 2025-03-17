@@ -1,0 +1,27 @@
+{
+	4: {
+		"good": 3,
+		"confused": 1,
+		"spy": 0
+	},
+	5: {
+		"good": 3,
+		"confused": 1,
+		"spy": 1
+	},
+	6: {
+		"good": 4,
+		"confused": 1,
+		"spy": 1
+	},
+	7: {
+		"good": 4,
+		"confused": 2,
+		"spy": 1
+	},
+	8: {
+		"good": 5,
+		"confused": 2,
+		"spy": 1
+	},
+}

@@ -9,6 +9,19 @@ import (
 	"go.uber.org/zap"
 )
 
+type Message struct {
+	Type   game.Event `json:"type"`
+	RoomID string     `json:"roomID"`
+}
+
+func (s *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
+	for conn := range s.Rooms[game.RoomID] {
+		if err := conn.WriteJSON(msg); err != nil {
+			s.logWriteError(err)
+		}
+	}
+}
+
 func ParseMessage(message []byte) (map[string]string, error) {
 	parsedMessage := make(map[string]string)
 	parsedMessage[string(message)] = string(message)
@@ -27,9 +40,9 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 
 	switch g := game.Event(m["type"]); g {
 	case game.StartGameEvent:
-		gID, ok := m["gameID"]
+		gID, ok := m["roomID"]
 		if !ok {
-			return fmt.Errorf("gameID not found in message")
+			return fmt.Errorf("roomID not found in message")
 		}
 		g := getGameFromRoomID(gID)
 		s.startGame(g)
