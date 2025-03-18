@@ -28,7 +28,7 @@ lint-check: go-lint-check
 
 ## make go-fmt; - run project linters
 .PHONY: fix
-fix: go-fmt
+fix: go-fmt yarn-fmt
 
 ## make fmt; - run go and web formatters
 .PHONY: fmt

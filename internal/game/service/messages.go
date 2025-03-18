@@ -6,6 +6,7 @@ import (
 
 	"github.com/TScafeJR/little-secret/internal/common"
 	"github.com/TScafeJR/little-secret/internal/game"
+	"github.com/TScafeJR/little-secret/internal/uuid"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 )
@@ -24,6 +25,13 @@ func (s *GameService) broadcastToRoom(game *game.Game, msg map[string]string) {
 	}
 }
 
+func (s *GameService) sendMessageToConnection(conn *websocket.Conn, msg Message) {
+	if err := conn.WriteJSON(msg); err != nil {
+		s.logWriteError(err)
+	}
+
+}
+
 func ParseMessage(message []byte) (Message, error) {
 	var m Message
 	if err := json.Unmarshal(message, &m); err != nil {
@@ -32,8 +40,21 @@ func ParseMessage(message []byte) (Message, error) {
 	return m, nil
 }
 
-func getGameFromRoomID(roomID string) *game.Game {
+func getGameFromRoomID(_ string) *game.Game {
 	return nil
+}
+
+func (s *GameService) handlePlayerConnected(conn *websocket.Conn) {
+	u := uuid.CreateUUID().String()
+	hash, err := common.UUIDToShort(u)
+	if err != nil {
+		return
+	}
+	m := Message{
+		RoomID: hash,
+		Type:   game.PlayerConnectedEvent,
+	}
+	s.sendMessageToConnection(conn, m)
 }
 
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
@@ -50,6 +71,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		}
 		foundGame := getGameFromRoomID(gID)
 		s.startGame(foundGame)
+	case game.PlayerConnectedEvent:
+		s.handlePlayerConnected(conn)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}

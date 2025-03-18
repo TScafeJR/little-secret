@@ -3,6 +3,7 @@ package gameservice
 import (
 	"net/http"
 
+	"github.com/TScafeJR/little-secret/internal/game"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 )
@@ -24,8 +25,11 @@ func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	for {
 		messageType, message, err := conn.ReadMessage()
 		if err != nil {
-			s.logger.Error("conn.ReadMessage", zap.Error(err))
-			break
+			if websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway) {
+				s.logger.Info("Client disconnected", zap.Error(err))
+				break
+			}
+			s.logger.Error("Unexpected WebSocket error", zap.Error(err))
 		}
 
 		s.checkRoom(r, conn)
@@ -53,7 +57,11 @@ func (s *GameService) checkRoom(r *http.Request, conn *websocket.Conn) {
 	}
 	s.Rooms[roomID][conn] = true
 
-	response := map[string]string{"type": "roomJoined", "room": roomID}
+	response := Message{
+		RoomID: roomID,
+		Type:   game.RoomJoinedEvent,
+	}
+
 	if err := conn.WriteJSON(response); err != nil {
 		s.logWriteError(err)
 	}

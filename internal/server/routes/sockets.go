@@ -21,7 +21,7 @@ func (s Services) Validate() error {
 
 func AddRoutes(router *chi.Mux, services Services) error {
 	if err := services.Validate(); err != nil {
-		return fmt.Errorf("services.Validate()", err)
+		return fmt.Errorf("services.Validate(): %w", err)
 	}
 
 	addWebSocketRoutes(router, services)

@@ -9,6 +9,7 @@ var (
 	UpdatePlayerNameEvent Event = "updatePlayerName"
 	SubmitClueEvent       Event = "submitClue"
 	VoteEvent             Event = "vote"
+	PlayerConnectedEvent  Event = "playerConnected"
 )
 
 type Phase string

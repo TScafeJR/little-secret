@@ -1,17 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Game from "./components/Game.tsx";
 
 function App() {
   return (
-    <>
-      <h1>Little Secret</h1>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <h1>
+        <b>Little Secret</b>
+      </h1>
+      <Game />
+    </div>
+  );
 }
 
-export default App
+export default App;
