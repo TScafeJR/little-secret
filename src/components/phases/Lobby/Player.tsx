@@ -1,13 +1,13 @@
 import { useState, useContext } from "react";
 import { GameContext } from "../../GameState";
 
-interface LobbyProps {
+interface PlayerProps {
   playerName: string;
   onSetName: (name: string) => void;
   handleLeaveGame: () => void;
 }
 
-export default function Player(p: LobbyProps) {
+export default function Player(p: PlayerProps) {
   const gameContext = useContext(GameContext);
   const [inputName, setInputName] = useState(p.playerName);
 

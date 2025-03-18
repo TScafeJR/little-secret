@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { Phase } from "./phases/phases.ts";
 import { Message } from "../game/message.ts";
+import { Player } from "../game/player.ts";
 
 export interface GameContextType {
   phase: Phase;
@@ -9,6 +10,7 @@ export interface GameContextType {
   roomCode: string;
   sendSocketMessage: (m: Message) => void;
   playerID: string;
+  players: Player[];
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -18,4 +20,5 @@ export const GameContext = createContext<GameContextType>({
   roomCode: "",
   sendSocketMessage: (_: Message) => {},
   playerID: "1234",
+  players: [],
 });

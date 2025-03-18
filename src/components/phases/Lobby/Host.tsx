@@ -2,13 +2,13 @@ import { useState, useContext, useEffect } from "react";
 import { GameContext } from "../../GameState";
 import { GameEvent } from "../../../game/events.ts";
 
-interface LobbyProps {
+interface HostProps {
   playerName: string;
   onSetName: (name: string) => void;
   handleLeaveGame: () => void;
 }
 
-export default function Host(p: LobbyProps) {
+export default function Host(p: HostProps) {
   const gameContext = useContext(GameContext);
   const [inputName, setInputName] = useState(p.playerName);
 
@@ -17,6 +17,7 @@ export default function Host(p: LobbyProps) {
       type: GameEvent.PLAYER_CONNECTED,
       playerID: gameContext.playerID,
     };
+
     gameContext.sendSocketMessage(m);
   }, [gameContext.playerID]);
 

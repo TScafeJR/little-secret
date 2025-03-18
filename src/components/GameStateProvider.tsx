@@ -4,6 +4,7 @@ import Config from "../config.ts";
 import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
 import { Message } from "../game/message.ts";
+import { Player } from "../game/player.ts";
 
 interface ContextProviderProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [roomCode, setRoomCode] = useState("");
   const [playerID, setPlayerID] = useState("1234");
   const socketRef = useRef<WebSocket | null>(null);
+  const [players, setPlayers] = useState<Player[]>([]);
 
   const handleSetName = (name: string) => {
     setPlayerName(name); // Update state
@@ -57,6 +59,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     roomCode: roomCode,
     sendSocketMessage: sendSocketMessage,
     playerID: playerID,
+    players: players,
   };
 
   useEffect(() => {
