@@ -5,13 +5,15 @@ import (
 	"hash/fnv"
 	"strings"
 	"sync"
+
+	"github.com/TScafeJR/little-secret/internal/id"
 )
 
 // Storage for UUID ↔ ShortCode mapping (can be replaced with DB)
 var (
 	mu          sync.Mutex
-	shortToUUID = make(map[string]string)
-	uuidToShort = make(map[string]string)
+	shortToUUID = make(map[id.RoomHash]string)
+	uuidToShort = make(map[string]id.RoomHash)
 )
 
 const base32 = "0123456789ABCDEFGHJKMNPQRSTUVWXYZ" // No 'I' or 'O' to avoid confusion
@@ -39,7 +41,7 @@ func encodeBase32(num uint32) string {
 }
 
 // Generates a unique 4-character short code for a UUID
-func UUIDToShort(uuidStr string) (string, error) {
+func UUIDToShort(uuidStr string) (id.RoomHash, error) {
 	mu.Lock()
 	defer mu.Unlock()
 
@@ -48,18 +50,18 @@ func UUIDToShort(uuidStr string) (string, error) {
 
 	// Return existing mapping if already converted
 	if short, exists := uuidToShort[normalizedUUID]; exists {
-		return short, nil
+		return id.RoomHash(short), nil
 	}
 
 	// Generate a short code
 	hashed := hashUUID(normalizedUUID)
-	shortCode := encodeBase32(hashed)
+	shortCode := id.RoomHash(encodeBase32(hashed))
 
 	// Handle collisions by modifying hash slightly
 	_, collision := shortToUUID[shortCode]
 	for collision {
 		hashed++
-		shortCode = encodeBase32(hashed)
+		shortCode = id.RoomHash(encodeBase32(hashed))
 		_, collision = shortToUUID[shortCode]
 	}
 
@@ -67,15 +69,15 @@ func UUIDToShort(uuidStr string) (string, error) {
 	shortToUUID[shortCode] = normalizedUUID
 	uuidToShort[normalizedUUID] = shortCode
 
-	return shortCode, nil
+	return id.RoomHash(shortCode), nil
 }
 
 // Decodes a 4-character short code back to UUID
-func ShortToUUID(shortCode string) (string, error) {
+func ShortToUUID(shortCode id.RoomHash) (string, error) {
 	mu.Lock()
 	defer mu.Unlock()
 
-	uuidStr, exists := shortToUUID[strings.ToUpper(shortCode)]
+	uuidStr, exists := shortToUUID[id.RoomHash(strings.ToUpper(string(shortCode)))]
 	if !exists {
 		return "", errors.New("short code not found")
 	}

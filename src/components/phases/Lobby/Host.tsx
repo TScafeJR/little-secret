@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { GameContext } from "../../GameState";
 import { GameEvent } from "../../../game/events.ts";
+import Players from "./Players.tsx";
 
 interface HostProps {
   playerName: string;
@@ -14,12 +15,12 @@ export default function Host(p: HostProps) {
 
   useEffect(() => {
     const m = {
-      type: GameEvent.PLAYER_CONNECTED,
+      type: GameEvent.ROOM_CREATED,
       playerID: gameContext.playerID,
     };
 
     gameContext.sendSocketMessage(m);
-  }, [gameContext.playerID]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -27,10 +28,11 @@ export default function Host(p: HostProps) {
       <h3>
         <b>{gameContext.roomCode.toUpperCase()}</b>
       </h3>
+      <Players />
       <input
         type="text"
         placeholder="Name"
-        className="base-input"
+        className="base-input center-text"
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />

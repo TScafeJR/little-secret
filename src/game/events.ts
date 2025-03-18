@@ -5,4 +5,5 @@ export enum GameEvent {
   SUBMIT_CLUE = "submitClue",
   VOTE = "vote",
   PLAYER_CONNECTED = "playerConnected",
+  ROOM_CREATED = "roomCreated",
 }

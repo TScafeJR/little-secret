@@ -91,9 +91,14 @@ h3 {
   font-weight: bold;
 }
 
+.center-text {
+  text-align: center;
+}
+
 /* Input Base Styles */
 .base-input {
   width: 90%;
+  font-weight: bold;
   max-width: 400px; /* Adjust as needed */
   padding: 10px 14px;
   font-size: 16px;

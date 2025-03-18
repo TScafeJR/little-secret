@@ -1,6 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import Host from "./Host.tsx";
 import Player from "./Player.tsx";
+import { GameContext } from "../../GameState";
+import { GameEvent } from "../../../game/events.ts";
 
 interface LobbyProps {
   playerName: string;
@@ -13,7 +15,15 @@ enum Role {
 }
 
 export default function Lobby(p: LobbyProps) {
+  const gameContext = useContext(GameContext);
   const [role, setRole] = useState<Role | null>(null);
+
+  useEffect(() => {
+    const m = {
+      type: GameEvent.PLAYER_CONNECTED,
+    };
+    gameContext.sendSocketMessage(m);
+  }, []);
 
   const body = useMemo(() => {
     switch (role) {
@@ -33,7 +43,7 @@ export default function Lobby(p: LobbyProps) {
           </div>
         );
     }
-  }, [role]);
+  }, [role, gameContext]);
 
   return <div className="my-4">{body}</div>;
 }

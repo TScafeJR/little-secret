@@ -4,13 +4,20 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/TScafeJR/little-secret/internal/game"
+	"github.com/TScafeJR/little-secret/internal/id"
 	"github.com/TScafeJR/little-secret/internal/uuid"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 )
 
+type Room struct {
+	Connections map[*websocket.Conn]bool
+	Game        *game.Game
+}
+
 type GameService struct {
-	Rooms  map[string]map[*websocket.Conn]bool
+	Rooms  map[id.RoomHash]*Room
 	logger *zap.Logger
 	mu     sync.Mutex
 }
@@ -35,7 +42,7 @@ func New(cfg *ServiceCfg) (*GameService, error) {
 		return nil, fmt.Errorf("cfg.Validate(): %w", err)
 	}
 
-	rooms := make(map[string]map[*websocket.Conn]bool)
+	rooms := make(map[id.RoomHash]*Room)
 
 	return &GameService{
 		logger: cfg.Logger,
@@ -51,8 +58,8 @@ func (g *GameService) generateNewRoomCode() string {
 func (s *GameService) CloseAllConnections() {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	for _, clients := range s.Rooms {
-		for conn := range clients {
+	for _, room := range s.Rooms {
+		for conn := range room.Connections {
 			_ = conn.Close()
 		}
 	}

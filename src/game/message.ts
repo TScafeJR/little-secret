@@ -6,4 +6,5 @@ export interface Message {
   roomID?: string;
   phase?: Phase;
   playerID?: string;
+  text?: string;
 }

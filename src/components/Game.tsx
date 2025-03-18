@@ -6,6 +6,7 @@ import { GameContext } from "./GameState";
 
 export default function Game() {
   const gameContext = useContext(GameContext);
+  console.info(gameContext);
   const renderPhase = useMemo(() => {
     switch (gameContext.phase) {
       case Phase.WAITING_FOR_PLAYERS:
@@ -18,7 +19,7 @@ export default function Game() {
       default:
         return <div>Unknown phase</div>;
     }
-  }, [gameContext.phase, gameContext.playerName]);
+  }, [gameContext]);
 
   return <GameStateProvider>{renderPhase}</GameStateProvider>;
 }

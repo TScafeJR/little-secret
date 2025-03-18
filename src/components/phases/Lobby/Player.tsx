@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { GameContext } from "../../GameState";
+import Players from "./Players.tsx";
 
 interface PlayerProps {
   playerName: string;
@@ -21,14 +22,19 @@ export default function Player(p: PlayerProps) {
           <b>{gameContext.roomCode.toUpperCase()}</b>
         </h3>
       )}
+      <Players />
       <input
         type="text"
         placeholder="Name"
-        className="base-input"
+        className="base-input center-text"
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />
-      <input type="text" placeholder="Room Code" className="base-input" />
+      <input
+        type="text"
+        placeholder="Room Code"
+        className="base-input center-text uppercase"
+      />
       <div className="w-full flex flex-col items-center gap-4">
         <button
           className="fw-button reg-button"

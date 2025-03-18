@@ -1,23 +1,37 @@
 package game
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/TScafeJR/little-secret/internal/id"
+	"github.com/gorilla/websocket"
+)
 
 type Game struct {
-	RoomID     string
+	RoomID     id.RoomHash
 	Players    []*Player
-	SecretWord string // The real password for Good Kittens
-	DecoyWord  string // A different password given to Confused Kittens
-	Phase      string // "discussion", "debate", "voting", or "finished"
+	SecretWord string
+	DecoyWord  string
+	Phase      string
 	Round      int
-	Votes      map[string]string // map from voting player ID -> voted player ID
-	// ... other state as needed
+	Votes      map[string]string
+	HostID     id.PlayerID
 }
 
-func (g *Game) FindPlayer(playerID string) (*Player, error) {
+func (g *Game) FindPlayer(playerID id.PlayerID) (*Player, error) {
 	for _, player := range g.Players {
 		if player.ID == playerID {
 			return player, nil
 		}
 	}
 	return nil, fmt.Errorf("player not found")
+}
+
+func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *Game {
+	h := NewPlayer(hostID, "Player 1", hostConn)
+	return &Game{
+		RoomID:  roomID,
+		Players: []*Player{h},
+		HostID:  hostID,
+	}
 }
