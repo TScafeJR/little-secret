@@ -14,13 +14,15 @@ export default function Host(p: HostProps) {
   const [inputName, setInputName] = useState(p.playerName);
 
   useEffect(() => {
-    const m = {
-      type: GameEvent.ROOM_CREATED,
-      playerID: gameContext.playerID,
-    };
+    if (gameContext.roomCode === "") {
+      const m = {
+        type: GameEvent.CREATE_ROOM,
+        playerID: gameContext.playerID,
+      };
 
-    gameContext.sendSocketMessage(m);
-  }, []);
+      gameContext.sendSocketMessage(m);
+    }
+  }, [gameContext]);
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -44,7 +46,13 @@ export default function Host(p: HostProps) {
           Set Name
         </button>
         <button className="fw-button cta-button">Start Game</button>
-        <button className="fw-button red-button" onClick={p.handleLeaveGame}>
+        <button
+          className="fw-button red-button"
+          onClick={() => {
+            p.handleLeaveGame();
+            gameContext.clearRoomCode();
+          }}
+        >
           Leave Game
         </button>
       </div>

@@ -11,6 +11,8 @@ var (
 	VoteEvent             Event = "vote"
 	PlayerConnectedEvent  Event = "playerConnected"
 	RoomCreatedEvent      Event = "roomCreated"
+	CreateRoomEvent       Event = "createRoom"
+	PlayerJoinedEvent     Event = "playerJoined"
 )
 
 type Phase string

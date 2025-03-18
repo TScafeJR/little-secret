@@ -121,6 +121,10 @@ h3 {
   font-size: 14px;
 }
 
+.base-input:focus::placeholder {
+  color: transparent;
+}
+
 /* Disabled State */
 .base-input:disabled {
   background-color: #f5f5f5;

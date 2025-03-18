@@ -11,6 +11,7 @@ export interface GameContextType {
   sendSocketMessage: (m: Message) => void;
   playerID: string;
   players: Player[];
+  clearRoomCode: () => void;
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -19,6 +20,7 @@ export const GameContext = createContext<GameContextType>({
   updatePlayerName: (_: string) => {},
   roomCode: "",
   sendSocketMessage: (_: Message) => {},
-  playerID: "1234",
+  playerID: "",
   players: [],
+  clearRoomCode: () => {},
 });

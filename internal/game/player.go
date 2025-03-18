@@ -6,12 +6,12 @@ import (
 )
 
 type Player struct {
-	ID         id.PlayerID
-	Name       string
-	Role       Role
-	SecretWord string
-	Alive      bool
-	Conn       *websocket.Conn
+	ID         id.PlayerID     `json:"id"`
+	Name       string          `json:"name"`
+	Role       Role            `json:"role,omitzero"`
+	SecretWord string          `json:"secretWord,omitzero"`
+	Alive      bool            `json:"alive"`
+	Conn       *websocket.Conn `json:"-"`
 }
 
 func NewPlayer(id id.PlayerID, displayName string, conn *websocket.Conn) *Player {

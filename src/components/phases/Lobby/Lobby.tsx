@@ -18,13 +18,6 @@ export default function Lobby(p: LobbyProps) {
   const gameContext = useContext(GameContext);
   const [role, setRole] = useState<Role | null>(null);
 
-  useEffect(() => {
-    const m = {
-      type: GameEvent.PLAYER_CONNECTED,
-    };
-    gameContext.sendSocketMessage(m);
-  }, []);
-
   const body = useMemo(() => {
     switch (role) {
       case Role.HOST:

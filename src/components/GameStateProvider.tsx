@@ -34,7 +34,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   };
 
   const handleIncomingMessage = (msg: Message) => {
-    console.debug(msg);
+    console.info("incoming message", msg);
     setMessages((prevMessages) => [...prevMessages, msg]);
     switch (msg.type) {
       case GameEvent.PLAYER_CONNECTED:
@@ -43,13 +43,16 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.ROOM_CREATED:
         setRoomCode(msg?.roomID as string);
         break;
+      case GameEvent.PLAYER_JOINED:
+        setPlayers((prevPlayers) => [...prevPlayers, msg?.player as Player]);
+        break;
       default:
         console.error("Unknown message type:", msg.type);
     }
   };
 
   const sendSocketMessage = (m: Message) => {
-    socketRef.current?.send(JSON.stringify(m));
+    socketRef?.current?.send(JSON.stringify(m));
   };
 
   const value: GameContextType = {
@@ -60,6 +63,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     sendSocketMessage: sendSocketMessage,
     playerID: playerID,
     players: players,
+    clearRoomCode: () => setRoomCode(""),
   };
 
   useEffect(() => {
@@ -68,6 +72,10 @@ export default function GameStateProvider(p: ContextProviderProps) {
 
     socket.onopen = () => {
       console.info("WebSocket connected");
+      const m = {
+        type: GameEvent.PLAYER_CONNECTED,
+      };
+      sendSocketMessage(m);
     };
 
     socket.onmessage = (event) => {

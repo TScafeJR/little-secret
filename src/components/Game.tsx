@@ -1,12 +1,10 @@
 import { useMemo, useContext } from "react";
 import Lobby from "./phases/Lobby/Lobby.tsx";
 import { Phase } from "./phases/phases.ts";
-import GameStateProvider from "./GameStateProvider.tsx";
 import { GameContext } from "./GameState";
 
 export default function Game() {
   const gameContext = useContext(GameContext);
-  console.info(gameContext);
   const renderPhase = useMemo(() => {
     switch (gameContext.phase) {
       case Phase.WAITING_FOR_PLAYERS:
@@ -21,5 +19,5 @@ export default function Game() {
     }
   }, [gameContext]);
 
-  return <GameStateProvider>{renderPhase}</GameStateProvider>;
+  return renderPhase;
 }

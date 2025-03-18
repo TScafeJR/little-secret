@@ -13,11 +13,12 @@ import (
 )
 
 type Message struct {
-	Type     game.Event  `json:"type,omitzero"`
-	RoomID   id.RoomHash `json:"roomID,omitzero"`
-	Phase    game.Phase  `json:"phase,omitzero"`
-	PlayerID id.PlayerID `json:"playerID,omitzero"`
-	Text     string      `json:"text,omitzero"`
+	Type     game.Event   `json:"type,omitzero"`
+	RoomID   id.RoomHash  `json:"roomID,omitzero"`
+	Phase    game.Phase   `json:"phase,omitzero"`
+	PlayerID id.PlayerID  `json:"playerID,omitzero"`
+	Text     string       `json:"text,omitzero"`
+	Player   *game.Player `json:"player,omitzero"`
 }
 
 func (s *GameService) broadcastToRoom(roomID id.RoomHash, msg Message) {
@@ -38,7 +39,18 @@ func (s *GameService) sendMessageToConnection(conn *websocket.Conn, msg Message)
 	if err := conn.WriteJSON(msg); err != nil {
 		s.logWriteError(err)
 	}
+}
 
+func (s *GameService) getPlayerFromPlayerID(pID id.PlayerID) (*game.Player, error) {
+	for _, room := range s.Rooms {
+		for _, player := range room.Game.Players {
+			if player.ID == pID {
+				return player, nil
+			}
+		}
+	}
+
+	return nil, fmt.Errorf("player not found for connection")
 }
 
 func parseMessage(message []byte) (Message, error) {
@@ -65,16 +77,17 @@ func (s *GameService) handlePlayerConnected(conn *websocket.Conn) {
 	s.sendMessageToConnection(conn, m)
 }
 
-func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn) {
+func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn, msg Message) {
 	roomID := s.generateNewRoomCode()
 	hash, err := common.UUIDToShort(roomID)
 	if err != nil {
+		s.logger.Error("common.UUIDToShort()", zap.Error(err))
 		return
 	}
 	conns := make(map[*websocket.Conn]bool)
 	conns[conn] = true
 
-	g := game.NewGame(hash, id.PlayerID("1"), conn)
+	g := game.NewGame(hash, msg.PlayerID, conn)
 	room := Room{
 		Connections: conns,
 		Game:        g,
@@ -87,6 +100,12 @@ func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn) {
 		Type:   game.RoomCreatedEvent,
 	}
 	s.sendMessageToConnection(conn, m)
+
+	m2 := Message{
+		Type:   game.PlayerJoinedEvent,
+		Player: g.Players[0],
+	}
+	s.sendMessageToConnection(conn, m2)
 }
 
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
@@ -103,8 +122,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		}
 	case game.PlayerConnectedEvent:
 		s.handlePlayerConnected(conn)
-	case game.RoomCreatedEvent:
-		s.handleRoomCreatedEvent(conn)
+	case game.CreateRoomEvent:
+		s.handleRoomCreatedEvent(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}
@@ -114,7 +133,6 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 
 func (s *GameService) HandleIncomingMessage(conn *websocket.Conn, messageType int, message []byte) error {
 	s.logger.Info("Received message", zap.String("message", string(message)))
-	s.logger.Debug("Game Service State", zap.Any("service", s))
 
 	if err := s.RespondToMessage(conn, messageType, message); err != nil {
 		return fmt.Errorf("s.RespondToMessage(): %w", err)

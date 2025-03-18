@@ -22,26 +22,41 @@ export default function Player(p: PlayerProps) {
           <b>{gameContext.roomCode.toUpperCase()}</b>
         </h3>
       )}
-      <Players />
-      <input
-        type="text"
-        placeholder="Name"
-        className="base-input center-text"
-        value={inputName}
-        onChange={(e) => setInputName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Room Code"
-        className="base-input center-text uppercase"
-      />
+      {hasCode && <Players />}
+      {hasCode && (
+        <input
+          type="text"
+          placeholder="Name"
+          className="base-input center-text"
+          value={inputName}
+          onChange={(e) => setInputName(e.target.value)}
+        />
+      )}
+      {!hasCode && (
+        <input
+          type="text"
+          placeholder="Room Code"
+          className="base-input center-text uppercase"
+        />
+      )}
       <div className="w-full flex flex-col items-center gap-4">
-        <button
-          className="fw-button reg-button"
-          onClick={() => p.onSetName(inputName)}
-        >
-          Set Name
-        </button>
+        {hasCode && (
+          <button
+            className="fw-button reg-button"
+            onClick={() => p.onSetName(inputName)}
+          >
+            Set Name
+          </button>
+        )}
+        {!hasCode && (
+          <button
+            type="submit"
+            className="fw-button reg-button"
+            onClick={() => p.onSetName(inputName)}
+          >
+            Submit Code
+          </button>
+        )}
         <button className="fw-button red-button" onClick={p.handleLeaveGame}>
           Leave Game
         </button>
