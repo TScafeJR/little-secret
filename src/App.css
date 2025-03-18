@@ -54,11 +54,14 @@ h3 {
 }
 
 .fw-button {
-  width: "90%";
+  width: 90%;
+  max-width: 400px; /* Optional: Limit max width for better design on larger screens */
+  display: block; /* Ensure it takes full width */
+  margin: 0 auto; /* Center it */
 }
 
 .app-container {
-  width: "100%";
+  width: 100%;
 }
 
 .cta-button {
@@ -86,4 +89,41 @@ h3 {
   border-radius: 0.375rem;
   text-decoration: none;
   font-weight: bold;
+}
+
+/* Input Base Styles */
+.base-input {
+  width: 90%;
+  max-width: 400px; /* Adjust as needed */
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus State - Blue Highlight Like MUI */
+.base-input:focus {
+  border-color: #3b82f6; /* MUI's default blue */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Placeholder Styling */
+.base-input::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Disabled State */
+.base-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Error State */
+.base-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
 }

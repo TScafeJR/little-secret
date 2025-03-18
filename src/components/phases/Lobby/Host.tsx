@@ -29,10 +29,11 @@ export default function Host(p: LobbyProps) {
       <input
         type="text"
         placeholder="Name"
+        className="base-input"
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />
-      <div className="flex flex-col items-center gap-4">
+      <div className="w-full flex flex-col items-center gap-4">
         <button
           className="fw-button reg-button"
           onClick={() => p.onSetName(inputName)}

@@ -24,11 +24,12 @@ export default function Player(p: LobbyProps) {
       <input
         type="text"
         placeholder="Name"
+        className="base-input"
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />
-      <input type="text" placeholder="Room Code" />
-      <div className="flex flex-col items-center gap-4">
+      <input type="text" placeholder="Room Code" className="base-input" />
+      <div className="w-full flex flex-col items-center gap-4">
         <button
           className="fw-button reg-button"
           onClick={() => p.onSetName(inputName)}
