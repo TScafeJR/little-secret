@@ -5,7 +5,7 @@ import GameStateProvider from "./components/GameStateProvider.tsx";
 function App() {
   return (
     <GameStateProvider>
-      <div className="app-container">
+      <div className="app-container min-h-screen">
         <h1>
           <b>Little Secret</b>
         </h1>

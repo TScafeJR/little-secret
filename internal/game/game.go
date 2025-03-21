@@ -35,3 +35,13 @@ func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *
 		HostID:  hostID,
 	}
 }
+
+type GameState struct {
+	Players []*Player `json:"players"`
+}
+
+func (g *Game) GetGameState() GameState {
+	return GameState{
+		Players: g.Players,
+	}
+}

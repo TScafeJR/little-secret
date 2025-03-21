@@ -8,12 +8,7 @@ export default function Game() {
   const renderPhase = useMemo(() => {
     switch (gameContext.phase) {
       case Phase.WAITING_FOR_PLAYERS:
-        return (
-          <Lobby
-            playerName={gameContext.playerName}
-            onSetName={gameContext.updatePlayerName}
-          />
-        );
+        return <Lobby />;
       default:
         return <div>Unknown phase</div>;
     }

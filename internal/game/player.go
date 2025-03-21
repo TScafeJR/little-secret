@@ -7,7 +7,7 @@ import (
 
 type Player struct {
 	ID         id.PlayerID     `json:"id"`
-	Name       string          `json:"name"`
+	Name       string          `json:"displayName"`
 	Role       Role            `json:"role,omitzero"`
 	SecretWord string          `json:"secretWord,omitzero"`
 	Alive      bool            `json:"alive"`

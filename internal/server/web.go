@@ -61,9 +61,6 @@ func ServeWeb(c srvcfg.Cfg) error {
 		// shutdown public server
 		go func() {
 			defer wg.Done()
-			if err := s.Shutdown(ctx); err != nil {
-				c.Logger.Error("publicServer.Shutdown()", zap.Error(err))
-			}
 			services.GameService.CloseAllConnections()
 			if err := s.Shutdown(ctx); err != nil {
 				c.Logger.Error("publicServer.Shutdown()", zap.Error(err))

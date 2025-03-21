@@ -2,35 +2,38 @@ import { useState, useMemo, useContext, useEffect } from "react";
 import Host from "./Host.tsx";
 import Player from "./Player.tsx";
 import { GameContext } from "../../GameState";
-import { GameEvent } from "../../../game/events.ts";
-
-interface LobbyProps {
-  playerName: string;
-  onSetName: (name: string) => void;
-}
+import { LobbyContext } from "./LobbyContext.tsx";
 
 enum Role {
   HOST = "host",
   PLAYER = "player",
 }
 
-export default function Lobby(p: LobbyProps) {
+export default function Lobby() {
   const gameContext = useContext(GameContext);
   const [role, setRole] = useState<Role | null>(null);
 
   const body = useMemo(() => {
     switch (role) {
       case Role.HOST:
-        return <Host {...p} handleLeaveGame={() => setRole(null)} />;
+        return <Host />;
       case Role.PLAYER:
-        return <Player {...p} handleLeaveGame={() => setRole(null)} />;
+        return <Player />;
       default:
         return (
-          <div className="flex flex-col items-center gap-4">
-            <button className="fw-button" onClick={() => setRole(Role.HOST)}>
+          <div className="flex flex-col items-center justify-items-end gap-4">
+            <button
+              className="fw-button"
+              id="host-btn"
+              onClick={() => setRole(Role.HOST)}
+            >
               New Game
             </button>
-            <button className="fw-button" onClick={() => setRole(Role.PLAYER)}>
+            <button
+              className="fw-button"
+              id="player-btn"
+              onClick={() => setRole(Role.PLAYER)}
+            >
               Join Game
             </button>
           </div>
@@ -38,5 +41,15 @@ export default function Lobby(p: LobbyProps) {
     }
   }, [role, gameContext]);
 
-  return <div className="my-4">{body}</div>;
+  return (
+    <LobbyContext.Provider
+      value={{
+        leaveGame: () => {
+          setRole(null);
+        },
+      }}
+    >
+      <div className="flex flex-col justify-end my-4">{body}</div>
+    </LobbyContext.Provider>
+  );
 }

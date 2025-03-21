@@ -1,0 +1,10 @@
+[build]
+# Instead of "go build -o ./tmp/main", instruct Air to use 'go run'
+cmd = "exec make go-srv"
+
+# Because you're not producing a binary, set this to a dummy value
+bin = "skip"
+
+# A typical set of file types to watch
+include_dir = ["internal", "cmd"]
+

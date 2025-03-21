@@ -1,14 +1,13 @@
 import { createContext } from "react";
 import { Phase } from "./phases/phases.ts";
-import { Message } from "../game/message.ts";
+import { OutboundMessage } from "../game/message.ts";
 import { Player } from "../game/player.ts";
 
 export interface GameContextType {
   phase: Phase;
   playerName: string;
-  updatePlayerName: (name: string) => void;
   roomCode: string;
-  sendSocketMessage: (m: Message) => void;
+  sendSocketMessage: (m: OutboundMessage) => void;
   playerID: string;
   players: Player[];
   clearRoomCode: () => void;
@@ -17,9 +16,8 @@ export interface GameContextType {
 export const GameContext = createContext<GameContextType>({
   phase: Phase.WAITING_FOR_PLAYERS,
   playerName: "",
-  updatePlayerName: (_: string) => {},
   roomCode: "",
-  sendSocketMessage: (_: Message) => {},
+  sendSocketMessage: (_: OutboundMessage) => {},
   playerID: "",
   players: [],
   clearRoomCode: () => {},

@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-if [ "$#" == 0 ]; then
-  echo "\n1st required argument is the .env file, 2nd optional argument is the command to be executed surrounded by quotes\n\n"
+if [ "$#" -lt 1 ]; then
+  echo "Usage: $0 .env-file command..."
   exit 1
 fi
 
+envfile="$1"
+shift  # shift removes the env file from $@
+
 set -o allexport
-# shellcheck source=../.env-local
-source "$1"
+source "$envfile"
 set +o allexport
 
-if [ "$#" == 2 ]; then
-  $2
-fi
+# Use exec + "$@" so multiple arguments are preserved
+exec "$@"
+

@@ -5,3 +5,5 @@ type RoomID string
 type RoomHash string
 
 type PlayerID string
+
+type MessageID string

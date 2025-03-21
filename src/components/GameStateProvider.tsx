@@ -1,9 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { GameContextType, GameContext } from "./GameState";
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from "react";
+import { GameContext } from "./GameState";
 import Config from "../config.ts";
 import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
-import { Message } from "../game/message.ts";
+import { OutboundMessage, InboundMessage } from "../game/message.ts";
 import { Player } from "../game/player.ts";
 
 interface ContextProviderProps {
@@ -11,8 +17,7 @@ interface ContextProviderProps {
 }
 
 export default function GameStateProvider(p: ContextProviderProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [role, setRole] = useState(null);
+  const [messages, setMessages] = useState<InboundMessage[]>([]);
   const [playerName, setPlayerName] = useState("");
   const [currentPhase, setCurrentPhase] = useState<Phase>(
     Phase.WAITING_FOR_PLAYERS,
@@ -23,7 +28,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [players, setPlayers] = useState<Player[]>([]);
 
   const handleSetName = (name: string) => {
-    setPlayerName(name); // Update state
+    setPlayerName(name);
     const updateMessage = {
       type: GameEvent.UPDATE_PLAYER_NAME,
       playerID: playerID,
@@ -33,7 +38,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     sendSocketMessage(updateMessage);
   };
 
-  const handleIncomingMessage = (msg: Message) => {
+  const handleIncomingMessage = (msg: InboundMessage) => {
     console.info("incoming message", msg);
     setMessages((prevMessages) => [...prevMessages, msg]);
     switch (msg.type) {
@@ -46,25 +51,35 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.PLAYER_JOINED:
         setPlayers((prevPlayers) => [...prevPlayers, msg?.player as Player]);
         break;
+      case GameEvent.UPDATE_PLAYER_NAME:
+        setPlayers(msg?.gameState?.players as Player[]);
+        break;
       default:
         console.error("Unknown message type:", msg.type);
     }
   };
 
-  const sendSocketMessage = (m: Message) => {
+  const sendSocketMessage = (m: OutboundMessage) => {
     socketRef?.current?.send(JSON.stringify(m));
   };
 
-  const value: GameContextType = {
-    phase: currentPhase,
-    playerName: playerName,
-    updatePlayerName: handleSetName,
-    roomCode: roomCode,
-    sendSocketMessage: sendSocketMessage,
-    playerID: playerID,
-    players: players,
-    clearRoomCode: () => setRoomCode(""),
-  };
+  const value = useMemo(
+    () => ({
+      phase: currentPhase,
+      playerName,
+      updatePlayerName: handleSetName,
+      roomCode,
+      sendSocketMessage,
+      playerID,
+      players,
+      clearRoomCode: () => {
+        setRoomCode("");
+        setPlayerName("");
+        setPlayers([]);
+      },
+    }),
+    [currentPhase, playerName, roomCode, playerID, players],
+  );
 
   useEffect(() => {
     const socket = new WebSocket(`ws://${Config.backendUrl}/ws`);
@@ -79,7 +94,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     };
 
     socket.onmessage = (event) => {
-      const msg = JSON.parse(event.data) as unknown as Message;
+      const msg = JSON.parse(event.data) as unknown as InboundMessage;
       handleIncomingMessage(msg);
     };
 

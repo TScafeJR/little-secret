@@ -15,7 +15,10 @@
     "supabase:srv-functions": "supabase functions serve",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop --backup",
-    "supabase:upgrade": "supabase link"
+    "supabase:upgrade": "supabase link",
+    "test": "yarn playwright test",
+    "test:ui": "yarn playwright test --ui",
+    "test:report": "yarn playwright show-report"
   },
   "dependencies": {
     "@tailwindcss/vite": "4.0.14",
@@ -29,6 +32,8 @@
   },
   "devDependencies": {
     "@eslint/js": "9.21.0",
+    "@playwright/test": "1.51.1",
+    "@types/node": "22.13.11",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "4.3.4",
