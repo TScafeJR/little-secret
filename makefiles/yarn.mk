@@ -13,3 +13,11 @@ yarn-gen:
 .PHONY: yarn-dev
 yarn-dev:
 	yarn dev
+
+.PHONY: yarn-install
+yarn-install:
+	yarn install
+
+.PHONY: yarn-test
+yarn-test:
+	yarn test

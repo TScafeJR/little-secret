@@ -13,13 +13,9 @@ export default function Player() {
 
   return (
     <div className="w-full flex flex-col items-center justify-items-end gap-4">
-      {hasCode && (
-        <div>
-          <CodeDisplay />
-          <Players />
-          <NameSubmission />
-        </div>
-      )}
+      {hasCode && <CodeDisplay />}
+      {hasCode && <Players />}
+      {hasCode && <NameSubmission />}
       {!hasCode && <CodeSubmission />}
       <LeaveGameButton />
     </div>

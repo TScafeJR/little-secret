@@ -12,7 +12,7 @@ show-help:
 
 ## make install; - install project dependencies
 .PHONY: install
-install: go-install
+install: go-install yarn-install
 
 ## make clean; - clean project state
 .PHONY: clean
@@ -40,7 +40,7 @@ fmt-check: go-fmt-check
 
 ## make test; - run project tests
 .PHONY: test
-test: go-test
+test: go-test yarn-test
 
 .PHONY: update-companies
 update-companies:
