@@ -18,7 +18,7 @@ export default function NameSubmission() {
       };
       gameContext.sendSocketMessage(m);
     },
-    [gameContext.sendSocketMessage],
+    [gameContext.sendSocketMessage, gameContext.roomCode],
   );
 
   return (

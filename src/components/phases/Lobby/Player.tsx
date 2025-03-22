@@ -4,6 +4,7 @@ import Players from "./Players.tsx";
 import NameSubmission from "./NameSubmission.tsx";
 import CodeSubmission from "./CodeSubmission.tsx";
 import LeaveGameButton from "./LeaveGameButton.tsx";
+import CodeDisplay from "./CodeDisplay.tsx";
 
 export default function Player() {
   const gameContext = useContext(GameContext);
@@ -11,13 +12,10 @@ export default function Player() {
   const hasCode = gameContext.roomCode !== "";
 
   return (
-    <div className="w-full flex items-center gap-4">
+    <div className="w-full flex flex-col items-center justify-items-end gap-4">
       {hasCode && (
         <div>
-          <h2>Room Code</h2>
-          <h3>
-            <b>{gameContext.roomCode.toUpperCase()}</b>
-          </h3>
+          <CodeDisplay />
           <Players />
           <NameSubmission />
         </div>

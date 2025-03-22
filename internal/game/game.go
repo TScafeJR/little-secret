@@ -36,6 +36,12 @@ func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *
 	}
 }
 
+func (g *Game) AddPlayer(pID id.PlayerID, conn *websocket.Conn) *Player {
+	p := NewPlayer(pID, fmt.Sprintf("Player %d", len(g.Players)+1), conn)
+	g.Players = append(g.Players, p)
+	return p
+}
+
 type GameState struct {
 	Players []*Player `json:"players"`
 }

@@ -46,6 +46,7 @@ export default function Lobby() {
       value={{
         leaveGame: () => {
           setRole(null);
+          gameContext.clearRoomCode();
         },
       }}
     >

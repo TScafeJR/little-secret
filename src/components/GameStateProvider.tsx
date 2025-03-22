@@ -26,7 +26,14 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [playerID, setPlayerID] = useState("");
   const socketRef = useRef<WebSocket | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
+  function handleShowSnackbar(msg: InboundMessage) {
+    setErrorMessage(msg.text as string);
+    setShowSnackbar(true);
+    setTimeout(() => setShowSnackbar(false), 5000);
+  }
   const handleSetName = (name: string) => {
     setPlayerName(name);
     const updateMessage = {
@@ -42,15 +49,17 @@ export default function GameStateProvider(p: ContextProviderProps) {
     console.info("incoming message", msg);
     setMessages((prevMessages) => [...prevMessages, msg]);
     switch (msg.type) {
+      case GameEvent.ERROR:
+        handleShowSnackbar(msg);
+        break;
       case GameEvent.PLAYER_CONNECTED:
         setPlayerID(msg?.playerID as string);
         break;
       case GameEvent.ROOM_CREATED:
+      case GameEvent.ROOM_JOINED:
         setRoomCode(msg?.roomID as string);
         break;
       case GameEvent.PLAYER_JOINED:
-        setPlayers((prevPlayers) => [...prevPlayers, msg?.player as Player]);
-        break;
       case GameEvent.UPDATE_PLAYER_NAME:
         setPlayers(msg?.gameState?.players as Player[]);
         break;
@@ -112,6 +121,15 @@ export default function GameStateProvider(p: ContextProviderProps) {
   }, []);
 
   return (
-    <GameContext.Provider value={value}>{p.children}</GameContext.Provider>
+    <GameContext.Provider value={value}>
+      <div>
+        {p.children}{" "}
+        {showSnackbar && (
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded shadow-lg">
+            {errorMessage}
+          </div>
+        )}
+      </div>
+    </GameContext.Provider>
   );
 }

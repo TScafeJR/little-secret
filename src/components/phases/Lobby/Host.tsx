@@ -4,6 +4,7 @@ import { GameEvent } from "../../../game/events.ts";
 import Players from "./Players.tsx";
 import NameSubmission from "./NameSubmission.tsx";
 import LeaveGameButton from "./LeaveGameButton.tsx";
+import CodeDisplay from "./CodeDisplay.tsx";
 
 export default function Host() {
   const gameContext = useContext(GameContext);
@@ -21,10 +22,7 @@ export default function Host() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h2>Room Code</h2>
-      <h3 id="room-code">
-        <b>{gameContext.roomCode.toUpperCase()}</b>
-      </h3>
+      <CodeDisplay />
       <Players />
       <div className="w-full flex flex-col items-center justify-items-end gap-4">
         <NameSubmission />

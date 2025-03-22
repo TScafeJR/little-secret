@@ -8,4 +8,6 @@ export enum GameEvent {
   CREATE_ROOM = "createRoom",
   ROOM_CREATED = "roomCreated",
   PLAYER_JOINED = "playerJoined",
+  SUBMIT_CODE = "roomCodeSubmitted",
+  ERROR = "error",
 }
