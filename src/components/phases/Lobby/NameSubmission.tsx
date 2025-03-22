@@ -27,12 +27,14 @@ export default function NameSubmission() {
         type="text"
         placeholder="Name"
         className="base-input center-text"
+        id="player-name-input"
         value={playerName}
         onChange={(e) => setPlayerName(e.target.value)}
         autoFocus
       />
       <button
         className="fw-button reg-button"
+        id="player-name-submit"
         onClick={() => handleNameSubmission(playerName)}
       >
         Set Name

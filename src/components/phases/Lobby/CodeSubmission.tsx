@@ -32,6 +32,7 @@ export default function CodeSubmission() {
       <button
         type="submit"
         className="fw-button reg-button"
+        id="room-code-submit"
         onClick={() => handleCodeSubmission(code)}
       >
         Submit Code
