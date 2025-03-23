@@ -18,6 +18,7 @@ export default function Host() {
       const m = {
         type: GameEvent.CREATE_ROOM,
         playerID: gameContext.playerID,
+        roomID: gameContext.roomCode,
       };
 
       gameContext.sendSocketMessage(m);

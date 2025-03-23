@@ -176,6 +176,32 @@ func (s *GameService) handleRoomCodeSubmittedEvent(conn *websocket.Conn, message
 	})
 }
 
+func (s *GameService) handleStartGame(_ *websocket.Conn, m Message) {
+	g, err := s.getGameFromRoomID(m.RoomID)
+	if err != nil {
+		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		return
+	}
+
+	if err = g.StartGame(); err != nil {
+		s.logger.Error("g.StartGame()", zap.Error(err))
+		return
+	}
+
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:  game.PhaseUpdatedEvent,
+		Phase: game.InfoPhase,
+	})
+
+	for i := range g.Players {
+		p := g.Players[i]
+		s.sendMessageToConnection(p.Conn, Message{
+			Type: game.RoleRevealEvent,
+			Text: p.SecretWord,
+		})
+	}
+}
+
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
 	m, err := parseMessage(message)
 	if err != nil {
@@ -183,11 +209,6 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 	}
 
 	switch g := m.Type; g {
-	case game.StartGameEvent:
-		_, err := s.getGameFromRoomID(m.RoomID)
-		if err != nil {
-			return fmt.Errorf("getGameFromRoomID(): %w", err)
-		}
 	case game.PlayerConnectedEvent:
 		s.handlePlayerConnected(conn)
 	case game.CreateRoomEvent:
@@ -196,6 +217,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handlePlayerUpdatedName(conn, m)
 	case game.RoomCodeSubmittedEvent:
 		s.handleRoomCodeSubmittedEvent(conn, m)
+	case game.StartGameEvent:
+		s.handleStartGame(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}

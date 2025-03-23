@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext, useEffect } from "react";
+import { useState, useMemo, useContext } from "react";
 import Host from "./Host.tsx";
 import Player from "./Player.tsx";
 import { GameContext } from "../../GameState";

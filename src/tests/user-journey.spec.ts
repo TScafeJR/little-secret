@@ -17,16 +17,16 @@ test.describe("main user journey path", () => {
     const players = [pageOne, pageTwo, pageThree, pageFour];
     await Promise.all(
       players.map(async (player) => {
-        await player.goto(appUrl);
+        return player.goto(appUrl);
       }),
     );
 
     await Promise.all(
       players.map(async (player, i) => {
         if (i === 0) {
-          await player.click("#host-btn");
+          return player.click("#host-btn");
         } else {
-          await player.click("#player-btn");
+          return player.click("#player-btn");
         }
       }),
     );
@@ -35,12 +35,12 @@ test.describe("main user journey path", () => {
     expect(roomCode).toBeTruthy();
 
     await Promise.all(
-      players.map(async (player) => {
+      players.slice(1).map(async (player) => {
         await player
           .locator("#room-code-input")
           .pressSequentially(roomCode as string);
         await player.click("#room-code-submit");
-        await player.waitForSelector("#room-code");
+        return player.waitForSelector("#room-code");
       }),
     );
 

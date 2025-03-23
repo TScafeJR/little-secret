@@ -10,4 +10,7 @@ export enum GameEvent {
   PLAYER_JOINED = "playerJoined",
   SUBMIT_CODE = "roomCodeSubmitted",
   ERROR = "error",
+  CHANGE_PHASE = "pashe",
+  ROLE_REVEAL = "roleReveal",
+  PHASE_UPDATED = "phaseUpdated",
 }

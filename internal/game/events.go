@@ -15,12 +15,16 @@ var (
 	PlayerJoinedEvent      Event = "playerJoined"
 	RoomCodeSubmittedEvent Event = "roomCodeSubmitted"
 	ErrorEvent             Event = "error"
+	ChangePhaseEvent       Event = "changePhase"
+	PhaseUpdatedEvent      Event = "phaseUpdated"
+	RoleRevealEvent        Event = "roleReveal"
 )
 
 type Phase string
 
 var (
 	WaitingForPlayersPhase Phase = "waitingForPlayers"
+	InfoPhase              Phase = "info"
 	VotePhase              Phase = "vote"
 	SubmitCluePhase        Phase = "submitClue"
 	RevealRolePhase        Phase = "revealRole"

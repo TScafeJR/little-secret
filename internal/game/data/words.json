@@ -1,0 +1,5204 @@
+[
+  {
+    "car": "bus"
+  },
+  {
+    "car": "trolley"
+  },
+  {
+    "bus": "car"
+  },
+  {
+    "bus": "trolley"
+  },
+  {
+    "trolley": "car"
+  },
+  {
+    "trolley": "bus"
+  },
+  {
+    "house": "apartment"
+  },
+  {
+    "house": "loft"
+  },
+  {
+    "apartment": "house"
+  },
+  {
+    "apartment": "loft"
+  },
+  {
+    "loft": "house"
+  },
+  {
+    "loft": "apartment"
+  },
+  {
+    "dog": "cat"
+  },
+  {
+    "dog": "ferret"
+  },
+  {
+    "dog": "turtle"
+  },
+  {
+    "dog": "fish"
+  },
+  {
+    "dog": "bird"
+  },
+  {
+    "dog": "rabbit"
+  },
+  {
+    "dog": "hamster"
+  },
+  {
+    "cat": "dog"
+  },
+  {
+    "cat": "ferret"
+  },
+  {
+    "cat": "turtle"
+  },
+  {
+    "cat": "fish"
+  },
+  {
+    "cat": "bird"
+  },
+  {
+    "cat": "rabbit"
+  },
+  {
+    "cat": "hamster"
+  },
+  {
+    "ferret": "dog"
+  },
+  {
+    "ferret": "cat"
+  },
+  {
+    "ferret": "turtle"
+  },
+  {
+    "ferret": "fish"
+  },
+  {
+    "ferret": "bird"
+  },
+  {
+    "ferret": "rabbit"
+  },
+  {
+    "ferret": "hamster"
+  },
+  {
+    "turtle": "dog"
+  },
+  {
+    "turtle": "cat"
+  },
+  {
+    "turtle": "ferret"
+  },
+  {
+    "turtle": "fish"
+  },
+  {
+    "turtle": "bird"
+  },
+  {
+    "turtle": "rabbit"
+  },
+  {
+    "turtle": "hamster"
+  },
+  {
+    "fish": "dog"
+  },
+  {
+    "fish": "cat"
+  },
+  {
+    "fish": "ferret"
+  },
+  {
+    "fish": "turtle"
+  },
+  {
+    "fish": "bird"
+  },
+  {
+    "fish": "rabbit"
+  },
+  {
+    "fish": "hamster"
+  },
+  {
+    "bird": "dog"
+  },
+  {
+    "bird": "cat"
+  },
+  {
+    "bird": "ferret"
+  },
+  {
+    "bird": "turtle"
+  },
+  {
+    "bird": "fish"
+  },
+  {
+    "bird": "rabbit"
+  },
+  {
+    "bird": "hamster"
+  },
+  {
+    "rabbit": "dog"
+  },
+  {
+    "rabbit": "cat"
+  },
+  {
+    "rabbit": "ferret"
+  },
+  {
+    "rabbit": "turtle"
+  },
+  {
+    "rabbit": "fish"
+  },
+  {
+    "rabbit": "bird"
+  },
+  {
+    "rabbit": "hamster"
+  },
+  {
+    "hamster": "dog"
+  },
+  {
+    "hamster": "cat"
+  },
+  {
+    "hamster": "ferret"
+  },
+  {
+    "hamster": "turtle"
+  },
+  {
+    "hamster": "fish"
+  },
+  {
+    "hamster": "bird"
+  },
+  {
+    "hamster": "rabbit"
+  },
+  {
+    "mountain": "hill"
+  },
+  {
+    "mountain": "canyon"
+  },
+  {
+    "mountain": "valley"
+  },
+  {
+    "hill": "mountain"
+  },
+  {
+    "hill": "canyon"
+  },
+  {
+    "hill": "valley"
+  },
+  {
+    "canyon": "mountain"
+  },
+  {
+    "canyon": "hill"
+  },
+  {
+    "canyon": "valley"
+  },
+  {
+    "valley": "mountain"
+  },
+  {
+    "valley": "hill"
+  },
+  {
+    "valley": "canyon"
+  },
+  {
+    "ocean": "pond"
+  },
+  {
+    "ocean": "lake"
+  },
+  {
+    "ocean": "river"
+  },
+  {
+    "pond": "ocean"
+  },
+  {
+    "pond": "lake"
+  },
+  {
+    "pond": "river"
+  },
+  {
+    "lake": "ocean"
+  },
+  {
+    "lake": "pond"
+  },
+  {
+    "lake": "river"
+  },
+  {
+    "river": "ocean"
+  },
+  {
+    "river": "pond"
+  },
+  {
+    "river": "lake"
+  },
+  {
+    "forest": "jungle"
+  },
+  {
+    "jungle": "forest"
+  },
+  {
+    "city": "town"
+  },
+  {
+    "city": "village"
+  },
+  {
+    "city": "suburb"
+  },
+  {
+    "town": "city"
+  },
+  {
+    "town": "village"
+  },
+  {
+    "town": "suburb"
+  },
+  {
+    "village": "city"
+  },
+  {
+    "village": "town"
+  },
+  {
+    "village": "suburb"
+  },
+  {
+    "suburb": "city"
+  },
+  {
+    "suburb": "town"
+  },
+  {
+    "suburb": "village"
+  },
+  {
+    "phone": "pda"
+  },
+  {
+    "pda": "phone"
+  },
+  {
+    "book": "tablet"
+  },
+  {
+    "tablet": "book"
+  },
+  {
+    "chair": "barstool"
+  },
+  {
+    "chair": "rocker"
+  },
+  {
+    "barstool": "chair"
+  },
+  {
+    "barstool": "rocker"
+  },
+  {
+    "rocker": "chair"
+  },
+  {
+    "rocker": "barstool"
+  },
+  {
+    "table": "desk"
+  },
+  {
+    "table": "counter"
+  },
+  {
+    "desk": "table"
+  },
+  {
+    "desk": "counter"
+  },
+  {
+    "counter": "table"
+  },
+  {
+    "counter": "desk"
+  },
+  {
+    "computer": "machine"
+  },
+  {
+    "computer": "phone"
+  },
+  {
+    "computer": "robot"
+  },
+  {
+    "machine": "computer"
+  },
+  {
+    "machine": "phone"
+  },
+  {
+    "machine": "robot"
+  },
+  {
+    "phone": "computer"
+  },
+  {
+    "phone": "machine"
+  },
+  {
+    "phone": "robot"
+  },
+  {
+    "robot": "computer"
+  },
+  {
+    "robot": "machine"
+  },
+  {
+    "robot": "phone"
+  },
+  {
+    "flower": "tree"
+  },
+  {
+    "tree": "flower"
+  },
+  {
+    "cup": "mug"
+  },
+  {
+    "cup": "glass"
+  },
+  {
+    "mug": "cup"
+  },
+  {
+    "mug": "glass"
+  },
+  {
+    "glass": "cup"
+  },
+  {
+    "glass": "mug"
+  },
+  {
+    "plate": "tray"
+  },
+  {
+    "plate": "bowl"
+  },
+  {
+    "tray": "plate"
+  },
+  {
+    "tray": "bowl"
+  },
+  {
+    "bowl": "plate"
+  },
+  {
+    "bowl": "tray"
+  },
+  {
+    "door": "portal"
+  },
+  {
+    "door": "gate"
+  },
+  {
+    "portal": "door"
+  },
+  {
+    "portal": "gate"
+  },
+  {
+    "gate": "door"
+  },
+  {
+    "gate": "portal"
+  },
+  {
+    "window": "skylight"
+  },
+  {
+    "skylight": "window"
+  },
+  {
+    "boot": "sneaker"
+  },
+  {
+    "boot": "loafer"
+  },
+  {
+    "boot": "slipper"
+  },
+  {
+    "sneaker": "boot"
+  },
+  {
+    "sneaker": "loafer"
+  },
+  {
+    "sneaker": "slipper"
+  },
+  {
+    "loafer": "boot"
+  },
+  {
+    "loafer": "sneaker"
+  },
+  {
+    "loafer": "slipper"
+  },
+  {
+    "slipper": "boot"
+  },
+  {
+    "slipper": "sneaker"
+  },
+  {
+    "slipper": "loafer"
+  },
+  {
+    "beret": "helmet"
+  },
+  {
+    "beret": "beanie"
+  },
+  {
+    "helmet": "beret"
+  },
+  {
+    "helmet": "beanie"
+  },
+  {
+    "beanie": "beret"
+  },
+  {
+    "beanie": "helmet"
+  },
+  {
+    "sack": "pouch"
+  },
+  {
+    "sack": "purse"
+  },
+  {
+    "sack": "satchel"
+  },
+  {
+    "sack": "bag"
+  },
+  {
+    "pouch": "sack"
+  },
+  {
+    "pouch": "purse"
+  },
+  {
+    "pouch": "satchel"
+  },
+  {
+    "pouch": "bag"
+  },
+  {
+    "purse": "sack"
+  },
+  {
+    "purse": "pouch"
+  },
+  {
+    "purse": "satchel"
+  },
+  {
+    "purse": "bag"
+  },
+  {
+    "satchel": "sack"
+  },
+  {
+    "satchel": "pouch"
+  },
+  {
+    "satchel": "purse"
+  },
+  {
+    "satchel": "bag"
+  },
+  {
+    "bag": "sack"
+  },
+  {
+    "bag": "pouch"
+  },
+  {
+    "bag": "purse"
+  },
+  {
+    "bag": "satchel"
+  },
+  {
+    "coin": "token"
+  },
+  {
+    "coin": "currency"
+  },
+  {
+    "coin": "change"
+  },
+  {
+    "coin": "bank"
+  },
+  {
+    "token": "coin"
+  },
+  {
+    "token": "currency"
+  },
+  {
+    "token": "change"
+  },
+  {
+    "token": "bank"
+  },
+  {
+    "currency": "coin"
+  },
+  {
+    "currency": "token"
+  },
+  {
+    "currency": "change"
+  },
+  {
+    "currency": "bank"
+  },
+  {
+    "change": "coin"
+  },
+  {
+    "change": "token"
+  },
+  {
+    "change": "currency"
+  },
+  {
+    "change": "bank"
+  },
+  {
+    "bank": "coin"
+  },
+  {
+    "bank": "token"
+  },
+  {
+    "bank": "currency"
+  },
+  {
+    "bank": "change"
+  },
+  {
+    "clock": "timer"
+  },
+  {
+    "clock": "watch"
+  },
+  {
+    "clock": "chronometer"
+  },
+  {
+    "timer": "clock"
+  },
+  {
+    "timer": "watch"
+  },
+  {
+    "timer": "chronometer"
+  },
+  {
+    "watch": "clock"
+  },
+  {
+    "watch": "timer"
+  },
+  {
+    "watch": "chronometer"
+  },
+  {
+    "chronometer": "clock"
+  },
+  {
+    "chronometer": "timer"
+  },
+  {
+    "chronometer": "watch"
+  },
+  {
+    "toy": "trinket"
+  },
+  {
+    "toy": "doll"
+  },
+  {
+    "toy": "figurine"
+  },
+  {
+    "trinket": "toy"
+  },
+  {
+    "trinket": "doll"
+  },
+  {
+    "trinket": "figurine"
+  },
+  {
+    "doll": "toy"
+  },
+  {
+    "doll": "trinket"
+  },
+  {
+    "doll": "figurine"
+  },
+  {
+    "figurine": "toy"
+  },
+  {
+    "figurine": "trinket"
+  },
+  {
+    "figurine": "doll"
+  },
+  {
+    "ship": "vessel"
+  },
+  {
+    "ship": "ark"
+  },
+  {
+    "ship": "plane"
+  },
+  {
+    "ship": "jet ski"
+  },
+  {
+    "vessel": "ship"
+  },
+  {
+    "vessel": "ark"
+  },
+  {
+    "vessel": "plane"
+  },
+  {
+    "vessel": "jet ski"
+  },
+  {
+    "ark": "ship"
+  },
+  {
+    "ark": "vessel"
+  },
+  {
+    "ark": "plane"
+  },
+  {
+    "ark": "jet ski"
+  },
+  {
+    "plane": "ship"
+  },
+  {
+    "plane": "vessel"
+  },
+  {
+    "plane": "ark"
+  },
+  {
+    "plane": "jet ski"
+  },
+  {
+    "jet ski": "ship"
+  },
+  {
+    "jet ski": "vessel"
+  },
+  {
+    "jet ski": "ark"
+  },
+  {
+    "jet ski": "plane"
+  },
+  {
+    "train": "trolley"
+  },
+  {
+    "train": "bullet train"
+  },
+  {
+    "trolley": "train"
+  },
+  {
+    "trolley": "bullet train"
+  },
+  {
+    "bullet train": "train"
+  },
+  {
+    "bullet train": "trolley"
+  },
+  {
+    "road": "highway"
+  },
+  {
+    "road": "trail"
+  },
+  {
+    "highway": "road"
+  },
+  {
+    "highway": "trail"
+  },
+  {
+    "trail": "road"
+  },
+  {
+    "trail": "highway"
+  },
+  {
+    "bridge": "overpass"
+  },
+  {
+    "overpass": "bridge"
+  },
+  {
+    "bagel": "roll"
+  },
+  {
+    "bagel": "doughnut"
+  },
+  {
+    "roll": "bagel"
+  },
+  {
+    "roll": "doughnut"
+  },
+  {
+    "doughnut": "bagel"
+  },
+  {
+    "doughnut": "roll"
+  },
+  {
+    "pizza": "pie"
+  },
+  {
+    "pizza": "flatbread"
+  },
+  {
+    "pie": "pizza"
+  },
+  {
+    "pie": "flatbread"
+  },
+  {
+    "flatbread": "pizza"
+  },
+  {
+    "flatbread": "pie"
+  },
+  {
+    "hamburger": "sandwich"
+  },
+  {
+    "hamburger": "slider"
+  },
+  {
+    "sandwich": "hamburger"
+  },
+  {
+    "sandwich": "slider"
+  },
+  {
+    "slider": "hamburger"
+  },
+  {
+    "slider": "sandwich"
+  },
+  {
+    "apple": "orange"
+  },
+  {
+    "apple": "pear"
+  },
+  {
+    "apple": "grapes"
+  },
+  {
+    "apple": "banana"
+  },
+  {
+    "apple": "melon"
+  },
+  {
+    "apple": "kiwi"
+  },
+  {
+    "orange": "apple"
+  },
+  {
+    "orange": "pear"
+  },
+  {
+    "orange": "grapes"
+  },
+  {
+    "orange": "banana"
+  },
+  {
+    "orange": "melon"
+  },
+  {
+    "orange": "kiwi"
+  },
+  {
+    "pear": "apple"
+  },
+  {
+    "pear": "orange"
+  },
+  {
+    "pear": "grapes"
+  },
+  {
+    "pear": "banana"
+  },
+  {
+    "pear": "melon"
+  },
+  {
+    "pear": "kiwi"
+  },
+  {
+    "grapes": "apple"
+  },
+  {
+    "grapes": "orange"
+  },
+  {
+    "grapes": "pear"
+  },
+  {
+    "grapes": "banana"
+  },
+  {
+    "grapes": "melon"
+  },
+  {
+    "grapes": "kiwi"
+  },
+  {
+    "banana": "apple"
+  },
+  {
+    "banana": "orange"
+  },
+  {
+    "banana": "pear"
+  },
+  {
+    "banana": "grapes"
+  },
+  {
+    "banana": "melon"
+  },
+  {
+    "banana": "kiwi"
+  },
+  {
+    "melon": "apple"
+  },
+  {
+    "melon": "orange"
+  },
+  {
+    "melon": "pear"
+  },
+  {
+    "melon": "grapes"
+  },
+  {
+    "melon": "banana"
+  },
+  {
+    "melon": "kiwi"
+  },
+  {
+    "kiwi": "apple"
+  },
+  {
+    "kiwi": "orange"
+  },
+  {
+    "kiwi": "pear"
+  },
+  {
+    "kiwi": "grapes"
+  },
+  {
+    "kiwi": "banana"
+  },
+  {
+    "kiwi": "melon"
+  },
+  {
+    "shirt": "jacket"
+  },
+  {
+    "shirt": "sweater"
+  },
+  {
+    "jacket": "shirt"
+  },
+  {
+    "jacket": "sweater"
+  },
+  {
+    "sweater": "shirt"
+  },
+  {
+    "sweater": "jacket"
+  },
+  {
+    "bottle": "flask"
+  },
+  {
+    "bottle": "jar"
+  },
+  {
+    "flask": "bottle"
+  },
+  {
+    "flask": "jar"
+  },
+  {
+    "jar": "bottle"
+  },
+  {
+    "jar": "flask"
+  },
+  {
+    "pen": "marker"
+  },
+  {
+    "pen": "highlighter"
+  },
+  {
+    "pen": "pencil"
+  },
+  {
+    "pen": "sharpie"
+  },
+  {
+    "marker": "pen"
+  },
+  {
+    "marker": "highlighter"
+  },
+  {
+    "marker": "pencil"
+  },
+  {
+    "marker": "sharpie"
+  },
+  {
+    "highlighter": "pen"
+  },
+  {
+    "highlighter": "marker"
+  },
+  {
+    "highlighter": "pencil"
+  },
+  {
+    "highlighter": "sharpie"
+  },
+  {
+    "pencil": "pen"
+  },
+  {
+    "pencil": "marker"
+  },
+  {
+    "pencil": "highlighter"
+  },
+  {
+    "pencil": "sharpie"
+  },
+  {
+    "sharpie": "pen"
+  },
+  {
+    "sharpie": "marker"
+  },
+  {
+    "sharpie": "highlighter"
+  },
+  {
+    "sharpie": "pencil"
+  },
+  {
+    "cousin": "uncle"
+  },
+  {
+    "cousin": "aunt"
+  },
+  {
+    "cousin": "nephew"
+  },
+  {
+    "cousin": "neice"
+  },
+  {
+    "cousin": "grandmother"
+  },
+  {
+    "cousin": "father"
+  },
+  {
+    "cousin": "sister"
+  },
+  {
+    "cousin": "brother"
+  },
+  {
+    "cousin": "mother"
+  },
+  {
+    "uncle": "cousin"
+  },
+  {
+    "uncle": "aunt"
+  },
+  {
+    "uncle": "nephew"
+  },
+  {
+    "uncle": "neice"
+  },
+  {
+    "uncle": "grandmother"
+  },
+  {
+    "uncle": "father"
+  },
+  {
+    "uncle": "sister"
+  },
+  {
+    "uncle": "brother"
+  },
+  {
+    "uncle": "mother"
+  },
+  {
+    "aunt": "cousin"
+  },
+  {
+    "aunt": "uncle"
+  },
+  {
+    "aunt": "nephew"
+  },
+  {
+    "aunt": "neice"
+  },
+  {
+    "aunt": "grandmother"
+  },
+  {
+    "aunt": "father"
+  },
+  {
+    "aunt": "sister"
+  },
+  {
+    "aunt": "brother"
+  },
+  {
+    "aunt": "mother"
+  },
+  {
+    "nephew": "cousin"
+  },
+  {
+    "nephew": "uncle"
+  },
+  {
+    "nephew": "aunt"
+  },
+  {
+    "nephew": "neice"
+  },
+  {
+    "nephew": "grandmother"
+  },
+  {
+    "nephew": "father"
+  },
+  {
+    "nephew": "sister"
+  },
+  {
+    "nephew": "brother"
+  },
+  {
+    "nephew": "mother"
+  },
+  {
+    "neice": "cousin"
+  },
+  {
+    "neice": "uncle"
+  },
+  {
+    "neice": "aunt"
+  },
+  {
+    "neice": "nephew"
+  },
+  {
+    "neice": "grandmother"
+  },
+  {
+    "neice": "father"
+  },
+  {
+    "neice": "sister"
+  },
+  {
+    "neice": "brother"
+  },
+  {
+    "neice": "mother"
+  },
+  {
+    "grandmother": "cousin"
+  },
+  {
+    "grandmother": "uncle"
+  },
+  {
+    "grandmother": "aunt"
+  },
+  {
+    "grandmother": "nephew"
+  },
+  {
+    "grandmother": "neice"
+  },
+  {
+    "grandmother": "father"
+  },
+  {
+    "grandmother": "sister"
+  },
+  {
+    "grandmother": "brother"
+  },
+  {
+    "grandmother": "mother"
+  },
+  {
+    "father": "cousin"
+  },
+  {
+    "father": "uncle"
+  },
+  {
+    "father": "aunt"
+  },
+  {
+    "father": "nephew"
+  },
+  {
+    "father": "neice"
+  },
+  {
+    "father": "grandmother"
+  },
+  {
+    "father": "sister"
+  },
+  {
+    "father": "brother"
+  },
+  {
+    "father": "mother"
+  },
+  {
+    "sister": "cousin"
+  },
+  {
+    "sister": "uncle"
+  },
+  {
+    "sister": "aunt"
+  },
+  {
+    "sister": "nephew"
+  },
+  {
+    "sister": "neice"
+  },
+  {
+    "sister": "grandmother"
+  },
+  {
+    "sister": "father"
+  },
+  {
+    "sister": "brother"
+  },
+  {
+    "sister": "mother"
+  },
+  {
+    "brother": "cousin"
+  },
+  {
+    "brother": "uncle"
+  },
+  {
+    "brother": "aunt"
+  },
+  {
+    "brother": "nephew"
+  },
+  {
+    "brother": "neice"
+  },
+  {
+    "brother": "grandmother"
+  },
+  {
+    "brother": "father"
+  },
+  {
+    "brother": "sister"
+  },
+  {
+    "brother": "mother"
+  },
+  {
+    "mother": "cousin"
+  },
+  {
+    "mother": "uncle"
+  },
+  {
+    "mother": "aunt"
+  },
+  {
+    "mother": "nephew"
+  },
+  {
+    "mother": "neice"
+  },
+  {
+    "mother": "grandmother"
+  },
+  {
+    "mother": "father"
+  },
+  {
+    "mother": "sister"
+  },
+  {
+    "mother": "brother"
+  },
+  {
+    "basket": "crate"
+  },
+  {
+    "crate": "basket"
+  },
+  {
+    "towel": "cloth"
+  },
+  {
+    "towel": "rag"
+  },
+  {
+    "cloth": "towel"
+  },
+  {
+    "cloth": "rag"
+  },
+  {
+    "rag": "towel"
+  },
+  {
+    "rag": "cloth"
+  },
+  {
+    "thread": "string"
+  },
+  {
+    "thread": "yarn"
+  },
+  {
+    "thread": "rope"
+  },
+  {
+    "thread": "cord"
+  },
+  {
+    "thread": "chain"
+  },
+  {
+    "string": "thread"
+  },
+  {
+    "string": "yarn"
+  },
+  {
+    "string": "rope"
+  },
+  {
+    "string": "cord"
+  },
+  {
+    "string": "chain"
+  },
+  {
+    "yarn": "thread"
+  },
+  {
+    "yarn": "string"
+  },
+  {
+    "yarn": "rope"
+  },
+  {
+    "yarn": "cord"
+  },
+  {
+    "yarn": "chain"
+  },
+  {
+    "rope": "thread"
+  },
+  {
+    "rope": "string"
+  },
+  {
+    "rope": "yarn"
+  },
+  {
+    "rope": "cord"
+  },
+  {
+    "rope": "chain"
+  },
+  {
+    "cord": "thread"
+  },
+  {
+    "cord": "string"
+  },
+  {
+    "cord": "yarn"
+  },
+  {
+    "cord": "rope"
+  },
+  {
+    "cord": "chain"
+  },
+  {
+    "chain": "thread"
+  },
+  {
+    "chain": "string"
+  },
+  {
+    "chain": "yarn"
+  },
+  {
+    "chain": "rope"
+  },
+  {
+    "chain": "cord"
+  },
+  {
+    "milk": "cream"
+  },
+  {
+    "milk": "cheese"
+  },
+  {
+    "milk": "butter"
+  },
+  {
+    "cream": "milk"
+  },
+  {
+    "cream": "cheese"
+  },
+  {
+    "cream": "butter"
+  },
+  {
+    "cheese": "milk"
+  },
+  {
+    "cheese": "cream"
+  },
+  {
+    "cheese": "butter"
+  },
+  {
+    "butter": "milk"
+  },
+  {
+    "butter": "cream"
+  },
+  {
+    "butter": "cheese"
+  },
+  {
+    "cake": "ice cream"
+  },
+  {
+    "cake": "crepe"
+  },
+  {
+    "cake": "doughnut"
+  },
+  {
+    "cake": "pie"
+  },
+  {
+    "cake": "cookie"
+  },
+  {
+    "cake": "wafer"
+  },
+  {
+    "cake": "muffin"
+  },
+  {
+    "ice cream": "cake"
+  },
+  {
+    "ice cream": "crepe"
+  },
+  {
+    "ice cream": "doughnut"
+  },
+  {
+    "ice cream": "pie"
+  },
+  {
+    "ice cream": "cookie"
+  },
+  {
+    "ice cream": "wafer"
+  },
+  {
+    "ice cream": "muffin"
+  },
+  {
+    "crepe": "cake"
+  },
+  {
+    "crepe": "ice cream"
+  },
+  {
+    "crepe": "doughnut"
+  },
+  {
+    "crepe": "pie"
+  },
+  {
+    "crepe": "cookie"
+  },
+  {
+    "crepe": "wafer"
+  },
+  {
+    "crepe": "muffin"
+  },
+  {
+    "doughnut": "cake"
+  },
+  {
+    "doughnut": "ice cream"
+  },
+  {
+    "doughnut": "crepe"
+  },
+  {
+    "doughnut": "pie"
+  },
+  {
+    "doughnut": "cookie"
+  },
+  {
+    "doughnut": "wafer"
+  },
+  {
+    "doughnut": "muffin"
+  },
+  {
+    "pie": "cake"
+  },
+  {
+    "pie": "ice cream"
+  },
+  {
+    "pie": "crepe"
+  },
+  {
+    "pie": "doughnut"
+  },
+  {
+    "pie": "cookie"
+  },
+  {
+    "pie": "wafer"
+  },
+  {
+    "pie": "muffin"
+  },
+  {
+    "cookie": "cake"
+  },
+  {
+    "cookie": "ice cream"
+  },
+  {
+    "cookie": "crepe"
+  },
+  {
+    "cookie": "doughnut"
+  },
+  {
+    "cookie": "pie"
+  },
+  {
+    "cookie": "wafer"
+  },
+  {
+    "cookie": "muffin"
+  },
+  {
+    "wafer": "cake"
+  },
+  {
+    "wafer": "ice cream"
+  },
+  {
+    "wafer": "crepe"
+  },
+  {
+    "wafer": "doughnut"
+  },
+  {
+    "wafer": "pie"
+  },
+  {
+    "wafer": "cookie"
+  },
+  {
+    "wafer": "muffin"
+  },
+  {
+    "muffin": "cake"
+  },
+  {
+    "muffin": "ice cream"
+  },
+  {
+    "muffin": "crepe"
+  },
+  {
+    "muffin": "doughnut"
+  },
+  {
+    "muffin": "pie"
+  },
+  {
+    "muffin": "cookie"
+  },
+  {
+    "muffin": "wafer"
+  },
+  {
+    "beer": "vodka"
+  },
+  {
+    "beer": "tequila"
+  },
+  {
+    "beer": "soda"
+  },
+  {
+    "beer": "wine"
+  },
+  {
+    "beer": "sparkling water"
+  },
+  {
+    "beer": "water"
+  },
+  {
+    "beer": "juice"
+  },
+  {
+    "vodka": "beer"
+  },
+  {
+    "vodka": "tequila"
+  },
+  {
+    "vodka": "soda"
+  },
+  {
+    "vodka": "wine"
+  },
+  {
+    "vodka": "sparkling water"
+  },
+  {
+    "vodka": "water"
+  },
+  {
+    "vodka": "juice"
+  },
+  {
+    "tequila": "beer"
+  },
+  {
+    "tequila": "vodka"
+  },
+  {
+    "tequila": "soda"
+  },
+  {
+    "tequila": "wine"
+  },
+  {
+    "tequila": "sparkling water"
+  },
+  {
+    "tequila": "water"
+  },
+  {
+    "tequila": "juice"
+  },
+  {
+    "soda": "beer"
+  },
+  {
+    "soda": "vodka"
+  },
+  {
+    "soda": "tequila"
+  },
+  {
+    "soda": "wine"
+  },
+  {
+    "soda": "sparkling water"
+  },
+  {
+    "soda": "water"
+  },
+  {
+    "soda": "juice"
+  },
+  {
+    "wine": "beer"
+  },
+  {
+    "wine": "vodka"
+  },
+  {
+    "wine": "tequila"
+  },
+  {
+    "wine": "soda"
+  },
+  {
+    "wine": "sparkling water"
+  },
+  {
+    "wine": "water"
+  },
+  {
+    "wine": "juice"
+  },
+  {
+    "sparkling water": "beer"
+  },
+  {
+    "sparkling water": "vodka"
+  },
+  {
+    "sparkling water": "tequila"
+  },
+  {
+    "sparkling water": "soda"
+  },
+  {
+    "sparkling water": "wine"
+  },
+  {
+    "sparkling water": "water"
+  },
+  {
+    "sparkling water": "juice"
+  },
+  {
+    "water": "beer"
+  },
+  {
+    "water": "vodka"
+  },
+  {
+    "water": "tequila"
+  },
+  {
+    "water": "soda"
+  },
+  {
+    "water": "wine"
+  },
+  {
+    "water": "sparkling water"
+  },
+  {
+    "water": "juice"
+  },
+  {
+    "juice": "beer"
+  },
+  {
+    "juice": "vodka"
+  },
+  {
+    "juice": "tequila"
+  },
+  {
+    "juice": "soda"
+  },
+  {
+    "juice": "wine"
+  },
+  {
+    "juice": "sparkling water"
+  },
+  {
+    "juice": "water"
+  },
+  {
+    "salt": "pepper"
+  },
+  {
+    "salt": "onion"
+  },
+  {
+    "salt": "garlic"
+  },
+  {
+    "salt": "olive oil"
+  },
+  {
+    "salt": "chili"
+  },
+  {
+    "salt": "honey"
+  },
+  {
+    "pepper": "salt"
+  },
+  {
+    "pepper": "onion"
+  },
+  {
+    "pepper": "garlic"
+  },
+  {
+    "pepper": "olive oil"
+  },
+  {
+    "pepper": "chili"
+  },
+  {
+    "pepper": "honey"
+  },
+  {
+    "onion": "salt"
+  },
+  {
+    "onion": "pepper"
+  },
+  {
+    "onion": "garlic"
+  },
+  {
+    "onion": "olive oil"
+  },
+  {
+    "onion": "chili"
+  },
+  {
+    "onion": "honey"
+  },
+  {
+    "garlic": "salt"
+  },
+  {
+    "garlic": "pepper"
+  },
+  {
+    "garlic": "onion"
+  },
+  {
+    "garlic": "olive oil"
+  },
+  {
+    "garlic": "chili"
+  },
+  {
+    "garlic": "honey"
+  },
+  {
+    "olive oil": "salt"
+  },
+  {
+    "olive oil": "pepper"
+  },
+  {
+    "olive oil": "onion"
+  },
+  {
+    "olive oil": "garlic"
+  },
+  {
+    "olive oil": "chili"
+  },
+  {
+    "olive oil": "honey"
+  },
+  {
+    "chili": "salt"
+  },
+  {
+    "chili": "pepper"
+  },
+  {
+    "chili": "onion"
+  },
+  {
+    "chili": "garlic"
+  },
+  {
+    "chili": "olive oil"
+  },
+  {
+    "chili": "honey"
+  },
+  {
+    "honey": "salt"
+  },
+  {
+    "honey": "pepper"
+  },
+  {
+    "honey": "onion"
+  },
+  {
+    "honey": "garlic"
+  },
+  {
+    "honey": "olive oil"
+  },
+  {
+    "honey": "chili"
+  },
+  {
+    "knife": "fork"
+  },
+  {
+    "knife": "spoon"
+  },
+  {
+    "fork": "knife"
+  },
+  {
+    "fork": "spoon"
+  },
+  {
+    "spoon": "knife"
+  },
+  {
+    "spoon": "fork"
+  },
+  {
+    "spider": "ant"
+  },
+  {
+    "spider": "fly"
+  },
+  {
+    "spider": "beetle"
+  },
+  {
+    "ant": "spider"
+  },
+  {
+    "ant": "fly"
+  },
+  {
+    "ant": "beetle"
+  },
+  {
+    "fly": "spider"
+  },
+  {
+    "fly": "ant"
+  },
+  {
+    "fly": "beetle"
+  },
+  {
+    "beetle": "spider"
+  },
+  {
+    "beetle": "ant"
+  },
+  {
+    "beetle": "fly"
+  },
+  {
+    "branch": "leaf"
+  },
+  {
+    "branch": "trunk"
+  },
+  {
+    "branch": "twig"
+  },
+  {
+    "branch": "root"
+  },
+  {
+    "leaf": "branch"
+  },
+  {
+    "leaf": "trunk"
+  },
+  {
+    "leaf": "twig"
+  },
+  {
+    "leaf": "root"
+  },
+  {
+    "trunk": "branch"
+  },
+  {
+    "trunk": "leaf"
+  },
+  {
+    "trunk": "twig"
+  },
+  {
+    "trunk": "root"
+  },
+  {
+    "twig": "branch"
+  },
+  {
+    "twig": "leaf"
+  },
+  {
+    "twig": "trunk"
+  },
+  {
+    "twig": "root"
+  },
+  {
+    "root": "branch"
+  },
+  {
+    "root": "leaf"
+  },
+  {
+    "root": "trunk"
+  },
+  {
+    "root": "twig"
+  },
+  {
+    "heart": "lung"
+  },
+  {
+    "heart": "bone"
+  },
+  {
+    "heart": "brain"
+  },
+  {
+    "heart": "rib"
+  },
+  {
+    "lung": "heart"
+  },
+  {
+    "lung": "bone"
+  },
+  {
+    "lung": "brain"
+  },
+  {
+    "lung": "rib"
+  },
+  {
+    "bone": "heart"
+  },
+  {
+    "bone": "lung"
+  },
+  {
+    "bone": "brain"
+  },
+  {
+    "bone": "rib"
+  },
+  {
+    "brain": "heart"
+  },
+  {
+    "brain": "lung"
+  },
+  {
+    "brain": "bone"
+  },
+  {
+    "brain": "rib"
+  },
+  {
+    "rib": "heart"
+  },
+  {
+    "rib": "lung"
+  },
+  {
+    "rib": "bone"
+  },
+  {
+    "rib": "brain"
+  },
+  {
+    "chairman": "president"
+  },
+  {
+    "chairman": "director"
+  },
+  {
+    "chairman": "chief"
+  },
+  {
+    "president": "chairman"
+  },
+  {
+    "president": "director"
+  },
+  {
+    "president": "chief"
+  },
+  {
+    "director": "chairman"
+  },
+  {
+    "director": "president"
+  },
+  {
+    "director": "chief"
+  },
+  {
+    "chief": "chairman"
+  },
+  {
+    "chief": "president"
+  },
+  {
+    "chief": "director"
+  },
+  {
+    "doctor": "hospital"
+  },
+  {
+    "doctor": "university"
+  },
+  {
+    "doctor": "nurse"
+  },
+  {
+    "hospital": "doctor"
+  },
+  {
+    "hospital": "university"
+  },
+  {
+    "hospital": "nurse"
+  },
+  {
+    "university": "doctor"
+  },
+  {
+    "university": "hospital"
+  },
+  {
+    "university": "nurse"
+  },
+  {
+    "nurse": "doctor"
+  },
+  {
+    "nurse": "hospital"
+  },
+  {
+    "nurse": "university"
+  },
+  {
+    "university": "academy"
+  },
+  {
+    "university": "campus"
+  },
+  {
+    "academy": "university"
+  },
+  {
+    "academy": "campus"
+  },
+  {
+    "campus": "university"
+  },
+  {
+    "campus": "academy"
+  },
+  {
+    "teacher": "instructor"
+  },
+  {
+    "teacher": "mentor"
+  },
+  {
+    "teacher": "trainer"
+  },
+  {
+    "teacher": "student"
+  },
+  {
+    "instructor": "teacher"
+  },
+  {
+    "instructor": "mentor"
+  },
+  {
+    "instructor": "trainer"
+  },
+  {
+    "instructor": "student"
+  },
+  {
+    "mentor": "teacher"
+  },
+  {
+    "mentor": "instructor"
+  },
+  {
+    "mentor": "trainer"
+  },
+  {
+    "mentor": "student"
+  },
+  {
+    "trainer": "teacher"
+  },
+  {
+    "trainer": "instructor"
+  },
+  {
+    "trainer": "mentor"
+  },
+  {
+    "trainer": "student"
+  },
+  {
+    "student": "teacher"
+  },
+  {
+    "student": "instructor"
+  },
+  {
+    "student": "mentor"
+  },
+  {
+    "student": "trainer"
+  },
+  {
+    "notebook": "journal"
+  },
+  {
+    "notebook": "logbook"
+  },
+  {
+    "notebook": "diary"
+  },
+  {
+    "journal": "notebook"
+  },
+  {
+    "journal": "logbook"
+  },
+  {
+    "journal": "diary"
+  },
+  {
+    "logbook": "notebook"
+  },
+  {
+    "logbook": "journal"
+  },
+  {
+    "logbook": "diary"
+  },
+  {
+    "diary": "notebook"
+  },
+  {
+    "diary": "journal"
+  },
+  {
+    "diary": "logbook"
+  },
+  {
+    "music": "movie"
+  },
+  {
+    "music": "photograph"
+  },
+  {
+    "music": "painting"
+  },
+  {
+    "music": "poem"
+  },
+  {
+    "movie": "music"
+  },
+  {
+    "movie": "photograph"
+  },
+  {
+    "movie": "painting"
+  },
+  {
+    "movie": "poem"
+  },
+  {
+    "photograph": "music"
+  },
+  {
+    "photograph": "movie"
+  },
+  {
+    "photograph": "painting"
+  },
+  {
+    "photograph": "poem"
+  },
+  {
+    "painting": "music"
+  },
+  {
+    "painting": "movie"
+  },
+  {
+    "painting": "photograph"
+  },
+  {
+    "painting": "poem"
+  },
+  {
+    "poem": "music"
+  },
+  {
+    "poem": "movie"
+  },
+  {
+    "poem": "photograph"
+  },
+  {
+    "poem": "painting"
+  },
+  {
+    "dream": "vision"
+  },
+  {
+    "dream": "illusion"
+  },
+  {
+    "dream": "idea"
+  },
+  {
+    "dream": "fantasy"
+  },
+  {
+    "vision": "dream"
+  },
+  {
+    "vision": "illusion"
+  },
+  {
+    "vision": "idea"
+  },
+  {
+    "vision": "fantasy"
+  },
+  {
+    "illusion": "dream"
+  },
+  {
+    "illusion": "vision"
+  },
+  {
+    "illusion": "idea"
+  },
+  {
+    "illusion": "fantasy"
+  },
+  {
+    "idea": "dream"
+  },
+  {
+    "idea": "vision"
+  },
+  {
+    "idea": "illusion"
+  },
+  {
+    "idea": "fantasy"
+  },
+  {
+    "fantasy": "dream"
+  },
+  {
+    "fantasy": "vision"
+  },
+  {
+    "fantasy": "illusion"
+  },
+  {
+    "fantasy": "idea"
+  },
+  {
+    "map": "chart"
+  },
+  {
+    "map": "diagram"
+  },
+  {
+    "chart": "map"
+  },
+  {
+    "chart": "diagram"
+  },
+  {
+    "diagram": "map"
+  },
+  {
+    "diagram": "chart"
+  },
+  {
+    "code": "script"
+  },
+  {
+    "code": "program"
+  },
+  {
+    "script": "code"
+  },
+  {
+    "script": "program"
+  },
+  {
+    "program": "code"
+  },
+  {
+    "program": "script"
+  },
+  {
+    "gift": "donation"
+  },
+  {
+    "gift": "offering"
+  },
+  {
+    "donation": "gift"
+  },
+  {
+    "donation": "offering"
+  },
+  {
+    "offering": "gift"
+  },
+  {
+    "offering": "donation"
+  },
+  {
+    "word": "image"
+  },
+  {
+    "image": "word"
+  },
+  {
+    "light": "lamp"
+  },
+  {
+    "light": "gleam"
+  },
+  {
+    "light": "illumination"
+  },
+  {
+    "light": "beam"
+  },
+  {
+    "lamp": "light"
+  },
+  {
+    "lamp": "gleam"
+  },
+  {
+    "lamp": "illumination"
+  },
+  {
+    "lamp": "beam"
+  },
+  {
+    "gleam": "light"
+  },
+  {
+    "gleam": "lamp"
+  },
+  {
+    "gleam": "illumination"
+  },
+  {
+    "gleam": "beam"
+  },
+  {
+    "illumination": "light"
+  },
+  {
+    "illumination": "lamp"
+  },
+  {
+    "illumination": "gleam"
+  },
+  {
+    "illumination": "beam"
+  },
+  {
+    "beam": "light"
+  },
+  {
+    "beam": "lamp"
+  },
+  {
+    "beam": "gleam"
+  },
+  {
+    "beam": "illumination"
+  },
+  {
+    "ring": "band"
+  },
+  {
+    "ring": "bracelet"
+  },
+  {
+    "ring": "necklace"
+  },
+  {
+    "ring": "earring"
+  },
+  {
+    "ring": "watch"
+  },
+  {
+    "band": "ring"
+  },
+  {
+    "band": "bracelet"
+  },
+  {
+    "band": "necklace"
+  },
+  {
+    "band": "earring"
+  },
+  {
+    "band": "watch"
+  },
+  {
+    "bracelet": "ring"
+  },
+  {
+    "bracelet": "band"
+  },
+  {
+    "bracelet": "necklace"
+  },
+  {
+    "bracelet": "earring"
+  },
+  {
+    "bracelet": "watch"
+  },
+  {
+    "necklace": "ring"
+  },
+  {
+    "necklace": "band"
+  },
+  {
+    "necklace": "bracelet"
+  },
+  {
+    "necklace": "earring"
+  },
+  {
+    "necklace": "watch"
+  },
+  {
+    "earring": "ring"
+  },
+  {
+    "earring": "band"
+  },
+  {
+    "earring": "bracelet"
+  },
+  {
+    "earring": "necklace"
+  },
+  {
+    "earring": "watch"
+  },
+  {
+    "watch": "ring"
+  },
+  {
+    "watch": "band"
+  },
+  {
+    "watch": "bracelet"
+  },
+  {
+    "watch": "necklace"
+  },
+  {
+    "watch": "earring"
+  },
+  {
+    "star": "sun"
+  },
+  {
+    "star": "asterisk"
+  },
+  {
+    "sun": "star"
+  },
+  {
+    "sun": "asterisk"
+  },
+  {
+    "asterisk": "star"
+  },
+  {
+    "asterisk": "sun"
+  },
+  {
+    "planet": "sun"
+  },
+  {
+    "planet": "moon"
+  },
+  {
+    "planet": "comet"
+  },
+  {
+    "planet": "asteroid"
+  },
+  {
+    "sun": "planet"
+  },
+  {
+    "sun": "moon"
+  },
+  {
+    "sun": "comet"
+  },
+  {
+    "sun": "asteroid"
+  },
+  {
+    "moon": "planet"
+  },
+  {
+    "moon": "sun"
+  },
+  {
+    "moon": "comet"
+  },
+  {
+    "moon": "asteroid"
+  },
+  {
+    "comet": "planet"
+  },
+  {
+    "comet": "sun"
+  },
+  {
+    "comet": "moon"
+  },
+  {
+    "comet": "asteroid"
+  },
+  {
+    "asteroid": "planet"
+  },
+  {
+    "asteroid": "sun"
+  },
+  {
+    "asteroid": "moon"
+  },
+  {
+    "asteroid": "comet"
+  },
+  {
+    "rock": "metal"
+  },
+  {
+    "metal": "rock"
+  },
+  {
+    "gold": "silver"
+  },
+  {
+    "gold": "diamond"
+  },
+  {
+    "gold": "bronze"
+  },
+  {
+    "gold": "platinum"
+  },
+  {
+    "gold": "pearl"
+  },
+  {
+    "silver": "gold"
+  },
+  {
+    "silver": "diamond"
+  },
+  {
+    "silver": "bronze"
+  },
+  {
+    "silver": "platinum"
+  },
+  {
+    "silver": "pearl"
+  },
+  {
+    "diamond": "gold"
+  },
+  {
+    "diamond": "silver"
+  },
+  {
+    "diamond": "bronze"
+  },
+  {
+    "diamond": "platinum"
+  },
+  {
+    "diamond": "pearl"
+  },
+  {
+    "bronze": "gold"
+  },
+  {
+    "bronze": "silver"
+  },
+  {
+    "bronze": "diamond"
+  },
+  {
+    "bronze": "platinum"
+  },
+  {
+    "bronze": "pearl"
+  },
+  {
+    "platinum": "gold"
+  },
+  {
+    "platinum": "silver"
+  },
+  {
+    "platinum": "diamond"
+  },
+  {
+    "platinum": "bronze"
+  },
+  {
+    "platinum": "pearl"
+  },
+  {
+    "pearl": "gold"
+  },
+  {
+    "pearl": "silver"
+  },
+  {
+    "pearl": "diamond"
+  },
+  {
+    "pearl": "bronze"
+  },
+  {
+    "pearl": "platinum"
+  },
+  {
+    "tea": "coffee"
+  },
+  {
+    "tea": "milk"
+  },
+  {
+    "tea": "juice"
+  },
+  {
+    "tea": "water"
+  },
+  {
+    "coffee": "tea"
+  },
+  {
+    "coffee": "milk"
+  },
+  {
+    "coffee": "juice"
+  },
+  {
+    "coffee": "water"
+  },
+  {
+    "milk": "tea"
+  },
+  {
+    "milk": "coffee"
+  },
+  {
+    "milk": "juice"
+  },
+  {
+    "milk": "water"
+  },
+  {
+    "juice": "tea"
+  },
+  {
+    "juice": "coffee"
+  },
+  {
+    "juice": "milk"
+  },
+  {
+    "juice": "water"
+  },
+  {
+    "water": "tea"
+  },
+  {
+    "water": "coffee"
+  },
+  {
+    "water": "milk"
+  },
+  {
+    "water": "juice"
+  },
+  {
+    "chicken": "beef"
+  },
+  {
+    "chicken": "pork"
+  },
+  {
+    "chicken": "lamb"
+  },
+  {
+    "chicken": "fish"
+  },
+  {
+    "beef": "chicken"
+  },
+  {
+    "beef": "pork"
+  },
+  {
+    "beef": "lamb"
+  },
+  {
+    "beef": "fish"
+  },
+  {
+    "pork": "chicken"
+  },
+  {
+    "pork": "beef"
+  },
+  {
+    "pork": "lamb"
+  },
+  {
+    "pork": "fish"
+  },
+  {
+    "lamb": "chicken"
+  },
+  {
+    "lamb": "beef"
+  },
+  {
+    "lamb": "pork"
+  },
+  {
+    "lamb": "fish"
+  },
+  {
+    "fish": "chicken"
+  },
+  {
+    "fish": "beef"
+  },
+  {
+    "fish": "pork"
+  },
+  {
+    "fish": "lamb"
+  },
+  {
+    "market": "fair"
+  },
+  {
+    "market": "exchange"
+  },
+  {
+    "market": "shop"
+  },
+  {
+    "market": "market"
+  },
+  {
+    "market": "boutique"
+  },
+  {
+    "market": "mall"
+  },
+  {
+    "fair": "market"
+  },
+  {
+    "fair": "exchange"
+  },
+  {
+    "fair": "shop"
+  },
+  {
+    "fair": "market"
+  },
+  {
+    "fair": "boutique"
+  },
+  {
+    "fair": "mall"
+  },
+  {
+    "exchange": "market"
+  },
+  {
+    "exchange": "fair"
+  },
+  {
+    "exchange": "shop"
+  },
+  {
+    "exchange": "market"
+  },
+  {
+    "exchange": "boutique"
+  },
+  {
+    "exchange": "mall"
+  },
+  {
+    "shop": "market"
+  },
+  {
+    "shop": "fair"
+  },
+  {
+    "shop": "exchange"
+  },
+  {
+    "shop": "market"
+  },
+  {
+    "shop": "boutique"
+  },
+  {
+    "shop": "mall"
+  },
+  {
+    "market": "market"
+  },
+  {
+    "market": "fair"
+  },
+  {
+    "market": "exchange"
+  },
+  {
+    "market": "shop"
+  },
+  {
+    "market": "boutique"
+  },
+  {
+    "market": "mall"
+  },
+  {
+    "boutique": "market"
+  },
+  {
+    "boutique": "fair"
+  },
+  {
+    "boutique": "exchange"
+  },
+  {
+    "boutique": "shop"
+  },
+  {
+    "boutique": "market"
+  },
+  {
+    "boutique": "mall"
+  },
+  {
+    "mall": "market"
+  },
+  {
+    "mall": "fair"
+  },
+  {
+    "mall": "exchange"
+  },
+  {
+    "mall": "shop"
+  },
+  {
+    "mall": "market"
+  },
+  {
+    "mall": "boutique"
+  },
+  {
+    "country": "nation"
+  },
+  {
+    "country": "state"
+  },
+  {
+    "country": "land"
+  },
+  {
+    "country": "realm"
+  },
+  {
+    "nation": "country"
+  },
+  {
+    "nation": "state"
+  },
+  {
+    "nation": "land"
+  },
+  {
+    "nation": "realm"
+  },
+  {
+    "state": "country"
+  },
+  {
+    "state": "nation"
+  },
+  {
+    "state": "land"
+  },
+  {
+    "state": "realm"
+  },
+  {
+    "land": "country"
+  },
+  {
+    "land": "nation"
+  },
+  {
+    "land": "state"
+  },
+  {
+    "land": "realm"
+  },
+  {
+    "realm": "country"
+  },
+  {
+    "realm": "nation"
+  },
+  {
+    "realm": "state"
+  },
+  {
+    "realm": "land"
+  },
+  {
+    "guitar": "piano"
+  },
+  {
+    "guitar": "drum"
+  },
+  {
+    "guitar": "violin"
+  },
+  {
+    "guitar": "cello"
+  },
+  {
+    "guitar": "trumpet"
+  },
+  {
+    "piano": "guitar"
+  },
+  {
+    "piano": "drum"
+  },
+  {
+    "piano": "violin"
+  },
+  {
+    "piano": "cello"
+  },
+  {
+    "piano": "trumpet"
+  },
+  {
+    "drum": "guitar"
+  },
+  {
+    "drum": "piano"
+  },
+  {
+    "drum": "violin"
+  },
+  {
+    "drum": "cello"
+  },
+  {
+    "drum": "trumpet"
+  },
+  {
+    "violin": "guitar"
+  },
+  {
+    "violin": "piano"
+  },
+  {
+    "violin": "drum"
+  },
+  {
+    "violin": "cello"
+  },
+  {
+    "violin": "trumpet"
+  },
+  {
+    "cello": "guitar"
+  },
+  {
+    "cello": "piano"
+  },
+  {
+    "cello": "drum"
+  },
+  {
+    "cello": "violin"
+  },
+  {
+    "cello": "trumpet"
+  },
+  {
+    "trumpet": "guitar"
+  },
+  {
+    "trumpet": "piano"
+  },
+  {
+    "trumpet": "drum"
+  },
+  {
+    "trumpet": "violin"
+  },
+  {
+    "trumpet": "cello"
+  },
+  {
+    "virus": "bug"
+  },
+  {
+    "bug": "virus"
+  },
+  {
+    "protein": "carbohydrate"
+  },
+  {
+    "protein": "fat"
+  },
+  {
+    "protein": "vitamin"
+  },
+  {
+    "protein": "oil"
+  },
+  {
+    "carbohydrate": "protein"
+  },
+  {
+    "carbohydrate": "fat"
+  },
+  {
+    "carbohydrate": "vitamin"
+  },
+  {
+    "carbohydrate": "oil"
+  },
+  {
+    "fat": "protein"
+  },
+  {
+    "fat": "carbohydrate"
+  },
+  {
+    "fat": "vitamin"
+  },
+  {
+    "fat": "oil"
+  },
+  {
+    "vitamin": "protein"
+  },
+  {
+    "vitamin": "carbohydrate"
+  },
+  {
+    "vitamin": "fat"
+  },
+  {
+    "vitamin": "oil"
+  },
+  {
+    "oil": "protein"
+  },
+  {
+    "oil": "carbohydrate"
+  },
+  {
+    "oil": "fat"
+  },
+  {
+    "oil": "vitamin"
+  },
+  {
+    "curtain": "curtain"
+  },
+  {
+    "curtain": "shade"
+  },
+  {
+    "curtain": "curtain"
+  },
+  {
+    "curtain": "shade"
+  },
+  {
+    "shade": "curtain"
+  },
+  {
+    "shade": "curtain"
+  },
+  {
+    "paper": "cardboard"
+  },
+  {
+    "paper": "plastic"
+  },
+  {
+    "cardboard": "paper"
+  },
+  {
+    "cardboard": "plastic"
+  },
+  {
+    "plastic": "paper"
+  },
+  {
+    "plastic": "cardboard"
+  },
+  {
+    "envelope": "paper"
+  },
+  {
+    "envelope": "letter"
+  },
+  {
+    "paper": "envelope"
+  },
+  {
+    "paper": "letter"
+  },
+  {
+    "letter": "envelope"
+  },
+  {
+    "letter": "paper"
+  },
+  {
+    "soap": "detergent"
+  },
+  {
+    "soap": "shampoo"
+  },
+  {
+    "soap": "lotion"
+  },
+  {
+    "soap": "cream"
+  },
+  {
+    "detergent": "soap"
+  },
+  {
+    "detergent": "shampoo"
+  },
+  {
+    "detergent": "lotion"
+  },
+  {
+    "detergent": "cream"
+  },
+  {
+    "shampoo": "soap"
+  },
+  {
+    "shampoo": "detergent"
+  },
+  {
+    "shampoo": "lotion"
+  },
+  {
+    "shampoo": "cream"
+  },
+  {
+    "lotion": "soap"
+  },
+  {
+    "lotion": "detergent"
+  },
+  {
+    "lotion": "shampoo"
+  },
+  {
+    "lotion": "cream"
+  },
+  {
+    "cream": "soap"
+  },
+  {
+    "cream": "detergent"
+  },
+  {
+    "cream": "shampoo"
+  },
+  {
+    "cream": "lotion"
+  },
+  {
+    "floor": "wall"
+  },
+  {
+    "floor": "ceiling"
+  },
+  {
+    "floor": "roof"
+  },
+  {
+    "wall": "floor"
+  },
+  {
+    "wall": "ceiling"
+  },
+  {
+    "wall": "roof"
+  },
+  {
+    "ceiling": "floor"
+  },
+  {
+    "ceiling": "wall"
+  },
+  {
+    "ceiling": "roof"
+  },
+  {
+    "roof": "floor"
+  },
+  {
+    "roof": "wall"
+  },
+  {
+    "roof": "ceiling"
+  },
+  {
+    "cloud": "rain"
+  },
+  {
+    "cloud": "snow"
+  },
+  {
+    "cloud": "wind"
+  },
+  {
+    "cloud": "storm"
+  },
+  {
+    "cloud": "hurricane"
+  },
+  {
+    "cloud": "tornado"
+  },
+  {
+    "cloud": "blizzard"
+  },
+  {
+    "cloud": "earthquake"
+  },
+  {
+    "cloud": "volcano"
+  },
+  {
+    "rain": "cloud"
+  },
+  {
+    "rain": "snow"
+  },
+  {
+    "rain": "wind"
+  },
+  {
+    "rain": "storm"
+  },
+  {
+    "rain": "hurricane"
+  },
+  {
+    "rain": "tornado"
+  },
+  {
+    "rain": "blizzard"
+  },
+  {
+    "rain": "earthquake"
+  },
+  {
+    "rain": "volcano"
+  },
+  {
+    "snow": "cloud"
+  },
+  {
+    "snow": "rain"
+  },
+  {
+    "snow": "wind"
+  },
+  {
+    "snow": "storm"
+  },
+  {
+    "snow": "hurricane"
+  },
+  {
+    "snow": "tornado"
+  },
+  {
+    "snow": "blizzard"
+  },
+  {
+    "snow": "earthquake"
+  },
+  {
+    "snow": "volcano"
+  },
+  {
+    "wind": "cloud"
+  },
+  {
+    "wind": "rain"
+  },
+  {
+    "wind": "snow"
+  },
+  {
+    "wind": "storm"
+  },
+  {
+    "wind": "hurricane"
+  },
+  {
+    "wind": "tornado"
+  },
+  {
+    "wind": "blizzard"
+  },
+  {
+    "wind": "earthquake"
+  },
+  {
+    "wind": "volcano"
+  },
+  {
+    "storm": "cloud"
+  },
+  {
+    "storm": "rain"
+  },
+  {
+    "storm": "snow"
+  },
+  {
+    "storm": "wind"
+  },
+  {
+    "storm": "hurricane"
+  },
+  {
+    "storm": "tornado"
+  },
+  {
+    "storm": "blizzard"
+  },
+  {
+    "storm": "earthquake"
+  },
+  {
+    "storm": "volcano"
+  },
+  {
+    "hurricane": "cloud"
+  },
+  {
+    "hurricane": "rain"
+  },
+  {
+    "hurricane": "snow"
+  },
+  {
+    "hurricane": "wind"
+  },
+  {
+    "hurricane": "storm"
+  },
+  {
+    "hurricane": "tornado"
+  },
+  {
+    "hurricane": "blizzard"
+  },
+  {
+    "hurricane": "earthquake"
+  },
+  {
+    "hurricane": "volcano"
+  },
+  {
+    "tornado": "cloud"
+  },
+  {
+    "tornado": "rain"
+  },
+  {
+    "tornado": "snow"
+  },
+  {
+    "tornado": "wind"
+  },
+  {
+    "tornado": "storm"
+  },
+  {
+    "tornado": "hurricane"
+  },
+  {
+    "tornado": "blizzard"
+  },
+  {
+    "tornado": "earthquake"
+  },
+  {
+    "tornado": "volcano"
+  },
+  {
+    "blizzard": "cloud"
+  },
+  {
+    "blizzard": "rain"
+  },
+  {
+    "blizzard": "snow"
+  },
+  {
+    "blizzard": "wind"
+  },
+  {
+    "blizzard": "storm"
+  },
+  {
+    "blizzard": "hurricane"
+  },
+  {
+    "blizzard": "tornado"
+  },
+  {
+    "blizzard": "earthquake"
+  },
+  {
+    "blizzard": "volcano"
+  },
+  {
+    "earthquake": "cloud"
+  },
+  {
+    "earthquake": "rain"
+  },
+  {
+    "earthquake": "snow"
+  },
+  {
+    "earthquake": "wind"
+  },
+  {
+    "earthquake": "storm"
+  },
+  {
+    "earthquake": "hurricane"
+  },
+  {
+    "earthquake": "tornado"
+  },
+  {
+    "earthquake": "blizzard"
+  },
+  {
+    "earthquake": "volcano"
+  },
+  {
+    "volcano": "cloud"
+  },
+  {
+    "volcano": "rain"
+  },
+  {
+    "volcano": "snow"
+  },
+  {
+    "volcano": "wind"
+  },
+  {
+    "volcano": "storm"
+  },
+  {
+    "volcano": "hurricane"
+  },
+  {
+    "volcano": "tornado"
+  },
+  {
+    "volcano": "blizzard"
+  },
+  {
+    "volcano": "earthquake"
+  },
+  {
+    "desert": "valley"
+  },
+  {
+    "desert": "island"
+  },
+  {
+    "valley": "desert"
+  },
+  {
+    "valley": "island"
+  },
+  {
+    "island": "desert"
+  },
+  {
+    "island": "valley"
+  },
+  {
+    "king": "queen"
+  },
+  {
+    "king": "prince"
+  },
+  {
+    "king": "princess"
+  },
+  {
+    "king": "heir"
+  },
+  {
+    "queen": "king"
+  },
+  {
+    "queen": "prince"
+  },
+  {
+    "queen": "princess"
+  },
+  {
+    "queen": "heir"
+  },
+  {
+    "prince": "king"
+  },
+  {
+    "prince": "queen"
+  },
+  {
+    "prince": "princess"
+  },
+  {
+    "prince": "heir"
+  },
+  {
+    "princess": "king"
+  },
+  {
+    "princess": "queen"
+  },
+  {
+    "princess": "prince"
+  },
+  {
+    "princess": "heir"
+  },
+  {
+    "heir": "king"
+  },
+  {
+    "heir": "queen"
+  },
+  {
+    "heir": "prince"
+  },
+  {
+    "heir": "princess"
+  },
+  {
+    "radio": "television"
+  },
+  {
+    "radio": "camera"
+  },
+  {
+    "radio": "monitor"
+  },
+  {
+    "television": "radio"
+  },
+  {
+    "television": "camera"
+  },
+  {
+    "television": "monitor"
+  },
+  {
+    "camera": "radio"
+  },
+  {
+    "camera": "television"
+  },
+  {
+    "camera": "monitor"
+  },
+  {
+    "monitor": "radio"
+  },
+  {
+    "monitor": "television"
+  },
+  {
+    "monitor": "camera"
+  },
+  {
+    "space": "air"
+  },
+  {
+    "space": "gas"
+  },
+  {
+    "space": "vacuum"
+  },
+  {
+    "space": "void"
+  },
+  {
+    "air": "space"
+  },
+  {
+    "air": "gas"
+  },
+  {
+    "air": "vacuum"
+  },
+  {
+    "air": "void"
+  },
+  {
+    "gas": "space"
+  },
+  {
+    "gas": "air"
+  },
+  {
+    "gas": "vacuum"
+  },
+  {
+    "gas": "void"
+  },
+  {
+    "vacuum": "space"
+  },
+  {
+    "vacuum": "air"
+  },
+  {
+    "vacuum": "gas"
+  },
+  {
+    "vacuum": "void"
+  },
+  {
+    "void": "space"
+  },
+  {
+    "void": "air"
+  },
+  {
+    "void": "gas"
+  },
+  {
+    "void": "vacuum"
+  },
+  {
+    "horse": "cow"
+  },
+  {
+    "horse": "pig"
+  },
+  {
+    "horse": "sheep"
+  },
+  {
+    "horse": "goat"
+  },
+  {
+    "horse": "deer"
+  },
+  {
+    "cow": "horse"
+  },
+  {
+    "cow": "pig"
+  },
+  {
+    "cow": "sheep"
+  },
+  {
+    "cow": "goat"
+  },
+  {
+    "cow": "deer"
+  },
+  {
+    "pig": "horse"
+  },
+  {
+    "pig": "cow"
+  },
+  {
+    "pig": "sheep"
+  },
+  {
+    "pig": "goat"
+  },
+  {
+    "pig": "deer"
+  },
+  {
+    "sheep": "horse"
+  },
+  {
+    "sheep": "cow"
+  },
+  {
+    "sheep": "pig"
+  },
+  {
+    "sheep": "goat"
+  },
+  {
+    "sheep": "deer"
+  },
+  {
+    "goat": "horse"
+  },
+  {
+    "goat": "cow"
+  },
+  {
+    "goat": "pig"
+  },
+  {
+    "goat": "sheep"
+  },
+  {
+    "goat": "deer"
+  },
+  {
+    "deer": "horse"
+  },
+  {
+    "deer": "cow"
+  },
+  {
+    "deer": "pig"
+  },
+  {
+    "deer": "sheep"
+  },
+  {
+    "deer": "goat"
+  },
+  {
+    "lion": "tiger"
+  },
+  {
+    "lion": "bear"
+  },
+  {
+    "lion": "wolf"
+  },
+  {
+    "lion": "fox"
+  },
+  {
+    "tiger": "lion"
+  },
+  {
+    "tiger": "bear"
+  },
+  {
+    "tiger": "wolf"
+  },
+  {
+    "tiger": "fox"
+  },
+  {
+    "bear": "lion"
+  },
+  {
+    "bear": "tiger"
+  },
+  {
+    "bear": "wolf"
+  },
+  {
+    "bear": "fox"
+  },
+  {
+    "wolf": "lion"
+  },
+  {
+    "wolf": "tiger"
+  },
+  {
+    "wolf": "bear"
+  },
+  {
+    "wolf": "fox"
+  },
+  {
+    "fox": "lion"
+  },
+  {
+    "fox": "tiger"
+  },
+  {
+    "fox": "bear"
+  },
+  {
+    "fox": "wolf"
+  },
+  {
+    "snake": "lizard"
+  },
+  {
+    "snake": "frog"
+  },
+  {
+    "snake": "turtle"
+  },
+  {
+    "lizard": "snake"
+  },
+  {
+    "lizard": "frog"
+  },
+  {
+    "lizard": "turtle"
+  },
+  {
+    "frog": "snake"
+  },
+  {
+    "frog": "lizard"
+  },
+  {
+    "frog": "turtle"
+  },
+  {
+    "turtle": "snake"
+  },
+  {
+    "turtle": "lizard"
+  },
+  {
+    "turtle": "frog"
+  },
+  {
+    "pasta": "rice"
+  },
+  {
+    "pasta": "wheat"
+  },
+  {
+    "pasta": "corn"
+  },
+  {
+    "rice": "pasta"
+  },
+  {
+    "rice": "wheat"
+  },
+  {
+    "rice": "corn"
+  },
+  {
+    "wheat": "pasta"
+  },
+  {
+    "wheat": "rice"
+  },
+  {
+    "wheat": "corn"
+  },
+  {
+    "corn": "pasta"
+  },
+  {
+    "corn": "rice"
+  },
+  {
+    "corn": "wheat"
+  },
+  {
+    "chocolate": "vanilla"
+  },
+  {
+    "chocolate": "strawberry"
+  },
+  {
+    "chocolate": "caramel"
+  },
+  {
+    "vanilla": "chocolate"
+  },
+  {
+    "vanilla": "strawberry"
+  },
+  {
+    "vanilla": "caramel"
+  },
+  {
+    "strawberry": "chocolate"
+  },
+  {
+    "strawberry": "vanilla"
+  },
+  {
+    "strawberry": "caramel"
+  },
+  {
+    "caramel": "chocolate"
+  },
+  {
+    "caramel": "vanilla"
+  },
+  {
+    "caramel": "strawberry"
+  },
+  {
+    "torch": "latern"
+  },
+  {
+    "torch": "lamp"
+  },
+  {
+    "latern": "torch"
+  },
+  {
+    "latern": "lamp"
+  },
+  {
+    "lamp": "torch"
+  },
+  {
+    "lamp": "latern"
+  },
+  {
+    "harmonica": "flute"
+  },
+  {
+    "harmonica": "clarinet"
+  },
+  {
+    "harmonica": "saxophone"
+  },
+  {
+    "flute": "harmonica"
+  },
+  {
+    "flute": "clarinet"
+  },
+  {
+    "flute": "saxophone"
+  },
+  {
+    "clarinet": "harmonica"
+  },
+  {
+    "clarinet": "flute"
+  },
+  {
+    "clarinet": "saxophone"
+  },
+  {
+    "saxophone": "harmonica"
+  },
+  {
+    "saxophone": "flute"
+  },
+  {
+    "saxophone": "clarinet"
+  },
+  {
+    "needle": "pin"
+  },
+  {
+    "needle": "nail"
+  },
+  {
+    "needle": "screw"
+  },
+  {
+    "needle": "bolt"
+  },
+  {
+    "pin": "needle"
+  },
+  {
+    "pin": "nail"
+  },
+  {
+    "pin": "screw"
+  },
+  {
+    "pin": "bolt"
+  },
+  {
+    "nail": "needle"
+  },
+  {
+    "nail": "pin"
+  },
+  {
+    "nail": "screw"
+  },
+  {
+    "nail": "bolt"
+  },
+  {
+    "screw": "needle"
+  },
+  {
+    "screw": "pin"
+  },
+  {
+    "screw": "nail"
+  },
+  {
+    "screw": "bolt"
+  },
+  {
+    "bolt": "needle"
+  },
+  {
+    "bolt": "pin"
+  },
+  {
+    "bolt": "nail"
+  },
+  {
+    "bolt": "screw"
+  },
+  {
+    "button": "zipper"
+  },
+  {
+    "button": "hook"
+  },
+  {
+    "zipper": "button"
+  },
+  {
+    "zipper": "hook"
+  },
+  {
+    "hook": "button"
+  },
+  {
+    "hook": "zipper"
+  },
+  {
+    "scarf": "shawl"
+  },
+  {
+    "scarf": "bandana"
+  },
+  {
+    "shawl": "scarf"
+  },
+  {
+    "shawl": "bandana"
+  },
+  {
+    "bandana": "scarf"
+  },
+  {
+    "bandana": "shawl"
+  },
+  {
+    "giraffe": "zebra"
+  },
+  {
+    "giraffe": "elephant"
+  },
+  {
+    "giraffe": "hippo"
+  },
+  {
+    "giraffe": "rhino"
+  },
+  {
+    "zebra": "giraffe"
+  },
+  {
+    "zebra": "elephant"
+  },
+  {
+    "zebra": "hippo"
+  },
+  {
+    "zebra": "rhino"
+  },
+  {
+    "elephant": "giraffe"
+  },
+  {
+    "elephant": "zebra"
+  },
+  {
+    "elephant": "hippo"
+  },
+  {
+    "elephant": "rhino"
+  },
+  {
+    "hippo": "giraffe"
+  },
+  {
+    "hippo": "zebra"
+  },
+  {
+    "hippo": "elephant"
+  },
+  {
+    "hippo": "rhino"
+  },
+  {
+    "rhino": "giraffe"
+  },
+  {
+    "rhino": "zebra"
+  },
+  {
+    "rhino": "elephant"
+  },
+  {
+    "rhino": "hippo"
+  },
+  {
+    "battery": "plug"
+  },
+  {
+    "battery": "socket"
+  },
+  {
+    "plug": "battery"
+  },
+  {
+    "plug": "socket"
+  },
+  {
+    "socket": "battery"
+  },
+  {
+    "socket": "plug"
+  },
+  {
+    "golf": "tennis"
+  },
+  {
+    "golf": "soccer"
+  },
+  {
+    "golf": "hockey"
+  },
+  {
+    "tennis": "golf"
+  },
+  {
+    "tennis": "soccer"
+  },
+  {
+    "tennis": "hockey"
+  },
+  {
+    "soccer": "golf"
+  },
+  {
+    "soccer": "tennis"
+  },
+  {
+    "soccer": "hockey"
+  },
+  {
+    "hockey": "golf"
+  },
+  {
+    "hockey": "tennis"
+  },
+  {
+    "hockey": "soccer"
+  },
+  {
+    "passport": "visa"
+  },
+  {
+    "passport": "id"
+  },
+  {
+    "passport": "license"
+  },
+  {
+    "visa": "passport"
+  },
+  {
+    "visa": "id"
+  },
+  {
+    "visa": "license"
+  },
+  {
+    "id": "passport"
+  },
+  {
+    "id": "visa"
+  },
+  {
+    "id": "license"
+  },
+  {
+    "license": "passport"
+  },
+  {
+    "license": "visa"
+  },
+  {
+    "license": "id"
+  },
+  {
+    "ticket": "pass"
+  },
+  {
+    "ticket": "permit"
+  },
+  {
+    "pass": "ticket"
+  },
+  {
+    "pass": "permit"
+  },
+  {
+    "permit": "ticket"
+  },
+  {
+    "permit": "pass"
+  },
+  {
+    "drug": "medicine"
+  },
+  {
+    "drug": "pill"
+  },
+  {
+    "medicine": "drug"
+  },
+  {
+    "medicine": "pill"
+  },
+  {
+    "pill": "drug"
+  },
+  {
+    "pill": "medicine"
+  },
+  {
+    "sword": "spear"
+  },
+  {
+    "sword": "axe"
+  },
+  {
+    "sword": "mace"
+  },
+  {
+    "spear": "sword"
+  },
+  {
+    "spear": "axe"
+  },
+  {
+    "spear": "mace"
+  },
+  {
+    "axe": "sword"
+  },
+  {
+    "axe": "spear"
+  },
+  {
+    "axe": "mace"
+  },
+  {
+    "mace": "sword"
+  },
+  {
+    "mace": "spear"
+  },
+  {
+    "mace": "axe"
+  },
+  {
+    "bow": "arrow"
+  },
+  {
+    "bow": "gun"
+  },
+  {
+    "arrow": "bow"
+  },
+  {
+    "arrow": "gun"
+  },
+  {
+    "gun": "bow"
+  },
+  {
+    "gun": "arrow"
+  },
+  {
+    "alarm": "siren"
+  },
+  {
+    "alarm": "bell"
+  },
+  {
+    "alarm": "whistle"
+  },
+  {
+    "siren": "alarm"
+  },
+  {
+    "siren": "bell"
+  },
+  {
+    "siren": "whistle"
+  },
+  {
+    "bell": "alarm"
+  },
+  {
+    "bell": "siren"
+  },
+  {
+    "bell": "whistle"
+  },
+  {
+    "whistle": "alarm"
+  },
+  {
+    "whistle": "siren"
+  },
+  {
+    "whistle": "bell"
+  },
+  {
+    "feather": "fur"
+  },
+  {
+    "feather": "scale"
+  },
+  {
+    "fur": "feather"
+  },
+  {
+    "fur": "scale"
+  },
+  {
+    "scale": "feather"
+  },
+  {
+    "scale": "fur"
+  },
+  {
+    "engine": "motor"
+  },
+  {
+    "engine": "pump"
+  },
+  {
+    "engine": "generator"
+  },
+  {
+    "motor": "engine"
+  },
+  {
+    "motor": "pump"
+  },
+  {
+    "motor": "generator"
+  },
+  {
+    "pump": "engine"
+  },
+  {
+    "pump": "motor"
+  },
+  {
+    "pump": "generator"
+  },
+  {
+    "generator": "engine"
+  },
+  {
+    "generator": "motor"
+  },
+  {
+    "generator": "pump"
+  },
+  {
+    "oven": "stove"
+  },
+  {
+    "oven": "grill"
+  },
+  {
+    "oven": "microwave"
+  },
+  {
+    "oven": "fridge"
+  },
+  {
+    "oven": "toaster"
+  },
+  {
+    "stove": "oven"
+  },
+  {
+    "stove": "grill"
+  },
+  {
+    "stove": "microwave"
+  },
+  {
+    "stove": "fridge"
+  },
+  {
+    "stove": "toaster"
+  },
+  {
+    "grill": "oven"
+  },
+  {
+    "grill": "stove"
+  },
+  {
+    "grill": "microwave"
+  },
+  {
+    "grill": "fridge"
+  },
+  {
+    "grill": "toaster"
+  },
+  {
+    "microwave": "oven"
+  },
+  {
+    "microwave": "stove"
+  },
+  {
+    "microwave": "grill"
+  },
+  {
+    "microwave": "fridge"
+  },
+  {
+    "microwave": "toaster"
+  },
+  {
+    "fridge": "oven"
+  },
+  {
+    "fridge": "stove"
+  },
+  {
+    "fridge": "grill"
+  },
+  {
+    "fridge": "microwave"
+  },
+  {
+    "fridge": "toaster"
+  },
+  {
+    "toaster": "oven"
+  },
+  {
+    "toaster": "stove"
+  },
+  {
+    "toaster": "grill"
+  },
+  {
+    "toaster": "microwave"
+  },
+  {
+    "toaster": "fridge"
+  },
+  {
+    "mirror": "glass"
+  },
+  {
+    "glass": "mirror"
+  },
+  {
+    "letter": "note"
+  },
+  {
+    "letter": "epistle"
+  },
+  {
+    "letter": "missive"
+  },
+  {
+    "letter": "message"
+  },
+  {
+    "note": "letter"
+  },
+  {
+    "note": "epistle"
+  },
+  {
+    "note": "missive"
+  },
+  {
+    "note": "message"
+  },
+  {
+    "epistle": "letter"
+  },
+  {
+    "epistle": "note"
+  },
+  {
+    "epistle": "missive"
+  },
+  {
+    "epistle": "message"
+  },
+  {
+    "missive": "letter"
+  },
+  {
+    "missive": "note"
+  },
+  {
+    "missive": "epistle"
+  },
+  {
+    "missive": "message"
+  },
+  {
+    "message": "letter"
+  },
+  {
+    "message": "note"
+  },
+  {
+    "message": "epistle"
+  },
+  {
+    "message": "missive"
+  },
+  {
+    "prison": "police"
+  },
+  {
+    "prison": "court"
+  },
+  {
+    "prison": "judge"
+  },
+  {
+    "prison": "lawyer"
+  },
+  {
+    "police": "prison"
+  },
+  {
+    "police": "court"
+  },
+  {
+    "police": "judge"
+  },
+  {
+    "police": "lawyer"
+  },
+  {
+    "court": "prison"
+  },
+  {
+    "court": "police"
+  },
+  {
+    "court": "judge"
+  },
+  {
+    "court": "lawyer"
+  },
+  {
+    "judge": "prison"
+  },
+  {
+    "judge": "police"
+  },
+  {
+    "judge": "court"
+  },
+  {
+    "judge": "lawyer"
+  },
+  {
+    "lawyer": "prison"
+  },
+  {
+    "lawyer": "police"
+  },
+  {
+    "lawyer": "court"
+  },
+  {
+    "lawyer": "judge"
+  },
+  {
+    "manager": "employee"
+  },
+  {
+    "manager": "supervisor"
+  },
+  {
+    "employee": "manager"
+  },
+  {
+    "employee": "supervisor"
+  },
+  {
+    "supervisor": "manager"
+  },
+  {
+    "supervisor": "employee"
+  },
+  {
+    "carrot": "potato"
+  },
+  {
+    "carrot": "tomato"
+  },
+  {
+    "carrot": "onion"
+  },
+  {
+    "carrot": "pepper"
+  },
+  {
+    "potato": "carrot"
+  },
+  {
+    "potato": "tomato"
+  },
+  {
+    "potato": "onion"
+  },
+  {
+    "potato": "pepper"
+  },
+  {
+    "tomato": "carrot"
+  },
+  {
+    "tomato": "potato"
+  },
+  {
+    "tomato": "onion"
+  },
+  {
+    "tomato": "pepper"
+  },
+  {
+    "onion": "carrot"
+  },
+  {
+    "onion": "potato"
+  },
+  {
+    "onion": "tomato"
+  },
+  {
+    "onion": "pepper"
+  },
+  {
+    "pepper": "carrot"
+  },
+  {
+    "pepper": "potato"
+  },
+  {
+    "pepper": "tomato"
+  },
+  {
+    "pepper": "onion"
+  },
+  {
+    "keyboard": "piano"
+  },
+  {
+    "keyboard": "typewriter"
+  },
+  {
+    "piano": "keyboard"
+  },
+  {
+    "piano": "typewriter"
+  },
+  {
+    "typewriter": "keyboard"
+  },
+  {
+    "typewriter": "piano"
+  },
+  {
+    "tower": "turret"
+  },
+  {
+    "tower": "castle"
+  },
+  {
+    "tower": "palace"
+  },
+  {
+    "turret": "tower"
+  },
+  {
+    "turret": "castle"
+  },
+  {
+    "turret": "palace"
+  },
+  {
+    "castle": "tower"
+  },
+  {
+    "castle": "turret"
+  },
+  {
+    "castle": "palace"
+  },
+  {
+    "palace": "tower"
+  },
+  {
+    "palace": "turret"
+  },
+  {
+    "palace": "castle"
+  },
+  {
+    "dragon": "knight"
+  },
+  {
+    "dragon": "queen"
+  },
+  {
+    "dragon": "king"
+  },
+  {
+    "knight": "dragon"
+  },
+  {
+    "knight": "queen"
+  },
+  {
+    "knight": "king"
+  },
+  {
+    "queen": "dragon"
+  },
+  {
+    "queen": "knight"
+  },
+  {
+    "queen": "king"
+  },
+  {
+    "king": "dragon"
+  },
+  {
+    "king": "knight"
+  },
+  {
+    "king": "queen"
+  },
+  {
+    "orchard": "vineyard"
+  },
+  {
+    "orchard": "garden"
+  },
+  {
+    "vineyard": "orchard"
+  },
+  {
+    "vineyard": "garden"
+  },
+  {
+    "garden": "orchard"
+  },
+  {
+    "garden": "vineyard"
+  },
+  {
+    "shower": "bathtub"
+  },
+  {
+    "shower": "sink"
+  },
+  {
+    "shower": "toilet"
+  },
+  {
+    "bathtub": "shower"
+  },
+  {
+    "bathtub": "sink"
+  },
+  {
+    "bathtub": "toilet"
+  },
+  {
+    "sink": "shower"
+  },
+  {
+    "sink": "bathtub"
+  },
+  {
+    "sink": "toilet"
+  },
+  {
+    "toilet": "shower"
+  },
+  {
+    "toilet": "bathtub"
+  },
+  {
+    "toilet": "sink"
+  },
+  {
+    "pillow": "blanket"
+  },
+  {
+    "blanket": "pillow"
+  },
+  {
+    "kitchen": "diningroom"
+  },
+  {
+    "kitchen": "livingroom"
+  },
+  {
+    "kitchen": "bedroom"
+  },
+  {
+    "diningroom": "kitchen"
+  },
+  {
+    "diningroom": "livingroom"
+  },
+  {
+    "diningroom": "bedroom"
+  },
+  {
+    "livingroom": "kitchen"
+  },
+  {
+    "livingroom": "diningroom"
+  },
+  {
+    "livingroom": "bedroom"
+  },
+  {
+    "bedroom": "kitchen"
+  },
+  {
+    "bedroom": "diningroom"
+  },
+  {
+    "bedroom": "livingroom"
+  },
+  {
+    "garage": "shed"
+  },
+  {
+    "shed": "garage"
+  },
+  {
+    "diner": "cafe"
+  },
+  {
+    "cafe": "diner"
+  },
+  {
+    "hotel": "motel"
+  },
+  {
+    "hotel": "hostel"
+  },
+  {
+    "motel": "hotel"
+  },
+  {
+    "motel": "hostel"
+  },
+  {
+    "hostel": "hotel"
+  },
+  {
+    "hostel": "motel"
+  },
+  {
+    "temple": "shrine"
+  },
+  {
+    "temple": "mosque"
+  },
+  {
+    "temple": "church"
+  },
+  {
+    "temple": "synagogue"
+  },
+  {
+    "shrine": "temple"
+  },
+  {
+    "shrine": "mosque"
+  },
+  {
+    "shrine": "church"
+  },
+  {
+    "shrine": "synagogue"
+  },
+  {
+    "mosque": "temple"
+  },
+  {
+    "mosque": "shrine"
+  },
+  {
+    "mosque": "church"
+  },
+  {
+    "mosque": "synagogue"
+  },
+  {
+    "church": "temple"
+  },
+  {
+    "church": "shrine"
+  },
+  {
+    "church": "mosque"
+  },
+  {
+    "church": "synagogue"
+  },
+  {
+    "synagogue": "temple"
+  },
+  {
+    "synagogue": "shrine"
+  },
+  {
+    "synagogue": "mosque"
+  },
+  {
+    "synagogue": "church"
+  }
+]

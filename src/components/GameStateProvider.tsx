@@ -28,6 +28,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [playerWord, setPlayerWord] = useState("");
 
   function handleShowSnackbar(msg: InboundMessage) {
     setErrorMessage(msg.text as string);
@@ -62,6 +63,12 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.PLAYER_JOINED:
       case GameEvent.UPDATE_PLAYER_NAME:
         setPlayers(msg?.gameState?.players as Player[]);
+        break;
+      case GameEvent.PHASE_UPDATED:
+        setCurrentPhase(msg?.phase as Phase);
+        break;
+      case GameEvent.ROLE_REVEAL:
+        setPlayerWord(msg?.text as string);
         break;
       default:
         console.error("Unknown message type:", msg.type);
@@ -123,7 +130,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   return (
     <GameContext.Provider value={value}>
       <div>
-        {p.children}{" "}
+        {p.children}
         {showSnackbar && (
           <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded shadow-lg">
             {errorMessage}

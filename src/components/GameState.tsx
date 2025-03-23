@@ -11,10 +11,12 @@ export interface GameContextType {
   playerID: string;
   players: Player[];
   clearRoomCode: () => void;
+  currentWord: string;
 }
 
 export const GameContext = createContext<GameContextType>({
   phase: Phase.WAITING_FOR_PLAYERS,
+  currentWord: "",
   playerName: "",
   roomCode: "",
   sendSocketMessage: (_: OutboundMessage) => {},
