@@ -69,7 +69,8 @@ export default function GameStateProvider(p: ContextProviderProps) {
         setCurrentPhase(msg?.phase as Phase);
         break;
       case GameEvent.ROLE_REVEAL:
-        setPlayerWord(msg?.text as string);
+        const word = (msg?.text as string) || "";
+        setPlayerWord(word);
         break;
       default:
         console.error("Unknown message type:", msg.type);

@@ -1,4 +1,4 @@
-import { test, expect, Browser } from "@playwright/test";
+import { test, expect, Browser, Page } from "@playwright/test";
 
 const appUrl = "http://localhost:5173";
 
@@ -14,85 +14,127 @@ const updateWordCount = (
   return wordCount;
 };
 
+const getPlayers = async (
+  browser: Browser,
+  numPlayers: number,
+): Promise<Page[]> => {
+  const players: Page[] = [];
+  for (let i = 0; i < numPlayers; i++) {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    players.push(page);
+  }
+  return players;
+};
+
+interface TestConfig {
+  sortOrder: number[];
+}
+
+const testConfig: Record<string, TestConfig> = {
+  "4": {
+    sortOrder: [1, 3],
+  },
+  "5": {
+    sortOrder: [1, 1, 3],
+  },
+  "6": {
+    sortOrder: [1, 1, 4],
+  },
+  "7": {
+    sortOrder: [1, 2, 4],
+  },
+  "8": {
+    sortOrder: [1, 2, 5],
+  },
+};
+
+const runTest = async (browser: Browser, numPlayers: number) => {
+  const players = await getPlayers(browser, numPlayers);
+  await Promise.all(
+    players.map(async (player) => {
+      return player.goto(appUrl);
+    }),
+  );
+
+  await Promise.all(
+    players.map(async (player, i) => {
+      if (i === 0) {
+        return player.click("#host-btn");
+      } else {
+        return player.click("#player-btn");
+      }
+    }),
+  );
+
+  const host = players[0];
+
+  const roomCode = await host.textContent("#room-code");
+  expect(roomCode).toBeTruthy();
+
+  await Promise.all(
+    players.slice(1).map(async (player) => {
+      await player
+        .locator("#room-code-input")
+        .pressSequentially(roomCode as string);
+      await player.click("#room-code-submit");
+      return player.waitForSelector("#room-code");
+    }),
+  );
+
+  await host.locator("#player-name-input").pressSequentially("host");
+  await host.click("#player-name-submit");
+
+  await Promise.all(
+    players.map(async (player, i) => {
+      if (i !== 0) {
+        await expect(player.getByText("host")).toBeVisible();
+      }
+    }),
+  );
+
+  // player 2 changes name to player
+  await players[1].locator("#player-name-input").pressSequentially("player");
+  await players[1].click("#player-name-submit");
+
+  // player 1 should see the player update name
+  await expect(host.getByText("player", { exact: true })).toBeVisible();
+
+  await host.click("#start-game-btn");
+  let wordCount: Record<string, number> = {};
+
+  for (const player of players) {
+    const playerWord = await player.textContent("#player-word");
+    wordCount = updateWordCount(wordCount, playerWord as string);
+  }
+
+  const order = testConfig[numPlayers.toString()].sortOrder;
+
+  const distinctWords = Object.keys(wordCount);
+  expect(distinctWords).toHaveLength(order.length);
+
+  const counts = Object.values(wordCount).sort();
+  expect(counts).toEqual(order);
+
+  for (const player of players) {
+    await player.close();
+  }
+};
+
 test.describe("main user journey path", () => {
-  test("game", async ({ browser }: { browser: Browser }) => {
-    const contextOne = await browser.newContext();
-    const contextTwo = await browser.newContext();
-    const contextThree = await browser.newContext();
-    const contextFour = await browser.newContext();
-
-    const pageOne = await contextOne.newPage();
-    const pageTwo = await contextTwo.newPage();
-    const pageThree = await contextThree.newPage();
-    const pageFour = await contextFour.newPage();
-
-    const players = [pageOne, pageTwo, pageThree, pageFour];
-    await Promise.all(
-      players.map(async (player) => {
-        return player.goto(appUrl);
-      }),
-    );
-
-    await Promise.all(
-      players.map(async (player, i) => {
-        if (i === 0) {
-          return player.click("#host-btn");
-        } else {
-          return player.click("#player-btn");
-        }
-      }),
-    );
-
-    const roomCode = await pageOne.textContent("#room-code");
-    expect(roomCode).toBeTruthy();
-
-    await Promise.all(
-      players.slice(1).map(async (player) => {
-        await player
-          .locator("#room-code-input")
-          .pressSequentially(roomCode as string);
-        await player.click("#room-code-submit");
-        return player.waitForSelector("#room-code");
-      }),
-    );
-
-    // Player 1 changes name to host
-    await pageOne.locator("#player-name-input").pressSequentially("host");
-    await pageOne.click("#player-name-submit");
-
-    // player 2 should see the host update name
-    await Promise.all(
-      players.map(async (player, i) => {
-        if (i !== 0) {
-          await expect(player.getByText("host")).toBeVisible();
-        }
-      }),
-    );
-
-    // player 2 changes name to player
-    await pageTwo.locator("#player-name-input").pressSequentially("player");
-    await pageTwo.click("#player-name-submit");
-
-    // player 1 should see the player update name
-    await expect(pageOne.getByText("player", { exact: true })).toBeVisible();
-
-    await pageOne.click("#start-game-btn");
-    let wordCount: Record<string, number> = {};
-
-    for (const player of players) {
-      const playerWord = await player.textContent("#player-word");
-      wordCount = updateWordCount(wordCount, playerWord as string);
-    }
-
-    const distinctWords = Object.keys(wordCount);
-    expect(distinctWords).toHaveLength(2);
-
-    const counts = Object.values(wordCount).sort();
-    expect(counts).toEqual([1, 3]);
-
-    await contextOne.close();
-    await contextTwo.close();
-    await contextThree.close();
-    await contextFour.close();
+  test("4 player game", async ({ browser }: { browser: Browser }) => {
+    await runTest(browser, 4);
+  });
+  test("5 player game", async ({ browser }: { browser: Browser }) => {
+    await runTest(browser, 5);
+  });
+  test("6 player game", async ({ browser }: { browser: Browser }) => {
+    await runTest(browser, 6);
+  });
+  test("7 player game", async ({ browser }: { browser: Browser }) => {
+    await runTest(browser, 7);
+  });
+  test("8 player game", async ({ browser }: { browser: Browser }) => {
+    await runTest(browser, 8);
   });
 });
