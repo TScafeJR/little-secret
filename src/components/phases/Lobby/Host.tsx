@@ -52,6 +52,7 @@ export default function Host() {
         <NameSubmission />
         <button
           className="fw-button cta-button"
+          id="start-game-btn"
           disabled={!startEnabled}
           onClick={handleClick}
         >

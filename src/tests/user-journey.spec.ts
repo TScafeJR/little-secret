@@ -2,6 +2,18 @@ import { test, expect, Browser } from "@playwright/test";
 
 const appUrl = "http://localhost:5173";
 
+const updateWordCount = (
+  wordCount: Record<string, number>,
+  word: string,
+): Record<string, number> => {
+  if (wordCount[word]) {
+    wordCount[word] += 1;
+  } else {
+    wordCount[word] = 1;
+  }
+  return wordCount;
+};
+
 test.describe("main user journey path", () => {
   test("game", async ({ browser }: { browser: Browser }) => {
     const contextOne = await browser.newContext();
@@ -63,6 +75,20 @@ test.describe("main user journey path", () => {
 
     // player 1 should see the player update name
     await expect(pageOne.getByText("player", { exact: true })).toBeVisible();
+
+    await pageOne.click("#start-game-btn");
+    let wordCount: Record<string, number> = {};
+
+    for (const player of players) {
+      const playerWord = await player.textContent("#player-word");
+      wordCount = updateWordCount(wordCount, playerWord as string);
+    }
+
+    const distinctWords = Object.keys(wordCount);
+    expect(distinctWords).toHaveLength(2);
+
+    const counts = Object.values(wordCount).sort();
+    expect(counts).toEqual([1, 3]);
 
     await contextOne.close();
     await contextTwo.close();

@@ -11,6 +11,7 @@ import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
 import { OutboundMessage, InboundMessage } from "../game/message.ts";
 import { Player } from "../game/player.ts";
+import { GameContextType } from "./GameState";
 
 interface ContextProviderProps {
   children: React.ReactNode;
@@ -79,7 +80,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     socketRef?.current?.send(JSON.stringify(m));
   };
 
-  const value = useMemo(
+  const value = useMemo<GameContextType>(
     () => ({
       phase: currentPhase,
       playerName,
@@ -88,13 +89,14 @@ export default function GameStateProvider(p: ContextProviderProps) {
       sendSocketMessage,
       playerID,
       players,
+      currentWord: playerWord,
       clearRoomCode: () => {
         setRoomCode("");
         setPlayerName("");
         setPlayers([]);
       },
     }),
-    [currentPhase, playerName, roomCode, playerID, players],
+    [currentPhase, playerName, roomCode, playerID, players, playerWord],
   );
 
   useEffect(() => {
