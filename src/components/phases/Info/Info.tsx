@@ -1,20 +1,25 @@
-import { useContext, useMemo } from "react";
-import { GameContext } from "../../GameState";
+import { useState, useCallback } from "react";
+import Word from "./Word.tsx";
 
 export default function Info() {
-  const gameContext = useContext(GameContext);
+  const [wordSeen, setWordSeen] = useState(false);
 
-  const displayWord = useMemo(() => {
-    return gameContext.currentWord || "You are a spy!";
-  }, [gameContext.currentWord]);
+  const handleWordSeenClick = useCallback(() => {
+    setWordSeen(true);
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center gap-2">
-      <h3>Your Word:</h3>
-      <h3 id="player-word">{displayWord}</h3>
-      <button className="fw-button cta-button" id="confirm-word-btn">
-        Confirm Word Seen
-      </button>
+      <Word wordSeen={wordSeen} />
+      {!wordSeen && (
+        <button
+          className="fw-button cta-button"
+          id="confirm-word-btn"
+          onClick={handleWordSeenClick}
+        >
+          Confirm Word Seen
+        </button>
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Host from "./Host.tsx";
 import Player from "./Player.tsx";
 import { GameContext } from "../../GameState";
 import { LobbyContext } from "./LobbyContext.tsx";
+import { GameEvent } from "../../../game/events.ts";
 
 enum Role {
   HOST = "host",
@@ -47,6 +48,11 @@ export default function Lobby() {
         leaveGame: () => {
           setRole(null);
           gameContext.clearRoomCode();
+          gameContext.sendSocketMessage({
+            type: GameEvent.REMOVE_PLAYER,
+            playerID: gameContext.playerID,
+            roomID: gameContext.roomCode,
+          });
         },
       }}
     >

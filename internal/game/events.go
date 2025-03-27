@@ -18,6 +18,8 @@ var (
 	ChangePhaseEvent       Event = "changePhase"
 	PhaseUpdatedEvent      Event = "phaseUpdated"
 	RoleRevealEvent        Event = "roleReveal"
+	RemovePlayerEvent      Event = "removePlayer"
+	HostLeftGameEvent      Event = "hostLeftGame"
 )
 
 type Phase string

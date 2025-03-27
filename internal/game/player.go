@@ -6,12 +6,14 @@ import (
 )
 
 type Player struct {
-	ID         id.PlayerID     `json:"id"`
-	Name       string          `json:"displayName"`
-	Role       Role            `json:"role,omitzero"`
-	SecretWord string          `json:"secretWord,omitzero"`
-	Alive      bool            `json:"alive"`
-	Conn       *websocket.Conn `json:"-"`
+	ID             id.PlayerID     `json:"id"`
+	Name           string          `json:"displayName"`
+	Role           Role            `json:"-"`
+	SecretWord     string          `json:"-"`
+	Alive          bool            `json:"alive"`
+	Conn           *websocket.Conn `json:"-"`
+	Host           bool            `json:"host"`
+	WaitingForVote bool            `json:"waitingForVote"`
 }
 
 func NewPlayer(id id.PlayerID, displayName string, conn *websocket.Conn) *Player {

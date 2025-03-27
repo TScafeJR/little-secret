@@ -13,4 +13,6 @@ export enum GameEvent {
   CHANGE_PHASE = "pashe",
   ROLE_REVEAL = "roleReveal",
   PHASE_UPDATED = "phaseUpdated",
+  REMOVE_PLAYER = "removePlayer",
+  HOST_LEFT_GAME = "hostLeftGame",
 }

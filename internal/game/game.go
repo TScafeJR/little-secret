@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"slices"
+
 	"github.com/TScafeJR/little-secret/internal/common"
 	"github.com/TScafeJR/little-secret/internal/id"
 	"github.com/gorilla/websocket"
@@ -37,6 +39,7 @@ func (g *Game) FindPlayer(playerID id.PlayerID) (*Player, error) {
 
 func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *Game {
 	h := NewPlayer(hostID, "Player 1", hostConn)
+	h.Host = true
 	return &Game{
 		RoomID:  roomID,
 		Players: []*Player{h},
@@ -135,4 +138,14 @@ func (g *Game) StartGame() error {
 	g.Phase = InfoPhase
 
 	return nil
+}
+
+func (g *Game) RemovePlayer(playerID id.PlayerID) error {
+	for i, player := range g.Players {
+		if player.ID == playerID {
+			g.Players = slices.Delete(g.Players, i, i+1)
+			return nil
+		}
+	}
+	return fmt.Errorf("player not found")
 }

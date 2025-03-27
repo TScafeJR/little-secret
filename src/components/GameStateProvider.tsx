@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-} from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { GameContext } from "./GameState";
 import Config from "../config.ts";
 import { Phase } from "./phases/phases.ts";
@@ -63,6 +57,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
         break;
       case GameEvent.PLAYER_JOINED:
       case GameEvent.UPDATE_PLAYER_NAME:
+      case GameEvent.REMOVE_PLAYER:
         setPlayers(msg?.gameState?.players as Player[]);
         break;
       case GameEvent.PHASE_UPDATED:
@@ -129,6 +124,14 @@ export default function GameStateProvider(p: ContextProviderProps) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      if (!window?.secret) {
+        window.secret = { state: value };
+      }
+    }
+  }, [value]);
 
   return (
     <GameContext.Provider value={value}>

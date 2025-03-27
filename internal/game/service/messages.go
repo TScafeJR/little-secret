@@ -202,6 +202,44 @@ func (s *GameService) handleStartGame(_ *websocket.Conn, m Message) {
 	}
 }
 
+func (s *GameService) handleRemovePlayer(conn *websocket.Conn, m Message) {
+	g, err := s.getGameFromRoomID(m.RoomID)
+	if err != nil {
+		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		return
+	}
+
+	p, err := g.FindPlayer(m.PlayerID)
+	if err != nil {
+		s.logger.Error("g.FindPlayer()", zap.Error(err))
+		return
+	}
+
+	for _, room := range s.Rooms {
+		if _, ok := room.Connections[conn]; ok {
+			delete(room.Connections, conn)
+		}
+	}
+
+	if p.Host {
+		s.broadcastToRoom(m.RoomID, Message{
+			Type: game.HostLeftGameEvent,
+		})
+	} else {
+		if err = g.RemovePlayer(m.PlayerID); err != nil {
+			s.logger.Error("g.RemovePlayer()", zap.Error(err))
+			return
+		}
+
+		s.broadcastToRoom(m.RoomID, Message{
+			Type:      game.RemovePlayerEvent,
+			PlayerID:  m.PlayerID,
+			GameState: g.GetGameState(),
+		})
+	}
+
+}
+
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
 	m, err := parseMessage(message)
 	if err != nil {
@@ -219,6 +257,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handleRoomCodeSubmittedEvent(conn, m)
 	case game.StartGameEvent:
 		s.handleStartGame(conn, m)
+	case game.RemovePlayerEvent:
+		s.handleRemovePlayer(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}
