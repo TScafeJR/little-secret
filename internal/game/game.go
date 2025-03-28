@@ -18,14 +18,15 @@ var (
 )
 
 type Game struct {
-	RoomID     id.RoomHash
-	Players    []*Player
-	SecretWord string
-	DecoyWord  string
-	Phase      Phase
-	Round      int
-	Votes      map[int]*VoteRound
-	HostID     id.PlayerID
+	RoomID             id.RoomHash
+	Players            []*Player
+	SecretWord         string
+	DecoyWord          string
+	Phase              Phase
+	Round              int
+	Votes              map[int]*VoteRound
+	HostID             id.PlayerID
+	PlayerOrderPointer int
 }
 
 func (g *Game) FindPlayer(playerID id.PlayerID) (*Player, error) {
@@ -54,6 +55,10 @@ func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *
 func (g *Game) AddPlayer(pID id.PlayerID, conn *websocket.Conn) *Player {
 	p := NewPlayer(pID, fmt.Sprintf("Player %d", len(g.Players)+1), conn)
 	g.Players = append(g.Players, p)
+	g.PlayerOrderPointer = g.PlayerOrderPointer + 1
+
+	p.SortOrder = g.PlayerOrderPointer
+
 	return p
 }
 

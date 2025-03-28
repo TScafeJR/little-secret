@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState, useEffect } from "react";
 import { GameContext } from "../../GameState";
 import WaitingForPlayers from "./WaitingForPlayers.tsx";
 import usePlayerInfo from "../../hooks/usePlayerInfo.tsx";
@@ -12,8 +12,15 @@ export default function Word(p: WordProps) {
   const gameContext = useContext(GameContext);
   const playerInfo = usePlayerInfo();
 
+  // this is a one time effect
+  useEffect(() => {
+    if (p.wordSeen) {
+      setShowWord(false);
+    }
+  }, [p.wordSeen]);
+
   const displayWord = useMemo(() => {
-    if (showWord || !p.wordSeen) {
+    if (showWord) {
       return gameContext.currentWord || "You are a spy!";
     } else {
       return "••••••••";
@@ -44,11 +51,6 @@ export default function Word(p: WordProps) {
           onClick={() => setShowWord((p) => !p)}
         >
           {toggleShowWordText}
-        </button>
-      )}
-      {showStartGameButton && (
-        <button className="fw-button cta-button" id="start-game-btn">
-          Start Game
         </button>
       )}
     </div>

@@ -4,7 +4,7 @@ import Config from "../config.ts";
 import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
 import { OutboundMessage, InboundMessage } from "../game/message.ts";
-import { Player } from "../game/player.ts";
+import { Player, sortPlayers } from "../game/player.ts";
 import { GameContextType } from "./GameState";
 
 interface ContextProviderProps {
@@ -59,7 +59,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.UPDATE_PLAYER_NAME:
       case GameEvent.REMOVE_PLAYER:
       case GameEvent.PROCCESSED_VOTE:
-        setPlayers(msg?.gameState?.players as Player[]);
+        setPlayers(sortPlayers(msg?.gameState?.players as Player[]));
         break;
       case GameEvent.PHASE_UPDATED:
         setCurrentPhase(msg?.phase as Phase);
@@ -67,6 +67,9 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.ROLE_REVEAL:
         const word = (msg?.text as string) || "";
         setPlayerWord(word);
+        break;
+      case GameEvent.CHANGE_PHASE:
+        setCurrentPhase(msg?.phase as Phase);
         break;
       default:
         console.error("Unknown message type:", msg.type);

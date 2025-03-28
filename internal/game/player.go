@@ -14,6 +14,7 @@ type Player struct {
 	Conn          *websocket.Conn `json:"-"`
 	Host          bool            `json:"host"`
 	ConfirmedVote bool            `json:"confirmedVote"`
+	SortOrder     int             `json:"sortOrder"`
 }
 
 func NewPlayer(id id.PlayerID, displayName string, conn *websocket.Conn) *Player {

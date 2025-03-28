@@ -271,11 +271,15 @@ func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
 		}
 	}
 
-	s.broadcastToRoom(m.RoomID, Message{
-		Type:      game.ProcessedVoteEvent,
-		PlayerID:  m.PlayerID,
-		GameState: g.GetGameState(),
-	})
+	for _, player := range g.Players {
+		if !player.ConfirmedVote {
+			s.broadcastToRoom(m.RoomID, Message{
+				Type:      game.ProcessedVoteEvent,
+				PlayerID:  m.PlayerID,
+				GameState: g.GetGameState(),
+			})
+		}
+	}
 }
 
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
