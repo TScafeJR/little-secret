@@ -1,10 +1,7 @@
 import { GameEvent } from "./events";
-import { Phase } from "../components/phases/phases";
 import { Player } from "./player";
-
-interface GameState {
-  players: Player[];
-}
+import { GameState } from "./game";
+import { Phase } from "../components/phases/phases";
 
 export interface InboundMessage {
   messageID?: string;

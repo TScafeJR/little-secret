@@ -44,12 +44,14 @@ func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *
 	h.Host = true
 
 	votes := make(map[int]*VoteRound)
+	clues := make(map[int]*ClueRound)
 
 	return &Game{
 		RoomID:  roomID,
 		Players: []*Player{h},
 		HostID:  hostID,
 		Votes:   votes,
+		Clues:   clues,
 	}
 }
 
@@ -64,14 +66,18 @@ func (g *Game) AddPlayer(pID id.PlayerID, conn *websocket.Conn) *Player {
 }
 
 type GameState struct {
-	Players []*Player `json:"players"`
-	Phase   Phase     `json:"phase"`
+	Players []*Player          `json:"players"`
+	Phase   Phase              `json:"phase"`
+	Clues   map[int]*ClueRound `json:"clues"`
+	Round   int                `json:"round"`
 }
 
 func (g *Game) GetGameState() GameState {
 	return GameState{
 		Players: g.Players,
 		Phase:   g.Phase,
+		Clues:   g.Clues,
+		Round:   g.Round,
 	}
 }
 
@@ -138,10 +144,12 @@ func (g *Game) StartGame() error {
 
 	for i := range g.Players {
 		p := g.Players[i]
-		if p.Role == GoodKittenRole {
+		switch p.Role {
+		case GoodKittenRole:
 			p.SecretWord = g.SecretWord
-		} else if p.Role == ConfusedKittenRole {
+		case ConfusedKittenRole:
 			p.SecretWord = g.DecoyWord
+		default:
 		}
 	}
 

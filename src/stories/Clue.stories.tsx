@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Clue from "../components/phases/Clue/Clue";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
-import { Player as PlayerType } from "../game/player";
 import { getPlayers } from "./helpers/players";
 
 const meta = {
@@ -30,4 +29,22 @@ const baseStory: Story = {
   },
 };
 
-export const Base: Story = {};
+/**
+ example
+
+ export const Spy: Story = {
+  ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      currentWord: "",
+    },
+  },
+};
+
+*/
+
+export const Base: Story = {
+  ...baseStory,
+};

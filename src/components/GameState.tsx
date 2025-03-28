@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { Phase } from "./phases/phases.ts";
 import { OutboundMessage } from "../game/message.ts";
 import { Player } from "../game/player.ts";
+import { ClueRound } from "../game/clue.ts";
 
 export interface GameContextType {
   phase: Phase;
@@ -12,6 +13,8 @@ export interface GameContextType {
   players: Player[];
   clearRoomCode: () => void;
   currentWord: string;
+  clues: Record<number, ClueRound>;
+  round: number;
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -23,4 +26,6 @@ export const GameContext = createContext<GameContextType>({
   playerID: "",
   players: [],
   clearRoomCode: () => {},
+  clues: {},
+  round: 0,
 });

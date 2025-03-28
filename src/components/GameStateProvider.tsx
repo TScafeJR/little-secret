@@ -6,6 +6,7 @@ import { GameEvent } from "../game/events.ts";
 import { OutboundMessage, InboundMessage } from "../game/message.ts";
 import { Player, sortPlayers } from "../game/player.ts";
 import { GameContextType } from "./GameState";
+import { ClueRound } from "../game/clue.ts";
 
 interface ContextProviderProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [playerWord, setPlayerWord] = useState("");
+  const [clues, setClues] = useState<Record<number, ClueRound>>({});
 
   function handleShowSnackbar(msg: InboundMessage) {
     setErrorMessage(msg.text as string);

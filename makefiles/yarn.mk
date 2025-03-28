@@ -21,3 +21,7 @@ yarn-install:
 .PHONY: yarn-test
 yarn-test:
 	yarn test
+
+.PHONY: yarn-storybook
+yarn-storybook:
+	yarn run storybook

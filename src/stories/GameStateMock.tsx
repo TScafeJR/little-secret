@@ -37,4 +37,6 @@ export const baseContext = {
   sendSocketMessage: (_: OutboundMessage) => {},
   playerID: "",
   clearRoomCode: () => {},
-};
+  clues: {},
+  round: 0,
+} as GameContextType;
