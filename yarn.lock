@@ -849,7 +849,7 @@
   dependencies:
     memoizerific "^1.11.3"
 
-"@storybook/blocks@8.6.10", "@storybook/blocks@^8.6.10":
+"@storybook/blocks@8.6.10":
   version "8.6.10"
   resolved "https://registry.yarnpkg.com/@storybook/blocks/-/blocks-8.6.10.tgz#9dbdd3e538f55f764f62f7cf6d403e0fab5f3e17"
   integrity sha512-S9XVyN36utNAo78/IHUP1DpCw7vBw5Ef4iO9diF+MLtxP3jJwFXPFkyBSi7AnWig9FH3I8vYI1fh1a4/nk1H4g==
@@ -902,7 +902,7 @@
   dependencies:
     type-fest "^2.19.0"
 
-"@storybook/experimental-addon-test@^8.6.10":
+"@storybook/experimental-addon-test@8.6.10":
   version "8.6.10"
   resolved "https://registry.yarnpkg.com/@storybook/experimental-addon-test/-/experimental-addon-test-8.6.10.tgz#ffe6e8d78d30b783bbb0afcd85830a96f9eb0bbc"
   integrity sha512-qsJGgycPji0gaDXF4L3gwk/torr3AKJnZ/FlW7jD4bW0HkVolSmHcgxAdd/MhoOulKuMkzL6mdUVcZsP+DdN0Q==
@@ -963,7 +963,7 @@
     resolve "^1.22.8"
     tsconfig-paths "^4.2.0"
 
-"@storybook/react@8.6.10", "@storybook/react@^8.6.10":
+"@storybook/react@8.6.10":
   version "8.6.10"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-8.6.10.tgz#eade7f3a0c78922e4563b5f44cdf8424f0d1113f"
   integrity sha512-QCs5nyXe+G2ZoZ1uspEsnSp7VYLJej5dJ1bSf22rrdHQde641zvC2HZQaba4dqR2YQxRCG9JtCdaQ3UVmnfzzA==
@@ -975,7 +975,7 @@
     "@storybook/react-dom-shim" "8.6.10"
     "@storybook/theming" "8.6.10"
 
-"@storybook/test@8.6.10", "@storybook/test@^8.6.10":
+"@storybook/test@8.6.10":
   version "8.6.10"
   resolved "https://registry.yarnpkg.com/@storybook/test/-/test-8.6.10.tgz#8b8cef4c6158e30943c2d02956c83870b2294659"
   integrity sha512-eCQueRB0SpwjnXcE5wmUNu2G7Z7nRzzHw+0QW2Yc3DoA5UwmOiuwTseZenQkD019dwvFJ87fHo1xXnDAamX1Tg==
@@ -1208,10 +1208,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.0.4.tgz#bedba97f9346bd4c0fe5d39e689713804ec9ac89"
   integrity sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==
 
-"@types/react@19.0.10":
-  version "19.0.10"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.10.tgz#d0c66dafd862474190fe95ce11a68de69ed2b0eb"
-  integrity sha512-JuRQ9KXLEjaUNjTWpzuR231Z2WpIwczOkBEIvbHNCzQefFIT0L8IqE6NV6ULLyC1SI/i234JnDoMkfg+RjQj2g==
+"@types/react@19.0.12":
+  version "19.0.12"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.12.tgz#338b3f7854adbb784be454b3a83053127af96bd3"
+  integrity sha512-V6Ar115dBDrjbtXSrS+/Oruobc+qVbbUxDFC1RSbRqLt5SYvxxyIDrSC85RWml54g+jfNeEMZhEj7wW07ONQhA==
   dependencies:
     csstype "^3.0.2"
 
@@ -1987,17 +1987,17 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
-eslint-plugin-react-hooks@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-5.1.0.tgz#3d34e37d5770866c34b87d5b499f5f0b53bf0854"
-  integrity sha512-mpJRtPgHN2tNAvZ35AMfqeB3Xqeo273QxrHJsbBEPWODRM4r0yB6jfoROqKEYrOn27UtRPpcpHc2UqyBSuUNTw==
+eslint-plugin-react-hooks@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-5.2.0.tgz#1be0080901e6ac31ce7971beed3d3ec0a423d9e3"
+  integrity sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==
 
 eslint-plugin-react-refresh@0.4.19:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-refresh/-/eslint-plugin-react-refresh-0.4.19.tgz#f15020c0caa58e33fc4efda27d328281ca74e53d"
   integrity sha512-eyy8pcr/YxSYjBoqIFSrlbn9i/xvxUFa8CjzAYo9cFjgGXqq1hyjihcpZvxRLalpaWmueWR81xn7vuKmAFijDQ==
 
-eslint-plugin-storybook@^0.12.0:
+eslint-plugin-storybook@0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-storybook/-/eslint-plugin-storybook-0.12.0.tgz#09ae667a7c569787d961b6f83337b2deee9daea8"
   integrity sha512-Lg5I0+npTgiYgZ4KSvGWGDFZi3eOCNJPaWX0c9rTEEXC5wvooOClsP9ZtbI4hhFKyKgYR877KiJxbRTSJq9gWA==
@@ -3008,7 +3008,7 @@ playwright-core@1.51.1:
   resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.51.1.tgz#d57f0393e02416f32a47cf82b27533656a8acce1"
   integrity sha512-/crRMj8+j/Nq5s8QcvegseuyeZPxpQCZb6HNk3Sos3BlZyAknRjoyJPFWkpNn8v0+P3WiwqFF8P+zQo4eqiNuw==
 
-playwright@1.51.1, playwright@^1.51.1:
+playwright@1.51.1:
   version "1.51.1"
   resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.51.1.tgz#ae1467ee318083968ad28d6990db59f47a55390f"
   integrity sha512-kkx+MB2KQRkyxjYPc3a0wLZZoDczmppyGJIvQ43l+aZihkaVvmu/21kiyaHeHjiFxjxNNFnUncKmcGIyOojsaw==
@@ -3344,7 +3344,7 @@ std-env@^3.8.0:
   resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.8.1.tgz#2b81c631c62e3d0b964b87f099b8dcab6c9a5346"
   integrity sha512-vj5lIj3Mwf9D79hBkltk5qmkFI+biIKWS2IBxEyEU3AX1tUf7AoL8nSazCOiiqQsGKIq01SClsKEzweu34uwvA==
 
-storybook@^8.6.10:
+storybook@8.6.10:
   version "8.6.10"
   resolved "https://registry.yarnpkg.com/storybook/-/storybook-8.6.10.tgz#c3daa8c39abaeaddd5a8eae3dc7078fcd566a8e5"
   integrity sha512-7LUD9hNllMZZhDJutxgejrpWI89rsBF+p2kCfWoJ9EuBTgRy8bbVQZlG7bE1gf7qLmnabnklsFslTakS2SbKRw==
