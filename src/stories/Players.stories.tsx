@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Players from "../components/phases/Info/WaitingForPlayers";
+import WaitingForPlayers from "../components/phases/Info/WaitingForPlayers";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 
 const meta = {
   title: "Lobby/WaitingForPlayers",
-  component: Players,
+  component: WaitingForPlayers,
   tags: ["autodocs"],
   decorators: [GameStateDecorator],
   parameters: {
@@ -30,7 +30,7 @@ const meta = {
       ],
     },
   },
-} satisfies Meta<typeof Players>;
+} satisfies Meta<typeof WaitingForPlayers>;
 
 export default meta;
 

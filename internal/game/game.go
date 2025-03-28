@@ -25,6 +25,7 @@ type Game struct {
 	Phase              Phase
 	Round              int
 	Votes              map[int]*VoteRound
+	Clues              map[int]*ClueRound
 	HostID             id.PlayerID
 	PlayerOrderPointer int
 }
@@ -157,4 +158,8 @@ func (g *Game) RemovePlayer(playerID id.PlayerID) error {
 		}
 	}
 	return fmt.Errorf("player not found")
+}
+
+func (g *Game) UpdatePhase(p Phase) {
+	g.Phase = p
 }
