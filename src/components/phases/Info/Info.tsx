@@ -1,7 +1,7 @@
 import { useState, useCallback, useContext } from "react";
 import Word from "./Word.tsx";
 import { GameContext } from "../../GameState";
-import { GameEvent } from "../../game/events.ts";
+import { GameEvent } from "../../../game/events";
 
 export default function Info() {
   const gameContext = useContext(GameContext);
