@@ -58,6 +58,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.PLAYER_JOINED:
       case GameEvent.UPDATE_PLAYER_NAME:
       case GameEvent.REMOVE_PLAYER:
+      case GameEvent.PROCCESSED_VOTE:
         setPlayers(msg?.gameState?.players as Player[]);
         break;
       case GameEvent.PHASE_UPDATED:

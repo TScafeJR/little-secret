@@ -1,0 +1,26 @@
+import { useContext } from "react";
+import { GameContext } from "../../GameState";
+
+export default function Players() {
+  const gameContext = useContext(GameContext);
+
+  return (
+    <div className="flex flex-col gap-4 my-4">
+      <h3 className="items-center">Players:</h3>
+      <ul className="items-center ml-4">
+        {gameContext.players.map((p) => {
+          return (
+            <div className="flex items-center gap-2">
+              <div
+                className={`w-2 h-2 ${
+                  p.confirmedVote ? "bg-green-400" : "bg-yellow-400"
+                } rounded-full`}
+              ></div>
+              <li key={p.id}>{p.displayName}</li>
+            </div>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}

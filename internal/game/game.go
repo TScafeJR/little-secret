@@ -24,7 +24,7 @@ type Game struct {
 	DecoyWord  string
 	Phase      Phase
 	Round      int
-	Votes      map[string]string
+	Votes      map[int]*VoteRound
 	HostID     id.PlayerID
 }
 
@@ -40,10 +40,14 @@ func (g *Game) FindPlayer(playerID id.PlayerID) (*Player, error) {
 func NewGame(roomID id.RoomHash, hostID id.PlayerID, hostConn *websocket.Conn) *Game {
 	h := NewPlayer(hostID, "Player 1", hostConn)
 	h.Host = true
+
+	votes := make(map[int]*VoteRound)
+
 	return &Game{
 		RoomID:  roomID,
 		Players: []*Player{h},
 		HostID:  hostID,
+		Votes:   votes,
 	}
 }
 

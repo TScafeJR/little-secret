@@ -240,6 +240,44 @@ func (s *GameService) handleRemovePlayer(conn *websocket.Conn, m Message) {
 
 }
 
+func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
+	g, err := s.getGameFromRoomID(m.RoomID)
+	if err != nil {
+		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		return
+	}
+
+	if _, ok := g.Votes[g.Round]; !ok {
+		g.Votes[g.Round] = game.NewVoteRound()
+	}
+
+	vr := g.Votes[g.Round]
+
+	if vr.Submitted.Contains(m.PlayerID) {
+		return
+	} else {
+		vr.Submitted.Add(m.PlayerID)
+		if m.Text != "" {
+			v := game.Vote{
+				From: m.PlayerID,
+				To:   id.PlayerID(m.Text),
+			}
+			vr.Votes = append(vr.Votes, v)
+		}
+		for i := range g.Players {
+			if g.Players[i].ID == m.PlayerID {
+				g.Players[i].ConfirmedVote = true
+			}
+		}
+	}
+
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:      game.ProcessedVoteEvent,
+		PlayerID:  m.PlayerID,
+		GameState: g.GetGameState(),
+	})
+}
+
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
 	m, err := parseMessage(message)
 	if err != nil {
@@ -259,6 +297,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handleStartGame(conn, m)
 	case game.RemovePlayerEvent:
 		s.handleRemovePlayer(conn, m)
+	case game.VoteEvent:
+		s.handleVote(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}

@@ -1,11 +1,19 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 import Word from "./Word.tsx";
+import { GameContext } from "../../GameState";
+import { GameEvent } from "../../game/events.ts";
 
 export default function Info() {
+  const gameContext = useContext(GameContext);
   const [wordSeen, setWordSeen] = useState(false);
 
   const handleWordSeenClick = useCallback(() => {
     setWordSeen(true);
+    gameContext.sendSocketMessage({
+      playerID: gameContext.playerID,
+      roomID: gameContext.roomCode,
+      type: GameEvent.VOTE,
+    });
   }, []);
 
   return (
