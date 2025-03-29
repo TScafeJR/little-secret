@@ -26,6 +26,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [errorMessage, setErrorMessage] = useState("");
   const [playerWord, setPlayerWord] = useState("");
   const [clues, setClues] = useState<Record<number, ClueRound>>({});
+  const [round, setRound] = useState(0);
 
   function handleShowSnackbar(msg: InboundMessage) {
     setErrorMessage(msg.text as string);
@@ -70,6 +71,12 @@ export default function GameStateProvider(p: ContextProviderProps) {
         const word = (msg?.text as string) || "";
         setPlayerWord(word);
         break;
+      case GameEvent.ROUND_UPDATE:
+        setRound(msg?.gameState?.round as number);
+        break;
+      case GameEvent.CLUE_SUBMITTED:
+        setClues(msg?.gameState?.clues as Record<number, ClueRound>);
+        break;
       default:
         console.error("Unknown message type:", msg.type);
     }
@@ -94,8 +101,19 @@ export default function GameStateProvider(p: ContextProviderProps) {
         setPlayerName("");
         setPlayers([]);
       },
+      clues,
+      round: round,
     }),
-    [currentPhase, playerName, roomCode, playerID, players, playerWord],
+    [
+      currentPhase,
+      playerName,
+      roomCode,
+      playerID,
+      players,
+      playerWord,
+      clues,
+      round,
+    ],
   );
 
   useEffect(() => {
@@ -132,6 +150,8 @@ export default function GameStateProvider(p: ContextProviderProps) {
     if (process.env.NODE_ENV !== "production") {
       if (!window?.secret) {
         window.secret = { state: value };
+      } else {
+        window.secret.state = value;
       }
     }
   }, [value]);

@@ -171,3 +171,23 @@ func (g *Game) RemovePlayer(playerID id.PlayerID) error {
 func (g *Game) UpdatePhase(p Phase) {
 	g.Phase = p
 }
+
+func (g *Game) ToggleConfirmedVote(playerID id.PlayerID) {
+	for _, player := range g.Players {
+		if player.ID == playerID {
+			player.ConfirmedVote = !player.ConfirmedVote
+		}
+	}
+}
+
+func (g *Game) AllAlivePlayersSubmittedClue(round int) bool {
+	roundClue, exists := g.Clues[round]
+	if !exists {
+		return false
+	}
+	return roundClue.SubmissionCount() == len(g.Players)
+}
+
+func (g *Game) IncrementRound() {
+	g.Round++
+}

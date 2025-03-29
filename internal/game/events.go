@@ -22,6 +22,7 @@ var (
 	HostLeftGameEvent      Event = "hostLeftGame"
 	ProcessedVoteEvent     Event = "processedVote"
 	ClueSubmittedEvent     Event = "clueSubmitted"
+	RoundUpdatedEvent      Event = "roundUpdated"
 )
 
 type Phase string

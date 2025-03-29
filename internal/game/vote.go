@@ -22,3 +22,7 @@ func NewVoteRound() *VoteRound {
 		Votes:     []Vote{},
 	}
 }
+
+func (vr *VoteRound) AddVote(vote Vote) {
+	vr.Votes = append(vr.Votes, vote)
+}

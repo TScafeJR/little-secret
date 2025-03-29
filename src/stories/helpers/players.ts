@@ -39,6 +39,8 @@ export function getPlayers(n: number): Player[] {
         p.displayName = "Berlinnnnn";
         break;
       default:
+        p.displayName = `Player ${i + 1}`;
+        break;
     }
 
     const c = createPlayer(p);

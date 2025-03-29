@@ -17,4 +17,5 @@ export enum GameEvent {
   HOST_LEFT_GAME = "hostLeftGame",
   PROCCESSED_VOTE = "processedVote",
   CLUE_SUBMITTED = "clueSubmitted",
+  ROUND_UPDATE = "roundUpdated",
 }

@@ -13,7 +13,7 @@ export interface GameContextType {
   players: Player[];
   clearRoomCode: () => void;
   currentWord: string;
-  clues: Record<number, ClueRound>;
+  clues: Record<number, ClueRound | undefined>;
   round: number;
 }
 

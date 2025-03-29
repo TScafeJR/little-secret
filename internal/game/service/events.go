@@ -186,13 +186,9 @@ func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
 				From: m.PlayerID,
 				To:   id.PlayerID(m.Text),
 			}
-			vr.Votes = append(vr.Votes, v)
+			vr.AddVote(v)
 		}
-		for i := range g.Players {
-			if g.Players[i].ID == m.PlayerID {
-				g.Players[i].ConfirmedVote = true
-			}
-		}
+		g.ToggleConfirmedVote(m.PlayerID)
 	}
 
 	for _, player := range g.Players {
@@ -206,7 +202,12 @@ func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
 		}
 	}
 
-	g.Round = g.Round + 1
+	g.IncrementRound()
+
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:      game.RoundUpdatedEvent,
+		GameState: g.GetGameState(),
+	})
 
 	nextPhase := game.SubmitCluePhase
 
@@ -217,6 +218,48 @@ func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
 		GameState: g.GetGameState(),
 		Phase:     nextPhase,
 	})
+}
+
+func (s *GameService) handleClueSubmitted(_ *websocket.Conn, m Message) {
+	g, err := s.getGameFromRoomID(m.RoomID)
+	if err != nil {
+		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		return
+	}
+
+	if _, ok := g.Clues[g.Round]; !ok {
+		g.Clues[g.Round] = game.NewClueRound()
+	}
+	cr := g.Clues[g.Round]
+	if cr.HasSubmitted(m.PlayerID) {
+		return
+	} else {
+		if m.Text != "" {
+			clue := game.Clue{
+				PlayerID: m.PlayerID,
+				Word:     m.Text,
+			}
+			cr.AddClue(clue)
+			cr.AddSubmittedPlayer(m.PlayerID)
+		} else {
+			s.logger.Error("Clue is empty")
+			return
+		}
+	}
+
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:      game.ClueSubmittedEvent,
+		GameState: g.GetGameState(),
+	})
+
+	if g.AllAlivePlayersSubmittedClue(g.Round) {
+		g.UpdatePhase(game.VotePhase)
+		s.broadcastToRoom(m.RoomID, Message{
+			Type:      game.PhaseUpdatedEvent,
+			GameState: g.GetGameState(),
+			Phase:     game.VotePhase,
+		})
+	}
 }
 
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
@@ -240,6 +283,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handleRemovePlayer(conn, m)
 	case game.VoteEvent:
 		s.handleVote(conn, m)
+	case game.SubmitClueEvent:
+		s.handleClueSubmitted(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}
