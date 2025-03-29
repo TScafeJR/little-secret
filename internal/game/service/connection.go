@@ -47,6 +47,7 @@ func (s *GameService) sendMessageToConnection(conn *websocket.Conn, msg Message)
 
 	if err := conn.WriteJSON(msg); err != nil {
 		s.logWriteError(err)
+		return
 	}
 
 	s.logger.Info("Sent message", zap.Any("message", msg))

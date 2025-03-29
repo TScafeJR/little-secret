@@ -25,6 +25,10 @@ func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn, msg Message) 
 	hash, err := common.UUIDToShort(roomID)
 	if err != nil {
 		s.logger.Error("common.UUIDToShort()", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to create room",
+		})
 		return
 	}
 	conns := make(map[*websocket.Conn]bool)
@@ -52,10 +56,14 @@ func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn, msg Message) 
 	s.sendMessageToConnection(conn, m2)
 }
 
-func (s *GameService) handlePlayerUpdatedName(_ *websocket.Conn, message Message) {
+func (s *GameService) handlePlayerUpdatedName(conn *websocket.Conn, message Message) {
 	g, err := s.getGameFromRoomID(message.RoomID)
 	if err != nil {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to update player name",
+		})
 		return
 	}
 
@@ -78,6 +86,10 @@ func (s *GameService) handleRoomCodeSubmittedEvent(conn *websocket.Conn, message
 	room, ok := s.Rooms[roomID]
 	if !ok {
 		s.logger.Error("Room not found", zap.String("roomID", string(roomID)))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Room not found",
+		})
 		return
 	}
 
@@ -96,15 +108,23 @@ func (s *GameService) handleRoomCodeSubmittedEvent(conn *websocket.Conn, message
 	})
 }
 
-func (s *GameService) handleStartGame(_ *websocket.Conn, m Message) {
+func (s *GameService) handleStartGame(conn *websocket.Conn, m Message) {
 	g, err := s.getGameFromRoomID(m.RoomID)
 	if err != nil {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to start game",
+		})
 		return
 	}
 
 	if err = g.StartGame(); err != nil {
 		s.logger.Error("g.StartGame()", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to start game",
+		})
 		return
 	}
 
@@ -130,6 +150,10 @@ func (s *GameService) handleRemovePlayer(conn *websocket.Conn, m Message) {
 	g, err := s.getGameFromRoomID(m.RoomID)
 	if err != nil {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to remove player",
+		})
 		return
 	}
 
@@ -164,10 +188,14 @@ func (s *GameService) handleRemovePlayer(conn *websocket.Conn, m Message) {
 
 }
 
-func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
+func (s *GameService) handleVote(conn *websocket.Conn, m Message) {
 	g, err := s.getGameFromRoomID(m.RoomID)
 	if err != nil {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to handle vote",
+		})
 		return
 	}
 
@@ -220,10 +248,14 @@ func (s *GameService) handleVote(_ *websocket.Conn, m Message) {
 	})
 }
 
-func (s *GameService) handleClueSubmitted(_ *websocket.Conn, m Message) {
+func (s *GameService) handleClueSubmitted(conn *websocket.Conn, m Message) {
 	g, err := s.getGameFromRoomID(m.RoomID)
 	if err != nil {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to handle clue submission",
+		})
 		return
 	}
 
@@ -243,6 +275,10 @@ func (s *GameService) handleClueSubmitted(_ *websocket.Conn, m Message) {
 			cr.AddSubmittedPlayer(m.PlayerID)
 		} else {
 			s.logger.Error("Clue is empty")
+			s.sendMessageToConnection(conn, Message{
+				Type: game.ErrorEvent,
+				Text: "Clue is empty",
+			})
 			return
 		}
 	}

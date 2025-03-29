@@ -33,6 +33,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
     setShowSnackbar(true);
     setTimeout(() => setShowSnackbar(false), 5000);
   }
+
   const handleSetName = (name: string) => {
     setPlayerName(name);
     const updateMessage = {
@@ -131,6 +132,10 @@ export default function GameStateProvider(p: ContextProviderProps) {
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data) as unknown as InboundMessage;
       handleIncomingMessage(msg);
+    };
+
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
     };
 
     socket.onclose = () => {
