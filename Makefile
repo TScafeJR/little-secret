@@ -16,7 +16,7 @@ install: go-install yarn-install
 
 ## make clean; - clean project state
 .PHONY: clean
-clean: go-clean
+clean: go-clean yarn-clean
 
 ## make lint; - run linters for protoc, go, and web
 .PHONY: lint
@@ -41,14 +41,6 @@ fmt-check: go-fmt-check
 ## make test; - run project tests
 .PHONY: test
 test: go-test yarn-test
-
-.PHONY: update-companies
-update-companies:
-	@./scripts/update-companies
-
-.PHONY: build
-build:
-	@./scripts/build
 
 ## make help; - show make help
 .PHONY: help show-help

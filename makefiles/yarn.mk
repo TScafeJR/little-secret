@@ -25,3 +25,7 @@ yarn-test:
 .PHONY: yarn-storybook
 yarn-storybook:
 	yarn run storybook
+
+.PHONY: yarn-clean
+yarn-clean:
+	yarn run clean
