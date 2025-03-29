@@ -8,9 +8,6 @@ const meta = {
   component: Clue,
   tags: ["autodocs"],
   decorators: [GameStateDecorator],
-  args: {
-    wordSeen: false,
-  },
 } satisfies Meta<typeof Clue>;
 
 export default meta;
@@ -29,22 +26,48 @@ const baseStory: Story = {
   },
 };
 
-/**
- example
+const cluePlayers = getPlayers(5);
 
- export const Spy: Story = {
+export const NoClues: Story = {
   ...baseStory,
   parameters: {
     ...baseStory.parameters,
     context: {
       ...baseStory.parameters?.context,
-      currentWord: "",
+      round: 1,
+      players: cluePlayers,
+      playerID: cluePlayers[0].id,
     },
   },
 };
 
-*/
-
-export const Base: Story = {
+export const NoCluesNotTurn: Story = {
   ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      round: 1,
+      players: cluePlayers,
+      playerID: cluePlayers[1].id,
+    },
+  },
+};
+
+export const NoCluesFirstPlayerDead: Story = {
+  ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      round: 1,
+      players: cluePlayers.map((p, i) => {
+        if (i === 0) {
+          return { ...p, alive: false };
+        }
+        return p;
+      }),
+      playerID: cluePlayers[1].id,
+    },
+  },
 };

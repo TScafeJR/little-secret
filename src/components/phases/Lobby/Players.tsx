@@ -9,7 +9,7 @@ export default function Players() {
       <h3 className="items-center">Players:</h3>
       <ol className="list-decimal ml-4">
         {gameContext.players.map((p) => {
-          return <li key={p.id}>{p.displayName}</li>;
+          return <li key={`${p.id}-player-list`}>{p.displayName}</li>;
         })}
       </ol>
     </div>

@@ -10,10 +10,12 @@ export default function Players() {
       <ul className="items-center ml-4">
         {gameContext.players.map((p) => {
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" key={`${p.id}-indicator`}>
               <div
                 className={`w-2 h-2 ${
-                  p.confirmedVote ? "bg-green-400" : "bg-yellow-400"
+                  p.confirmedVote
+                    ? "bg-green-400"
+                    : "bg-yellow-400 animate-pulse"
                 } rounded-full`}
               ></div>
               <li key={p.id}>{p.displayName}</li>

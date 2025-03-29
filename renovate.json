@@ -1,14 +1,12 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"config:recommended"
-	],
-	"dependencyDashboard": true,
-	"dependencyDashboardAutoclose": true,
-	"internalChecksFilter": "strict",
-	"labels": ["bot", "renovate", "dependencies"],
-	"postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"],
-	"stabilityDays": 7,
-	"prConcurrentLimit": 7,
-	"digest": false,
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "internalChecksFilter": "strict",
+  "labels": ["bot", "renovate", "dependencies"],
+  "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"],
+  "stabilityDays": 7,
+  "prConcurrentLimit": 7,
+  "digest": false
 }

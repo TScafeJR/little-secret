@@ -6,6 +6,7 @@ export interface Player {
   confirmedVote?: boolean;
   host?: boolean;
   sortOrder?: number;
+  alive?: boolean;
 }
 
 export const sortPlayers = (players: Player[]): Player[] => {
@@ -14,11 +15,18 @@ export const sortPlayers = (players: Player[]): Player[] => {
 
 export const getCurrentCluePlayer = (p: Player[], c: ClueRound): Player => {
   const players = sortPlayers(p);
-  const currIdx = players.findIndex(
-    (player) => player.id === c.lastSubmittedPlayerID,
-  );
-  if (currIdx + 1 >= players.length) {
-    return players[players.length - 1];
+  const index = players.findIndex((pl) => pl.id === c.lastSubmittedPlayerID);
+  const total = players.length;
+
+  for (let i = 1; i <= total; i++) {
+    const next = players[(index + i) % total];
+    if (next.alive) return next;
   }
-  return players[currIdx + 1];
+
+  return players.find((pl) => pl.id === c.lastSubmittedPlayerID)!;
+};
+
+export const getFirstAlivePlayer = (p: Player[]): Player => {
+  const players = sortPlayers(p);
+  return players.find((pl) => pl.alive) || players[0];
 };

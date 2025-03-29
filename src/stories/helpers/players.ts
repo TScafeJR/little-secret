@@ -6,6 +6,7 @@ function createPlayer(p: Player): Player {
     displayName: p.displayName ?? "Anonymous",
     confirmedVote: p.confirmedVote ?? false,
     host: p.host ?? false,
+    alive: p.alive ?? true,
   };
 }
 
@@ -23,6 +24,7 @@ export function getPlayers(n: number): Player[] {
       confirmedVote: false,
       host: false,
       sortOrder: i,
+      alive: true,
     };
 
     switch (i) {

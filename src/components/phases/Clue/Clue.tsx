@@ -1,9 +1,13 @@
-import { useMemo, useContext, useState } from "react";
+import { useMemo, useContext, useState, useEffect } from "react";
 import { GameContext } from "../../GameState";
-import { getCurrentCluePlayer } from "../../../game/player";
+import {
+  getCurrentCluePlayer,
+  getFirstAlivePlayer,
+} from "../../../game/player";
 
 export default function Clue() {
   const [clue, setClue] = useState("");
+  const [dotCount, setDotCount] = useState(0);
   const { clues, playerID, round, players } = useContext(GameContext);
 
   const clueRound = useMemo(() => {
@@ -11,7 +15,7 @@ export default function Clue() {
   }, [clues, round]);
 
   const currentPlayerTurn = useMemo(() => {
-    if (!clueRound) return undefined;
+    if (!clueRound) return getFirstAlivePlayer(players);
     return getCurrentCluePlayer(players, clueRound);
   }, [clueRound, players]);
 
@@ -19,11 +23,19 @@ export default function Clue() {
     return currentPlayerTurn?.id === playerID;
   }, [currentPlayerTurn, playerID]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDotCount((prev) => (prev + 1) % 4);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <h1>Clue</h1>
       {isTurn ? (
         <div className="w-full flex flex-col items-center gap-4">
+          <h3>It's your turn to submit a clue</h3>
           <input
             type="text"
             placeholder="Clue"
@@ -38,9 +50,10 @@ export default function Clue() {
           </button>
         </div>
       ) : (
-        <h2 className="fw-text">
-          Waiting for {currentPlayerTurn?.displayName} to give a clue
-        </h2>
+        <h3 className="fw-text text-center">
+          Waiting for {currentPlayerTurn?.displayName} to give a clue this round
+          {".".repeat(dotCount)}
+        </h3>
       )}
     </div>
   );
