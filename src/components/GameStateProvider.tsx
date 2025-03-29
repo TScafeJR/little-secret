@@ -154,9 +154,13 @@ export default function GameStateProvider(p: ContextProviderProps) {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       if (!window?.secret) {
-        window.secret = { state: value };
+        window.secret = {
+          state: value,
+          messages: messages,
+        };
       } else {
         window.secret.state = value;
+        window.secret.messages = messages;
       }
     }
   }, [value]);
@@ -166,8 +170,14 @@ export default function GameStateProvider(p: ContextProviderProps) {
       <div>
         {p.children}
         {showSnackbar && (
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded shadow-lg">
-            {errorMessage}
+          <div className="fixed top-8 left-1/2 -translate-x-1/2 bg-red-700 text-white px-4 py-2 rounded shadow-lg flex flex-col items-center">
+            <span>{errorMessage}</span>
+            <button
+              className="text-sm underline trans-button"
+              onClick={() => setShowSnackbar(false)}
+            >
+              dismiss
+            </button>
           </div>
         )}
       </div>
