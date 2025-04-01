@@ -22,6 +22,10 @@ yarn-install:
 yarn-test:
 	yarn test
 
+.PHONY: yarn-test-ui
+yarn-test-ui:
+	yarn test:ui
+
 .PHONY: yarn-storybook
 yarn-storybook:
 	yarn run storybook

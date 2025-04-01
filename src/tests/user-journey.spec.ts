@@ -78,20 +78,16 @@ const runTest = async (browser: Browser, numPlayers: number) => {
         .locator("#room-code-input")
         .pressSequentially(roomCode as string);
       await player.click("#room-code-submit");
-      return player.waitForSelector("#room-code");
+      await expect(player.locator("#room-code")).toBeVisible();
     }),
   );
 
   await host.locator("#player-name-input").pressSequentially("host");
   await host.click("#player-name-submit");
 
-  await Promise.all(
-    players.map(async (player, i) => {
-      if (i !== 0) {
-        await expect(player.getByText("host")).toBeVisible();
-      }
-    }),
-  );
+  for (const player of players.slice(1)) {
+    await expect(player.getByText("host")).toBeVisible({ timeout: 3000 });
+  }
 
   // player 2 changes name to player
   await players[1].locator("#player-name-input").pressSequentially("player");
@@ -104,7 +100,9 @@ const runTest = async (browser: Browser, numPlayers: number) => {
   let wordCount: Record<string, number> = {};
 
   for (const player of players) {
-    const playerWord = await player.textContent("#player-word");
+    const wordEl = player.locator("#player-word");
+    await expect(wordEl).toBeVisible({ timeout: 3000 });
+    const playerWord = await wordEl.textContent();
     wordCount = updateWordCount(wordCount, playerWord as string);
   }
 
@@ -115,6 +113,13 @@ const runTest = async (browser: Browser, numPlayers: number) => {
 
   const counts = Object.values(wordCount).sort();
   expect(counts).toEqual(order);
+
+  await Promise.all(
+    players.map(async (player) => {
+      await player.waitForSelector("#confirm-word-btn", { timeout: 2000 });
+      return player.click("#confirm-word-btn");
+    }),
+  );
 
   for (const player of players) {
     await player.close();

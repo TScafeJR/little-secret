@@ -20,6 +20,7 @@
     "supabase:upgrade": "supabase link",
     "storybook": "storybook dev -p 6006",
     "test": "yarn playwright test",
+		"test:ci": "CI=true yarn playwright test --ui",
     "test:ui": "yarn playwright test --ui",
     "test:report": "yarn playwright show-report"
   },
