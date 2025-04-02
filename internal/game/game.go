@@ -28,6 +28,7 @@ type Game struct {
 	Clues              map[int]*ClueRound
 	HostID             id.PlayerID
 	PlayerOrderPointer int
+	Result             *Result
 }
 
 func (g *Game) FindPlayer(playerID id.PlayerID) (*Player, error) {
@@ -71,6 +72,7 @@ type GameState struct {
 	Clues   map[int]*ClueRound `json:"clues"`
 	Round   int                `json:"round"`
 	Votes   map[int]*VoteRound `json:"votes"`
+	Result  *Result            `json:"result,omitzero"`
 }
 
 func (g *Game) GetGameState() GameState {
@@ -80,6 +82,7 @@ func (g *Game) GetGameState() GameState {
 		Clues:   g.Clues,
 		Round:   g.Round,
 		Votes:   g.Votes,
+		Result:  g.Result,
 	}
 }
 

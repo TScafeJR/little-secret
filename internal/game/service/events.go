@@ -316,6 +316,46 @@ func (s *GameService) handleClueSubmitted(conn *websocket.Conn, m Message) {
 	}
 }
 
+func (s *GameService) handleRoleConfirmed(conn *websocket.Conn, m Message) {
+	g, err := s.getGameFromRoomID(m.RoomID)
+	if err != nil {
+		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Failed to handle clue submission",
+		})
+		return
+	}
+
+	res := &game.Result{}
+
+	if m.Text != "" {
+		same := confirmSecretWordGuess(*g, m)
+		if same {
+			res.WinningRoles = append(res.WinningRoles, game.SpyKittenRole)
+		}
+	}
+
+	if g.IsOver() {
+		g.UpdatePhase(game.GameOverPhase)
+		g.Result = res
+
+		s.broadcastToRoom(m.RoomID, Message{
+			Type:      game.GameOverEvent,
+			GameState: g.GetGameState(),
+			Phase:     game.GameOverPhase,
+		})
+		return
+	}
+
+	g.UpdatePhase(game.SubmitCluePhase)
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:      game.PhaseUpdatedEvent,
+		GameState: g.GetGameState(),
+		Phase:     game.SubmitCluePhase,
+	})
+}
+
 func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, message []byte) error {
 	m, err := parseMessage(message)
 	if err != nil {
@@ -339,6 +379,8 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handleVote(conn, m)
 	case game.SubmitClueEvent:
 		s.handleClueSubmitted(conn, m)
+	case game.RoleConfirmedEvent:
+		s.handleRoleConfirmed(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}

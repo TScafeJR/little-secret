@@ -20,4 +20,6 @@ export enum GameEvent {
   ROUND_UPDATE = "roundUpdated",
   VOTES_UPDATED = "votesUpdated",
   WORD_SHARED = "wordShared",
+  ROLE_CONFIRMED = "roleConfirmed",
+  GAME_OVER = "gameOver",
 }

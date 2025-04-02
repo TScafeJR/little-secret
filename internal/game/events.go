@@ -24,6 +24,8 @@ var (
 	ClueSubmittedEvent     Event = "clueSubmitted"
 	RoundUpdatedEvent      Event = "roundUpdated"
 	WordSharedEvent        Event = "wordShared"
+	RoleConfirmedEvent     Event = "roleConfirmed"
+	GameOverEvent          Event = "gameOver"
 )
 
 type Phase string
@@ -35,4 +37,5 @@ var (
 	SubmitCluePhase        Phase = "submitClue"
 	RevealRolePhase        Phase = "revealRole"
 	GuessWordPhase         Phase = "guessWord"
+	GameOverPhase          Phase = "gameOver"
 )
