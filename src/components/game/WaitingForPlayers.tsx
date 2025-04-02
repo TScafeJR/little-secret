@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GameContext } from "../../GameState";
+import { GameContext } from "../GameState";
 
 export default function Players() {
   const gameContext = useContext(GameContext);
@@ -12,13 +12,17 @@ export default function Players() {
           return (
             <div className="flex items-center gap-2" key={`${p.id}-indicator`}>
               <div
-                className={`w-2 h-2 ${
-                  p.confirmedVote
-                    ? "bg-green-400"
-                    : "bg-yellow-400 animate-pulse"
-                } rounded-full`}
+                className={`w-2 h-2 rounded-full ${
+                  p.alive
+                    ? p.confirmedVote
+                      ? "bg-green-400"
+                      : "bg-yellow-400 animate-pulse"
+                    : "bg-red-500"
+                }`}
               ></div>
-              <li key={p.id}>{p.displayName}</li>
+              <li key={p.id} className={`${!p.alive ? "line-through" : ""}`}>
+                {p.displayName}
+              </li>
             </div>
           );
         })}

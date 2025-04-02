@@ -7,9 +7,13 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     "@storybook/experimental-addon-test",
   ],
+  core: {
+    disableTelemetry: true,
+  },
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
 };
+
 export default config;

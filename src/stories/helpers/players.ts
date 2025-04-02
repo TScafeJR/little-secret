@@ -38,6 +38,13 @@ export function getPlayers(n: number): Player[] {
       case 2:
         p.displayName = "Berlinnnnn";
         break;
+      case 3:
+        p.displayName = "Vena";
+        break;
+      case 4:
+        p.displayName = "Peggy";
+        break;
+
       default:
         p.displayName = `Player ${i + 1}`;
         break;

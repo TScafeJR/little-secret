@@ -1,7 +1,6 @@
 import { useContext, useMemo, useState, useEffect } from "react";
 import { GameContext } from "../../GameState";
-import WaitingForPlayers from "./WaitingForPlayers.tsx";
-import usePlayerInfo from "../../hooks/usePlayerInfo.tsx";
+import WaitingForPlayers from "../../game/WaitingForPlayers.tsx";
 
 interface WordProps {
   wordSeen: boolean;
@@ -10,7 +9,6 @@ interface WordProps {
 export default function Word(p: WordProps) {
   const [showWord, setShowWord] = useState(!p.wordSeen);
   const gameContext = useContext(GameContext);
-  const playerInfo = usePlayerInfo();
 
   // this is a one time effect
   useEffect(() => {
@@ -30,14 +28,6 @@ export default function Word(p: WordProps) {
   const toggleShowWordText = useMemo(() => {
     return showWord ? "Hide Word" : "Show Word";
   }, [showWord]);
-
-  const showStartGameButton = useMemo(() => {
-    return (
-      p.wordSeen &&
-      playerInfo.isHost &&
-      gameContext.players.every((p) => p.confirmedVote)
-    );
-  }, [gameContext.players, playerInfo.isHost, p.wordSeen]);
 
   return (
     <div className="w-full flex flex-col items-center gap-2">

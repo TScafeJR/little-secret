@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import WaitingForPlayers from "../components/phases/Info/WaitingForPlayers";
+import WaitingForPlayers from "../components/game/WaitingForPlayers";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
+import { getPlayers } from "./helpers/players";
+import { Player } from "../game/player.ts";
+
+const players = getPlayers(5);
 
 const meta = {
-  title: "Lobby/WaitingForPlayers",
+  title: "components/WaitingForPlayers",
   component: WaitingForPlayers,
   tags: ["autodocs"],
   decorators: [GameStateDecorator],
@@ -11,23 +15,17 @@ const meta = {
     layout: "centered",
     context: {
       ...baseContext,
-      players: [
-        {
-          id: "1",
-          displayName: "Ty",
-          confirmedVote: true,
-        },
-        {
-          id: "2",
-          displayName: "nugget",
-          confirmedVote: false,
-        },
-        {
-          id: "3",
-          displayName: "Berlinnnnn",
-          confirmedVote: false,
-        },
-      ],
+      players: players.map<Player>((p, i) => {
+        if (i === 0) {
+          p.confirmedVote = true;
+        }
+
+        if (i % 2 === 0) {
+          p.alive = false;
+        }
+
+        return p;
+      }),
     },
   },
 } satisfies Meta<typeof WaitingForPlayers>;

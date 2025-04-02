@@ -4,6 +4,7 @@ import { Phase } from "./phases/phases.ts";
 import { GameContext } from "./GameState";
 import Info from "./phases/Info/Info.tsx";
 import Clue from "./phases/Clue/Clue.tsx";
+import Vote from "./phases/Vote/Vote.tsx";
 
 export default function Game() {
   const gameContext = useContext(GameContext);
@@ -16,6 +17,8 @@ export default function Game() {
         return <Info />;
       case Phase.SUBMIT_CLUE:
         return <Clue />;
+      case Phase.VOTE:
+        return <Vote />;
       default:
         return <div>Unknown phase</div>;
     }
