@@ -241,6 +241,22 @@ func (s *GameService) handleVote(conn *websocket.Conn, m Message) {
 		nextPhase = game.SubmitCluePhase
 	}
 
+	if nextPhase == game.RevealRolePhase {
+		g.ResolveVotes()
+		vr = g.GetVoteRound()
+
+		for _, playerID := range vr.VotedOutPlayerIDs {
+			g.KillPlayer(playerID)
+			p := g.GetPlayer(playerID)
+			if p != nil && p.Role != game.SpyKittenRole {
+				s.sendMessageToConnection(p.Conn, Message{
+					Type: game.WordSharedEvent,
+					Text: p.SecretWord,
+				})
+			}
+		}
+	}
+
 	g.UpdatePhase(nextPhase)
 
 	s.broadcastToRoom(m.RoomID, Message{

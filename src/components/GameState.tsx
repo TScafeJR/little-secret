@@ -17,6 +17,7 @@ export interface GameContextType {
   clues: Record<number, ClueRound | undefined>;
   round: number;
   votes: Record<number, VoteRound | undefined>;
+  roundWord: string;
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -31,4 +32,5 @@ export const GameContext = createContext<GameContextType>({
   clues: {},
   round: 0,
   votes: {},
+  roundWord: "",
 });

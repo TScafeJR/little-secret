@@ -23,6 +23,7 @@ var (
 	ProcessedVoteEvent     Event = "processedVote"
 	ClueSubmittedEvent     Event = "clueSubmitted"
 	RoundUpdatedEvent      Event = "roundUpdated"
+	WordSharedEvent        Event = "wordShared"
 )
 
 type Phase string

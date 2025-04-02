@@ -39,4 +39,5 @@ export const baseContext = {
   clearRoomCode: () => {},
   clues: {},
   round: 0,
+  votes: {},
 } as GameContextType;

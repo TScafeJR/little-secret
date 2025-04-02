@@ -29,6 +29,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [clues, setClues] = useState<Record<number, ClueRound>>({});
   const [round, setRound] = useState(0);
   const [votes, setVotes] = useState<Record<number, VoteRound>>({});
+  const [roundWord, setRoundWord] = useState("");
 
   function handleShowSnackbar(msg: InboundMessage) {
     setErrorMessage(msg.text as string);
@@ -83,6 +84,9 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.VOTES_UPDATED:
         setVotes(msg?.gameState?.votes as Record<number, VoteRound>);
         break;
+      case GameEvent.WORD_SHARED:
+        setRoundWord(msg?.text as string);
+        break;
       default:
         console.error("Unknown message type:", msg.type);
     }
@@ -110,6 +114,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       clues,
       round: round,
       votes,
+      roundWord: roundWord,
     }),
     [
       currentPhase,
@@ -121,6 +126,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       clues,
       round,
       votes,
+      roundWord,
     ],
   );
 

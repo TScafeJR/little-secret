@@ -223,3 +223,31 @@ func (g *Game) IsOver() bool {
 
 	return confusedOrSpy >= good
 }
+
+func (g *Game) ResolveVotes() {
+	for _, r := range g.Votes {
+		r.ResolveVotes()
+	}
+}
+
+func (g *Game) GetVoteRound() *VoteRound {
+	return g.Votes[g.Round]
+}
+
+func (g *Game) KillPlayer(pID id.PlayerID) {
+	for _, player := range g.Players {
+		if player.ID == pID {
+			player.Alive = false
+		}
+	}
+
+}
+
+func (g *Game) GetPlayer(pID id.PlayerID) *Player {
+	for _, player := range g.Players {
+		if player.ID == pID {
+			return player
+		}
+	}
+	return nil
+}
