@@ -164,9 +164,7 @@ func (s *GameService) handleRemovePlayer(conn *websocket.Conn, m Message) {
 	}
 
 	for _, room := range s.Rooms {
-		if _, ok := room.Connections[conn]; ok {
-			delete(room.Connections, conn)
-		}
+		delete(room.Connections, conn)
 	}
 
 	if p.Host {
@@ -220,7 +218,7 @@ func (s *GameService) handleVote(conn *websocket.Conn, m Message) {
 	}
 
 	for _, player := range g.Players {
-		if !player.ConfirmedVote {
+		if !player.ConfirmedVote && player.Alive {
 			s.broadcastToRoom(m.RoomID, Message{
 				Type:      game.ProcessedVoteEvent,
 				PlayerID:  m.PlayerID,
@@ -230,14 +228,18 @@ func (s *GameService) handleVote(conn *websocket.Conn, m Message) {
 		}
 	}
 
-	g.IncrementRound()
+	nextPhase := game.RevealRolePhase
 
-	s.broadcastToRoom(m.RoomID, Message{
-		Type:      game.RoundUpdatedEvent,
-		GameState: g.GetGameState(),
-	})
+	if g.IsWordRevealingRound() {
+		g.IncrementRound()
 
-	nextPhase := game.SubmitCluePhase
+		s.broadcastToRoom(m.RoomID, Message{
+			Type:      game.RoundUpdatedEvent,
+			GameState: g.GetGameState(),
+		})
+
+		nextPhase = game.SubmitCluePhase
+	}
 
 	g.UpdatePhase(nextPhase)
 

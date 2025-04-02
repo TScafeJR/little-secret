@@ -18,4 +18,5 @@ export enum GameEvent {
   PROCCESSED_VOTE = "processedVote",
   CLUE_SUBMITTED = "clueSubmitted",
   ROUND_UPDATE = "roundUpdated",
+  VOTES_UPDATED = "votesUpdated",
 }

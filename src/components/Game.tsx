@@ -5,6 +5,7 @@ import { GameContext } from "./GameState";
 import Info from "./phases/Info/Info.tsx";
 import Clue from "./phases/Clue/Clue.tsx";
 import Vote from "./phases/Vote/Vote.tsx";
+import RevealRole from "./phases/RevealRole/RevealRole.tsx";
 
 export default function Game() {
   const gameContext = useContext(GameContext);
@@ -19,6 +20,8 @@ export default function Game() {
         return <Clue />;
       case Phase.VOTE:
         return <Vote />;
+      case Phase.REVEAL_ROLE:
+        return <RevealRole />;
       default:
         return <div>Unknown phase</div>;
     }

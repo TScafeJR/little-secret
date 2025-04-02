@@ -1,6 +1,7 @@
-import { useMemo, useContext, useState } from "react";
+import { useMemo, useContext, useState, useCallback } from "react";
 import { GameContext } from "../../GameState";
 import WaitingForPlayers from "../../game/WaitingForPlayers.tsx";
+import { GameEvent } from "../../../game/events";
 
 export default function Vote() {
   const [voted, setVoted] = useState(false);
@@ -24,6 +25,19 @@ export default function Vote() {
     return [...filteredPlayers].sort(() => Math.random() - 0.5);
   }, [filteredPlayers]);
 
+  const handleVote = useCallback(
+    (playerID: string) => {
+      setVoted(true);
+      gameContext.sendSocketMessage({
+        playerID: gameContext.playerID,
+        roomID: gameContext.roomCode,
+        type: GameEvent.VOTE,
+        text: playerID,
+      });
+    },
+    [setVoted],
+  );
+
   return (
     <div className="w-full flex flex-col items-center gap-2">
       <h3 className="text-center">{headerMessage}</h3>
@@ -32,7 +46,7 @@ export default function Vote() {
           <button
             className="fw-button cta-button"
             id="confirm-word-btn"
-            onClick={() => setVoted(true)}
+            onClick={() => handleVote(player.id)}
           >
             Vote for {player.displayName}
           </button>

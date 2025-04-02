@@ -7,6 +7,7 @@ import { OutboundMessage, InboundMessage } from "../game/message.ts";
 import { Player, sortPlayers } from "../game/player.ts";
 import { GameContextType } from "./GameState";
 import { ClueRound } from "../game/clue.ts";
+import { VoteRound } from "../game/vote.ts";
 
 interface ContextProviderProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   const [playerWord, setPlayerWord] = useState("");
   const [clues, setClues] = useState<Record<number, ClueRound>>({});
   const [round, setRound] = useState(0);
+  const [votes, setVotes] = useState<Record<number, VoteRound>>({});
 
   function handleShowSnackbar(msg: InboundMessage) {
     setErrorMessage(msg.text as string);
@@ -78,6 +80,9 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.CLUE_SUBMITTED:
         setClues(msg?.gameState?.clues as Record<number, ClueRound>);
         break;
+      case GameEvent.VOTES_UPDATED:
+        setVotes(msg?.gameState?.votes as Record<number, VoteRound>);
+        break;
       default:
         console.error("Unknown message type:", msg.type);
     }
@@ -104,6 +109,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       },
       clues,
       round: round,
+      votes,
     }),
     [
       currentPhase,
@@ -114,6 +120,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
       playerWord,
       clues,
       round,
+      votes,
     ],
   );
 

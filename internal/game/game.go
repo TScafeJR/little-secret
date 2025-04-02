@@ -70,6 +70,7 @@ type GameState struct {
 	Phase   Phase              `json:"phase"`
 	Clues   map[int]*ClueRound `json:"clues"`
 	Round   int                `json:"round"`
+	Votes   map[int]*VoteRound `json:"votes"`
 }
 
 func (g *Game) GetGameState() GameState {
@@ -78,6 +79,7 @@ func (g *Game) GetGameState() GameState {
 		Phase:   g.Phase,
 		Clues:   g.Clues,
 		Round:   g.Round,
+		Votes:   g.Votes,
 	}
 }
 
@@ -190,4 +192,34 @@ func (g *Game) AllAlivePlayersSubmittedClue(round int) bool {
 
 func (g *Game) IncrementRound() {
 	g.Round++
+}
+
+func (g *Game) IsWordRevealingRound() bool {
+	return g.Round == 0
+}
+
+func (g *Game) NumberOfAlivePlayers() int {
+	count := 0
+	for _, player := range g.Players {
+		if player.Alive {
+			count++
+		}
+	}
+	return count
+}
+
+func (g *Game) IsOver() bool {
+	// game is over if (confused + spy).alive >= good.alive
+	confusedOrSpy := 0
+	for _, player := range g.Players {
+		if player.Role == ConfusedKittenRole || player.Role == SpyKittenRole {
+			if player.Alive {
+				confusedOrSpy++
+			}
+		}
+	}
+
+	good := g.NumberOfAlivePlayers() - confusedOrSpy
+
+	return confusedOrSpy >= good
 }
