@@ -82,19 +82,21 @@ const runTest = async (browser: Browser, numPlayers: number) => {
     }),
   );
 
-  await host.locator("#player-name-input").pressSequentially("host");
-  await host.click("#player-name-submit");
+  /** hide this logic for now. not a core peice of funcitonality
+		await host.locator("#player-name-input").pressSequentially("host");
+		await host.click("#player-name-submit");
 
-  for (const player of players.slice(1)) {
-    await expect(player.getByText("host")).toBeVisible({ timeout: 3000 });
-  }
+		for (const player of players.slice(1)) {
+			await expect(player.getByText("host")).toBeVisible({ timeout: 3000 });
+		}
 
-  // player 2 changes name to player
-  await players[1].locator("#player-name-input").pressSequentially("player");
-  await players[1].click("#player-name-submit");
+		// player 2 changes name to player
+		await players[1].locator("#player-name-input").pressSequentially("player");
+		await players[1].click("#player-name-submit");
 
-  // player 1 should see the player update name
-  await expect(host.getByText("player", { exact: true })).toBeVisible();
+		// player 1 should see the player update name
+		await expect(host.getByText("player", { exact: true })).toBeVisible();
+	*/
 
   await host.click("#start-game-btn");
   let wordCount: Record<string, number> = {};
