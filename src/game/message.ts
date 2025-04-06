@@ -12,6 +12,7 @@ export interface InboundMessage {
   text?: string;
   player?: Player;
   gameState?: GameState;
+  timestamp?: string;
 }
 
 export interface OutboundMessage {
@@ -21,4 +22,12 @@ export interface OutboundMessage {
   playerID?: string;
   text?: string;
   player?: Player;
+}
+
+export function sortMessages(m: InboundMessage[]): InboundMessage[] {
+  return m.sort((a, b) => {
+    const aTime = new Date(a.timestamp || "").getTime();
+    const bTime = new Date(b.timestamp || "").getTime();
+    return aTime - bTime;
+  });
 }

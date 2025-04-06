@@ -7,7 +7,7 @@ import (
 )
 
 func (s *GameService) broadcastToRoom(roomID id.RoomHash, msg Message) {
-	msg.PopulateMessageID()
+	msg.PopulateMessage()
 
 	r, ok := s.Rooms[roomID]
 	if !ok {
@@ -33,7 +33,7 @@ func (s *GameService) broadcastToRoom(roomID id.RoomHash, msg Message) {
 }
 
 func (s *GameService) sendMessageToConnection(conn *websocket.Conn, msg Message) {
-	msg.PopulateMessageID()
+	msg.PopulateMessage()
 
 	if msg.RoomID != "" {
 		g, err := s.getGameFromRoomID(msg.RoomID)

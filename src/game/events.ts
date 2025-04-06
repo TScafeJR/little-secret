@@ -15,7 +15,7 @@ export enum GameEvent {
   PHASE_UPDATED = "phaseUpdated",
   REMOVE_PLAYER = "removePlayer",
   HOST_LEFT_GAME = "hostLeftGame",
-  PROCCESSED_VOTE = "processedVote",
+  PROCESSED_VOTE = "processedVote",
   CLUE_SUBMITTED = "clueSubmitted",
   ROUND_UPDATE = "roundUpdated",
   VOTES_UPDATED = "votesUpdated",

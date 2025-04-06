@@ -3,6 +3,7 @@ package gameservice
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/TScafeJR/little-secret/internal/game"
 	"github.com/TScafeJR/little-secret/internal/id"
@@ -21,6 +22,7 @@ type Message struct {
 	Player        *game.Player   `json:"player,omitzero"`
 	GameState     game.GameState `json:"gameState,omitzero"`
 	MessageSender id.PlayerID    `json:"messageSender,omitzero"`
+	Timestemp     *time.Time     `json:"timestamp,omitzero"`
 }
 
 func NewMessage(m Message) Message {
@@ -31,9 +33,14 @@ func NewMessage(m Message) Message {
 	return rm
 }
 
-func (m *Message) PopulateMessageID() {
+func (m *Message) PopulateMessage() {
 	if m.MessageID == "" {
 		m.MessageID = id.MessageID(uuid.CreateUUID().String())
+	}
+
+	if m.Timestemp == nil {
+		t := time.Now()
+		m.Timestemp = &t
 	}
 }
 

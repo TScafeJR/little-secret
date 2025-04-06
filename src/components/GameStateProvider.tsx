@@ -3,7 +3,11 @@ import { GameContext } from "./GameState";
 import Config from "../config.ts";
 import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
-import { OutboundMessage, InboundMessage } from "../game/message.ts";
+import {
+  OutboundMessage,
+  InboundMessage,
+  sortMessages,
+} from "../game/message.ts";
 import { Player, sortPlayers } from "../game/player.ts";
 import { GameContextType } from "./GameState";
 import { ClueRound } from "../game/clue.ts";
@@ -50,7 +54,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
 
   const handleIncomingMessage = (msg: InboundMessage) => {
     console.info("incoming message", msg);
-    setMessages((prevMessages) => [...prevMessages, msg]);
+    setMessages((prevMessages) => sortMessages([...prevMessages, msg]));
     switch (msg.type) {
       case GameEvent.ERROR:
         handleShowSnackbar(msg);
@@ -65,8 +69,11 @@ export default function GameStateProvider(p: ContextProviderProps) {
       case GameEvent.PLAYER_JOINED:
       case GameEvent.UPDATE_PLAYER_NAME:
       case GameEvent.REMOVE_PLAYER:
-      case GameEvent.PROCCESSED_VOTE:
+      case GameEvent.PROCESSED_VOTE:
         setPlayers(sortPlayers(msg?.gameState?.players as Player[]));
+        if (msg.type === GameEvent.PROCESSED_VOTE) {
+          setVotes(msg?.gameState?.votes as Record<number, VoteRound>);
+        }
         break;
       case GameEvent.PHASE_UPDATED:
         setCurrentPhase(msg?.phase as Phase);
