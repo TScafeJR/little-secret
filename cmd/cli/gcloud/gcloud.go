@@ -2,7 +2,7 @@ package gcloud
 
 import (
 	"github.com/TScafeJR/little-secret/cmd/cli/gcloud/secrets"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 var Command = &cli.Command{

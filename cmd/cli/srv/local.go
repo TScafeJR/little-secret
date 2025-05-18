@@ -6,7 +6,7 @@ import (
 	"github.com/TScafeJR/little-secret/internal/server"
 	"github.com/TScafeJR/little-secret/internal/server/srvcfg"
 	"github.com/streamingfast/logging"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"golang.org/x/term"
