@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { GameContext } from "./GameState";
-import Config from "../config.ts";
+import Config, { webSocketScheme } from "../config.ts";
 import { Phase } from "./phases/phases.ts";
 import { GameEvent } from "../game/events.ts";
 import {
@@ -238,7 +238,7 @@ export default function GameStateProvider(p: ContextProviderProps) {
   );
 
   useEffect(() => {
-    const socket = new WebSocket(`ws://${Config.backendUrl}/ws`);
+    const socket = new WebSocket(`${webSocketScheme()}://${Config.backendUrl}/ws`);
     socketRef.current = socket;
 
     socket.onopen = () => {

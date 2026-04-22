@@ -1,1 +1,1 @@
-SELECT COUNT(*) FROM ls_game_events;
+s

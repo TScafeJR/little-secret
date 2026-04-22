@@ -24,6 +24,7 @@ func AddRoutes(router *chi.Mux, services Services) error {
 		return fmt.Errorf("services.Validate(): %w", err)
 	}
 
+	AddHealthRoutes(router)
 	addWebSocketRoutes(router, services)
 	return nil
 }

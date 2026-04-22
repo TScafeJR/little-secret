@@ -79,11 +79,19 @@ func main() {
 
 	allowedOrigins := make([]string, 0)
 
+	// Prod serves the Vite build alongside /ws from a single Cloud Run service.
+	// The prod Dockerfile copies the build to /app/dist; override via env var
+	// only for non-default layouts.
+	staticPath := os.Getenv("STATIC_FILE_PATH")
+	if staticPath == "" {
+		staticPath = "/app/dist"
+	}
+
 	if err := server.ServeWeb(srvcfg.Cfg{
 		PublicPort:     port,
 		AllowedOrigins: allowedOrigins,
 		Logger:         logger,
-		StaticFilePath: "",
+		StaticFilePath: staticPath,
 		DbUri:          dbUri,
 	}); err != nil {
 		logger.Fatal("server.ServeGRPCWeb()", zap.Error(err))

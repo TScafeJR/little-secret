@@ -36,6 +36,11 @@ func ServeWeb(c srvcfg.Cfg) error {
 		return fmt.Errorf("routes.AddRoutes(): %w", err)
 	}
 
+	// Static serving must be mounted last — it owns the `/*` catch-all (SPA
+	// fallback to index.html). An empty StaticFilePath is a no-op (local dev,
+	// where Vite serves the frontend separately).
+	routes.AddStaticRoutes(router, c.StaticFilePath)
+
 	s := http.Server{
 		Addr:        fmt.Sprintf(":%d", c.PublicPort),
 		Handler:     router,
