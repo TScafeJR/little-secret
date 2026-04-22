@@ -13,6 +13,7 @@ AR_REPO          := little-secret
 AR_IMAGE         := us-east1-docker.pkg.dev/$(GCP_PROJECT)/$(AR_REPO)/little-secret
 GIT_SHA          := $(shell git rev-parse --short HEAD)
 CR_SERVICE       := little-secret
+CR_DOMAIN        := little-secret.scafejr.me
 
 ## make gcp-login; - login to gcp account (application-default creds)
 .PHONY: gcp-login
@@ -74,9 +75,39 @@ gcp-deploy:
 		--set-env-vars=GOOGLE_CLOUD_PROJECT=$(GCP_PROJECT) \
 		--ingress=all
 
-## make gcp-ship; - build, push, and deploy in one shot
+## make gcp-domain-map; - ensure $(CR_DOMAIN) is mapped to the service
+## Idempotent: creates the mapping only if it doesn't already exist. Run once
+## per project; subsequent deploys of the same service name inherit the
+## mapping automatically. Still safe to call on every ship.
+.PHONY: gcp-domain-map
+gcp-domain-map:
+	@if gcloud beta run domain-mappings describe \
+		--domain=$(CR_DOMAIN) \
+		--region=$(GCP_REGION) \
+		--project=$(GCP_PROJECT) >/dev/null 2>&1; then \
+		echo "domain mapping $(CR_DOMAIN) -> $(CR_SERVICE) already exists"; \
+	else \
+		echo "creating domain mapping $(CR_DOMAIN) -> $(CR_SERVICE)"; \
+		gcloud beta run domain-mappings create \
+			--service=$(CR_SERVICE) \
+			--domain=$(CR_DOMAIN) \
+			--region=$(GCP_REGION) \
+			--project=$(GCP_PROJECT); \
+	fi
+	@echo "App URL: https://$(CR_DOMAIN)"
+
+## make gcp-domain-status; - show TLS + readiness status for the custom domain
+.PHONY: gcp-domain-status
+gcp-domain-status:
+	gcloud beta run domain-mappings describe \
+		--domain=$(CR_DOMAIN) \
+		--region=$(GCP_REGION) \
+		--project=$(GCP_PROJECT) \
+		--format="value(status.conditions)"
+
+## make gcp-ship; - build, push, deploy, and ensure the custom domain is mapped
 .PHONY: gcp-ship
-gcp-ship: gcp-build gcp-push gcp-deploy
+gcp-ship: gcp-build gcp-push gcp-deploy gcp-domain-map
 
 # ── Cloud Scheduler keepalive ───────────────────────────────────────────────
 # Cloud Run scales to zero after ~15 min idle. The scheduler pings /healthz

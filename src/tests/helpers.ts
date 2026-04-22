@@ -140,10 +140,11 @@ export async function submitOneClueFromActivePlayer(
   pages: Page[],
   clueIndex: number,
   timeout = 90_000,
-): Promise<void> {
+  allowPhaseAdvanceWithoutSubmission = false,
+): Promise<boolean> {
   const started = Date.now();
   while (Date.now() - started < timeout) {
-    for (const p of pages) {
+    for (const [activeIdx, p] of pages.entries()) {
       // Only the active player renders the clue input; use its visibility as the
       // "is-turn" signal. Checking the submit button's enabled state doesn't work
       // here — it's gated on a non-empty clue value, so it's disabled until we type.
@@ -155,10 +156,32 @@ export async function submitOneClueFromActivePlayer(
         // lobbies; treat detaches/timeouts as a transient race and retry.
         await input.fill(`clue-${clueIndex}`, { timeout: 1_500 });
         await p.locator("#player-clue-submit").click({ timeout: 3_000 });
-        return;
+        const accepted = await waitForClueSubmissionAccepted(
+          pages,
+          activeIdx,
+          5_000,
+        );
+        if (accepted) return true;
+        continue;
       } catch {
         continue;
       }
+    }
+
+    // In production runs, phase transitions can outrun this helper between the
+    // caller's phase check and our input probe. If every page already advanced,
+    // don't fail this round with a clue-timeout.
+    const phases = await Promise.all(
+      pages.map(async (page) => {
+        const root = page.locator('[data-testid="e2e-root"]');
+        return root.getAttribute("data-phase").catch(() => null);
+      }),
+    );
+    if (
+      allowPhaseAdvanceWithoutSubmission &&
+      phases.every((phase) => phase !== "submitClue")
+    ) {
+      return false;
     }
     await delay(50);
   }
@@ -175,6 +198,46 @@ export async function submitOneClueFromActivePlayer(
   throw new Error(
     `Timed out waiting for an active clue submitter (${debugDetails.join(", ")})`,
   );
+}
+
+async function waitForClueSubmissionAccepted(
+  pages: Page[],
+  activeIdx: number,
+  timeout = 5_000,
+): Promise<boolean> {
+  const started = Date.now();
+  while (Date.now() - started < timeout) {
+    const phases = await Promise.all(
+      pages.map(async (page) => {
+        const root = page.locator('[data-testid="e2e-root"]');
+        return root.getAttribute("data-phase").catch(() => null);
+      }),
+    );
+    if (phases.some((phase) => phase !== "submitClue")) {
+      return true;
+    }
+
+    for (const [idx, page] of pages.entries()) {
+      const visible = await page
+        .locator("#clue-input")
+        .isVisible()
+        .catch(() => false);
+      if (visible && idx !== activeIdx) {
+        return true;
+      }
+    }
+
+    const stillActive = await pages[activeIdx]
+      .locator("#clue-input")
+      .isVisible()
+      .catch(() => false);
+    if (!stillActive) {
+      return true;
+    }
+
+    await delay(50);
+  }
+  return false;
 }
 
 function delay(ms: number): Promise<void> {
@@ -236,7 +299,13 @@ export async function playRoundsUntilGameOver(
         .locator('[data-testid="e2e-root"]')
         .getAttribute("data-phase");
       if (phaseNow !== "submitClue") break;
-      await submitOneClueFromActivePlayer(pages, r * numPlayers + c);
+      const submitted = await submitOneClueFromActivePlayer(
+        pages,
+        r * numPlayers + c,
+        90_000,
+        true,
+      );
+      if (!submitted) break;
     }
 
     // Wait for Vote phase

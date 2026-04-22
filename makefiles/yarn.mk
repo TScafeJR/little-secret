@@ -37,6 +37,11 @@ yarn-test-e2e:
 yarn-test-journey:
 	yarn test:e2e:journey
 
+## make yarn-test-production; - run user journey spec against production route
+.PHONY: yarn-test-production
+yarn-test-production:
+	PLAYWRIGHT_BASE_URL=https://little-secret.scafejr.me yarn playwright test src/tests/user-journey.spec.ts --reporter=list --retries=2
+
 .PHONY: yarn-test-ui
 yarn-test-ui:
 	yarn test:ui
