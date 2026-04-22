@@ -15,7 +15,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/streamingfast/logging v0.0.0-20230608130331-f22c91403091
 	github.com/urfave/cli/v2 v2.27.6
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.27.1
 	golang.org/x/term v0.30.0
 	google.golang.org/api v0.228.0
 	google.golang.org/genproto v0.0.0-20250313205543-e70fdf4c4cb4
