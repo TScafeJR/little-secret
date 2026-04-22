@@ -6,7 +6,7 @@ import GameStateProvider from "./components/GameStateProvider.tsx";
 import { Phase } from "./components/phases/phases.ts";
 
 const RULES_VIDEO_URL = "https://www.youtube.com/watch?v=2Phx2vlr9Mc";
-const RULES_PDF_URL = "/rules/Little_Secret_US_FLYER.pdf";
+const RULES_PDF_URL = "/Little_Secret_US_FLYER.pdf";
 
 function AppContent() {
   const [isRulesOpen, setIsRulesOpen] = useState(false);

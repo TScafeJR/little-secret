@@ -15,5 +15,14 @@ have everyone on the edge of their seats.
 
 ## Rules
 
-[pdf](rules/Little_Secret_US_FLYER.pdf)
+[pdf](public/Little_Secret_US_FLYER.pdf)
 [video](https://www.youtube.com/watch?v=2Phx2vlr9Mc)
+
+## Documentation Index
+
+- [CLAUDE.md](CLAUDE.md) — engineering guide, architecture, commands, and
+  testing contracts
+- [prd.md](prd.md) — product requirements and repository overview
+- [todo.md](todo.md) — implementation tracker and current checklist status
+- [plans/parity.md](plans/parity.md) — original parity plan and execution
+  details

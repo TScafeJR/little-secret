@@ -1,7 +1,7 @@
 # Little Secret — implementation TODO
 
 Tracking the remaining work to finish the game per
-`rules/Little_Secret_US_FLYER.pdf`. Scope decisions: Secret Weapons deferred,
+`public/Little_Secret_US_FLYER.pdf`. Scope decisions: Secret Weapons deferred,
 ties resolved by random pick server-side.
 
 ## Wave 0 — scaffolding

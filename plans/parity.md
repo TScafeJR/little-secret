@@ -4,10 +4,11 @@
 
 The repo implements the lobby, Info phase, clue submission, voting, and a
 partially-wired reveal/game-over flow for a browser port of Exploding Kittens'
-Little Secret. The printed rules (`rules/Little_Secret_US_FLYER.pdf`, extracted)
-describe the full loop: clue → debate → vote → reveal (possibly spy guess) →
-repeat until all Confused + Spy are out (Good win), only Confused/Spy remain
-(Confused/Spy win), or the Spy guesses the password on elimination (Spy win).
+Little Secret. The printed rules (`public/Little_Secret_US_FLYER.pdf`,
+extracted) describe the full loop: clue → debate → vote → reveal (possibly spy
+guess) → repeat until all Confused + Spy are out (Good win), only Confused/Spy
+remain (Confused/Spy win), or the Spy guesses the password on elimination (Spy
+win).
 
 Three motivations for this work:
 
