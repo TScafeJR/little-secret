@@ -31,11 +31,11 @@
     "test:report": "yarn playwright show-report"
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.1.0",
+    "@tailwindcss/vite": "4.2.2",
     "random-words": "2.0.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "tailwindcss": "4.1.0"
+    "tailwindcss": "4.2.2"
   },
   "repository": {
     "type": "git",
