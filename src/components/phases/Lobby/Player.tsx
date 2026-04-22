@@ -12,7 +12,7 @@ export default function Player() {
   const hasCode = gameContext.roomCode !== "";
 
   return (
-    <div className="w-full flex flex-col items-center justify-items-end gap-4">
+    <div className="phase-layout">
       {hasCode && <CodeDisplay />}
       {hasCode && <Players />}
       {hasCode && <NameSubmission />}

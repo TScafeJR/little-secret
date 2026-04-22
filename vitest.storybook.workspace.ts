@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { defineWorkspace } from "vitest/config";
+import { defaultExclude, defineWorkspace } from "vitest/config";
 
 import { storybookTest } from "@storybook/experimental-addon-test/vitest-plugin";
 
@@ -12,7 +12,13 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineWorkspace([
-  "vite.config.ts",
+  {
+    extends: "./vite.config.ts",
+    // Playwright E2E lives in `src/tests/`; do not collect it as Vitest tests.
+    test: {
+      exclude: [...defaultExclude, "src/tests/**"],
+    },
+  },
   {
     extends: "vite.config.ts",
     plugins: [
@@ -25,8 +31,9 @@ export default defineWorkspace([
       browser: {
         enabled: true,
         headless: true,
-        name: "chromium",
         provider: "playwright",
+        // Vitest 3+ — use `instances` (top-level `name` is deprecated)
+        instances: [{ browser: "chromium" }],
       },
       setupFiles: [".storybook/vitest.setup.ts"],
     },

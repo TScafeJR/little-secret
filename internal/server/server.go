@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
@@ -48,9 +49,17 @@ func NewServer(cfg srvcfg.Cfg) (*Server, *Services, CloseFn, error) {
 
 	gameservice, err := game.New(&game.ServiceCfg{
 		Logger: cfg.Logger.Named("game_service"),
+		Store:  game.NewPGEventStore(dbPool),
 	})
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("game.New(): %w", err)
+	}
+
+	// Rebuild in-memory room state from the event log. A failure here shouldn't
+	// prevent server startup — we log and continue; worst case, ongoing games
+	// from before the crash are unrecoverable but new games still work.
+	if err := gameservice.Recover(context.Background()); err != nil {
+		cfg.Logger.Error("gameservice.Recover", zap.Error(err))
 	}
 
 	return &Server{

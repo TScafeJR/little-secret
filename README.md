@@ -15,4 +15,5 @@ have everyone on the edge of their seats.
 
 ## Rules
 
+[pdf](rules/Little_Secret_US_FLYER.pdf)
 [video](https://www.youtube.com/watch?v=2Phx2vlr9Mc)

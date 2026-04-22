@@ -26,6 +26,9 @@ var (
 	WordSharedEvent        Event = "wordShared"
 	RoleConfirmedEvent     Event = "roleConfirmed"
 	GameOverEvent          Event = "gameOver"
+	RejoinEvent            Event = "rejoin"
+	RejoinFailedEvent      Event = "rejoinFailed"
+	RejoinedEvent          Event = "rejoined"
 )
 
 type Phase string

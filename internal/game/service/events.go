@@ -1,6 +1,8 @@
 package gameservice
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/TScafeJR/little-secret/internal/common"
@@ -10,6 +12,56 @@ import (
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 )
+
+// handleRejoin reconnects a client whose browser still holds a
+// {roomCode, playerID} pair (typically after a page refresh or server
+// restart). If the room and player both exist in memory, we rewire that
+// player's Conn to the new socket and reply with the full GameState so the
+// client rehydrates straight into its current phase. On any miss we send
+// RejoinFailedEvent so the client can clear its localStorage and fall back
+// to the lobby.
+func (s *GameService) handleRejoin(conn *websocket.Conn, m Message) {
+	room, ok := s.Rooms[m.RoomID]
+	if !ok {
+		s.sendMessageToConnection(conn, Message{
+			Type: game.RejoinFailedEvent,
+			Text: "Room not found",
+		})
+		return
+	}
+
+	g := room.Game
+	player := g.GetPlayer(m.PlayerID)
+	if player == nil {
+		s.sendMessageToConnection(conn, Message{
+			Type: game.RejoinFailedEvent,
+			Text: "Player not found in room",
+		})
+		return
+	}
+
+	// Swap the stored player's Conn to the new socket, register the socket in
+	// the room's connection set, and drop the old one (best-effort close).
+	if player.Conn != nil && player.Conn != conn {
+		for c := range room.Connections {
+			if c == player.Conn {
+				delete(room.Connections, c)
+				_ = c.Close()
+				break
+			}
+		}
+	}
+	player.Conn = conn
+	room.Connections[conn] = true
+
+	s.sendMessageToConnection(conn, Message{
+		Type:      game.RejoinedEvent,
+		RoomID:    m.RoomID,
+		PlayerID:  m.PlayerID,
+		Phase:     g.Phase,
+		GameState: g.GetGameState(),
+	})
+}
 
 func (s *GameService) handlePlayerConnected(conn *websocket.Conn) {
 	u := uuid.CreateUUID().String()
@@ -41,6 +93,22 @@ func (s *GameService) handleRoomCreatedEvent(conn *websocket.Conn, msg Message) 
 	}
 
 	s.Rooms[hash] = &room
+
+	// The inbound CreateRoom message has no RoomID (the server picks it), so
+	// the RespondToMessage prelude skipped it. Log it here under the generated
+	// hash so replay can rebuild the room with the same id.
+	if !s.replaying {
+		created := Message{
+			Type:     game.CreateRoomEvent,
+			RoomID:   hash,
+			PlayerID: msg.PlayerID,
+		}
+		if buf, err := json.Marshal(created); err == nil {
+			if _, err := s.store.Append(context.Background(), hash, string(game.CreateRoomEvent), buf); err != nil {
+				s.logger.Error("store.Append(CreateRoom)", zap.Error(err))
+			}
+		}
+	}
 
 	m := NewMessage(Message{
 		RoomID: id.RoomHash(hash),
@@ -197,6 +265,19 @@ func (s *GameService) handleVote(conn *websocket.Conn, m Message) {
 		return
 	}
 
+	// The Info-phase "confirm word seen" piggybacks on this handler with an empty
+	// Text, so we only block dead players during real vote phases — in Info, every
+	// player (all still alive) taps through.
+	if g.Phase == game.VotePhase {
+		if p := g.GetPlayer(m.PlayerID); p == nil || !p.Alive {
+			s.sendMessageToConnection(conn, Message{
+				Type: game.ErrorEvent,
+				Text: "Eliminated players can't vote",
+			})
+			return
+		}
+	}
+
 	if _, ok := g.Votes[g.Round]; !ok {
 		g.Votes[g.Round] = game.NewVoteRound()
 	}
@@ -277,29 +358,59 @@ func (s *GameService) handleClueSubmitted(conn *websocket.Conn, m Message) {
 		return
 	}
 
+	sender := g.GetPlayer(m.PlayerID)
+	if sender == nil || !sender.Alive {
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Eliminated players can't submit clues",
+		})
+		return
+	}
+
 	if _, ok := g.Clues[g.Round]; !ok {
 		g.Clues[g.Round] = game.NewClueRound()
 	}
 	cr := g.Clues[g.Round]
 	if cr.HasSubmitted(m.PlayerID) {
 		return
-	} else {
-		if m.Text != "" {
-			clue := game.Clue{
-				PlayerID: m.PlayerID,
-				Word:     m.Text,
-			}
-			cr.AddClue(clue)
-			cr.AddSubmittedPlayer(m.PlayerID)
-		} else {
-			s.logger.Error("Clue is empty")
+	}
+
+	if m.Text == "" {
+		s.logger.Error("Clue is empty")
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "Clue is empty",
+		})
+		return
+	}
+
+	clueText := normalizeWord(m.Text)
+	// Rulebook: players can't say their own password. Spy has an empty
+	// SecretWord so this only bites kittens.
+	if sender.SecretWord != "" && clueText == normalizeWord(sender.SecretWord) {
+		s.sendMessageToConnection(conn, Message{
+			Type: game.ErrorEvent,
+			Text: "You can't use your password as your clue",
+		})
+		return
+	}
+	// Rulebook: can't repeat another player's clue from this round.
+	for _, existing := range cr.Clues {
+		if normalizeWord(existing.Word) == clueText {
 			s.sendMessageToConnection(conn, Message{
 				Type: game.ErrorEvent,
-				Text: "Clue is empty",
+				Text: "That clue was already used this round",
 			})
 			return
 		}
 	}
+
+	clue := game.Clue{
+		PlayerID: m.PlayerID,
+		Word:     m.Text,
+	}
+	cr.AddClue(clue)
+	cr.AddSubmittedPlayer(m.PlayerID)
 
 	s.broadcastToRoom(m.RoomID, Message{
 		Type:      game.ClueSubmittedEvent,
@@ -307,6 +418,7 @@ func (s *GameService) handleClueSubmitted(conn *websocket.Conn, m Message) {
 	})
 
 	if g.AllAlivePlayersSubmittedClue(g.Round) {
+		g.ResetConfirmedVoteForAlive()
 		g.UpdatePhase(game.VotePhase)
 		s.broadcastToRoom(m.RoomID, Message{
 			Type:      game.PhaseUpdatedEvent,
@@ -322,24 +434,30 @@ func (s *GameService) handleRoleConfirmed(conn *websocket.Conn, m Message) {
 		s.logger.Error("s.getGameFromRoomID", zap.Error(err))
 		s.sendMessageToConnection(conn, Message{
 			Type: game.ErrorEvent,
-			Text: "Failed to handle clue submission",
+			Text: "Failed to handle role confirmation",
 		})
 		return
 	}
 
-	res := &game.Result{}
+	if g.Phase != game.RevealRolePhase {
+		return
+	}
 
+	// Spy guess branch: guess arrives as a non-empty Text only from the spy after
+	// they've been voted out. Correct guess → instant spy win regardless of board
+	// state. Wrong guess → spy already killed by handleVote, game continues and
+	// gets resolved normally below.
+	spyGuessedCorrectly := false
 	if m.Text != "" {
-		same := confirmSecretWordGuess(*g, m)
-		if same {
-			res.WinningRoles = append(res.WinningRoles, game.SpyKittenRole)
+		voter := g.GetPlayer(m.PlayerID)
+		if voter != nil && voter.Role == game.SpyKittenRole && confirmSecretWordGuess(*g, m) {
+			spyGuessedCorrectly = true
 		}
 	}
 
-	if g.IsOver() {
+	if spyGuessedCorrectly || g.IsOver() {
+		g.Result = g.DetermineWinners(spyGuessedCorrectly)
 		g.UpdatePhase(game.GameOverPhase)
-		g.Result = res
-
 		s.broadcastToRoom(m.RoomID, Message{
 			Type:      game.GameOverEvent,
 			GameState: g.GetGameState(),
@@ -347,6 +465,15 @@ func (s *GameService) handleRoleConfirmed(conn *websocket.Conn, m Message) {
 		})
 		return
 	}
+
+	// Continue loop: advance the round so a fresh ClueRound is used, then go
+	// back to SubmitClue. Without the increment, the previous round's clue map
+	// would still be full and every submit would no-op (cr.HasSubmitted).
+	g.IncrementRound()
+	s.broadcastToRoom(m.RoomID, Message{
+		Type:      game.RoundUpdatedEvent,
+		GameState: g.GetGameState(),
+	})
 
 	g.UpdatePhase(game.SubmitCluePhase)
 	s.broadcastToRoom(m.RoomID, Message{
@@ -360,6 +487,21 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 	m, err := parseMessage(message)
 	if err != nil {
 		return fmt.Errorf("ParseMessage(): %w", err)
+	}
+
+	// One in-flight mutator at a time: each WS runs in its own goroutine; without this,
+	// handleVote and friends race on game maps/slices (e.g. Set.Add → concurrent map writes).
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	// Append to the event log before dispatch. Events that reference a room
+	// are recoverable; the pre-room events (PlayerConnected, CreateRoom) are
+	// skipped — CreateRoom writes its own roles_assigned/words_chosen record
+	// once the roomID is known.
+	if !s.replaying && m.RoomID != "" {
+		if _, err := s.store.Append(context.Background(), m.RoomID, string(m.Type), message); err != nil {
+			s.logger.Error("store.Append", zap.String("room", string(m.RoomID)), zap.Error(err))
+		}
 	}
 
 	switch g := m.Type; g {
@@ -381,9 +523,46 @@ func (s *GameService) RespondToMessage(conn *websocket.Conn, messageType int, me
 		s.handleClueSubmitted(conn, m)
 	case game.RoleConfirmedEvent:
 		s.handleRoleConfirmed(conn, m)
+	case game.RejoinEvent:
+		s.handleRejoin(conn, m)
 	default:
 		return fmt.Errorf("unknown message type: %s", m.Type)
 	}
 
+	// Snapshot the room's Game after every successful mutation. Recovery reads
+	// the latest snapshot per room instead of replaying individual events,
+	// sidestepping RNG/non-determinism concerns and making recovery robust
+	// against code changes. CreateRoom populates s.Rooms inside the handler;
+	// look up by whichever RoomID we know about now.
+	if !s.replaying {
+		roomID := m.RoomID
+		if roomID == "" && m.Type == game.CreateRoomEvent {
+			// handleRoomCreatedEvent already logged its own CreateRoom row with
+			// the generated hash; find the just-created room by matching the
+			// requesting player.
+			for rid, r := range s.Rooms {
+				if r.Game != nil && len(r.Game.Players) > 0 && r.Game.Players[0].ID == m.PlayerID {
+					roomID = rid
+					break
+				}
+			}
+		}
+		if roomID != "" {
+			if room, ok := s.Rooms[roomID]; ok && room.Game != nil {
+				if buf, err := json.Marshal(room.Game); err == nil {
+					if _, err := s.store.Append(context.Background(), roomID, snapshotEventType, buf); err != nil {
+						s.logger.Error("store.Append(snapshot)", zap.String("room", string(roomID)), zap.Error(err))
+					}
+				} else {
+					s.logger.Error("json.Marshal(game)", zap.Error(err))
+				}
+			}
+		}
+	}
+
 	return nil
 }
+
+// snapshotEventType is the event_type stored for full *Game JSONB snapshots.
+// Distinct from any game.Event value so it never collides with inbound events.
+const snapshotEventType = "_snapshot"

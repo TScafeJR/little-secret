@@ -5,4 +5,5 @@ export enum Phase {
   SUBMIT_CLUE = "submitClue",
   REVEAL_ROLE = "revealRole",
   GUESS_WORD = "guessWord",
+  GAME_OVER = "gameOver",
 }

@@ -30,15 +30,16 @@ export default function Word(p: WordProps) {
   }, [showWord]);
 
   return (
-    <div className="w-full flex flex-col items-center gap-2">
-      <h3>Your Word:</h3>
+    <div className="phase-layout">
+      <h3>Your Word</h3>
       <h3 id="player-word">{displayWord}</h3>
       <WaitingForPlayers />
       {p.wordSeen && (
         <button
+          type="button"
           className="fw-button reg-button"
-          id="confirm-word-btn"
-          onClick={() => setShowWord((p) => !p)}
+          id="word-visibility-toggle-btn"
+          onClick={() => setShowWord((prev) => !prev)}
         >
           {toggleShowWordText}
         </button>

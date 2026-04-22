@@ -1,0 +1,26 @@
+---
+description: "Feature implementations must be verified with user-journey-wizard MCP"
+alwaysApply: false
+---
+# Feature Verification
+
+When implementing a new feature or significant UI/API change:
+
+1. **Before marking complete**: Verify the feature works in the browser using the **user-journey-wizard** MCP. Also add the feature to the "user-journey.spec.ts" file if it is a qualified user-journey experience.
+
+2. **Required verification steps**:
+   - Call `screenshot_page` on the relevant route(s) to:w
+    confirm the UI renders correctly on **desktop**.
+   - Call `screenshot_page` with `mobile: true` on the same route(s) to catch awkward mobile layouts (overflow, cramped buttons, broken responsive behavior).
+   - Call `inspect_network_errors` on the route(s) to catch 4xx/5xx responses, console errors, and uncaught exceptions.
+   - Run "make yarn-test" and ensure tests pass before wrapping up. These tests run my full user journey tests and NEED to pass. Finishing a prompt without these passing is a non-starter.
+
+3. **When to verify**:
+   - After adding new pages, modals, or forms.
+   - After adding file upload, API integrations, or data flows.
+   - After any change that adds user-facing behavior.
+
+4. **If verification fails**: Fix the issues before considering the feature done. Do not ship broken or untested flows.
+
+5. **Dev server**: Ensure the frontend dev server is running (port 5173 by default) before calling MCP tools.
+

@@ -1,7 +1,10 @@
 package gameservice
 
 import (
+	"errors"
 	"net/http"
+	"strings"
+	"syscall"
 
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
@@ -20,7 +23,10 @@ func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	s.logger.Info("New client connected")
 
-	defer conn.Close()
+	defer func() {
+		s.forgetConnWrite(conn)
+		_ = conn.Close()
+	}()
 	for {
 		messageType, message, err := conn.ReadMessage()
 		if err != nil {
@@ -38,6 +44,29 @@ func (s *GameService) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// logWriteError reports a WriteJSON failure at the right level. A client
+// disconnecting mid-broadcast (page close/refresh, normal WS close) shows up
+// as "broken pipe" / "use of closed network connection" / "websocket: close
+// sent" — none of which are actionable server errors, so we demote them to
+// Info. Anything else is still Error with a stack trace.
 func (s *GameService) logWriteError(e error) {
+	if isDisconnectErr(e) {
+		s.logger.Info("conn.WriteJSON (peer disconnected)", zap.Error(e))
+		return
+	}
 	s.logger.Error("conn.WriteJSON", zap.Error(e))
+}
+
+func isDisconnectErr(e error) bool {
+	if e == nil {
+		return false
+	}
+	if errors.Is(e, syscall.EPIPE) || errors.Is(e, syscall.ECONNRESET) {
+		return true
+	}
+	msg := e.Error()
+	return strings.Contains(msg, "websocket: close sent") ||
+		strings.Contains(msg, "use of closed network connection") ||
+		strings.Contains(msg, "broken pipe") ||
+		strings.Contains(msg, "connection reset by peer")
 }

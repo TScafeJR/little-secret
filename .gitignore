@@ -30,3 +30,6 @@ dist-ssr
 /playwright/.cache/
 
 *storybook.log
+
+# Docker / Go build artifacts
+tmp/

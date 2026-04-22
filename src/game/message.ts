@@ -11,7 +11,7 @@ export interface InboundMessage {
   playerID?: string;
   text?: string;
   player?: Player;
-  gameState?: GameState;
+  gameState?: Partial<GameState>;
   timestamp?: string;
 }
 

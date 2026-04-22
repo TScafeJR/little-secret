@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn, userEvent, within } from "@storybook/test";
 import Clue from "../components/phases/Clue/Clue";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";
+import { GameEvent } from "../game/events";
 
 const meta = {
   title: "Clue/Clue",
@@ -69,5 +71,34 @@ export const NoCluesFirstPlayerDead: Story = {
       }),
       playerID: cluePlayers[1].id,
     },
+  },
+};
+
+const sendClue = fn();
+
+export const SubmitsClue: Story = {
+  parameters: {
+    layout: "centered",
+    context: {
+      ...baseContext,
+      roomCode: "CLUER",
+      players: cluePlayers,
+      round: 1,
+      playerID: cluePlayers[0].id,
+      sendSocketMessage: sendClue,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(canvas.getByPlaceholderText("Clue"), "pineapple");
+    await userEvent.click(canvas.getByRole("button", { name: "Submit Clue" }));
+    await expect(sendClue).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: GameEvent.SUBMIT_CLUE,
+        text: "pineapple",
+        roomID: "CLUER",
+        playerID: cluePlayers[0].id,
+      }),
+    );
   },
 };

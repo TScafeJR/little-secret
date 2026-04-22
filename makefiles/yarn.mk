@@ -20,7 +20,22 @@ yarn-install:
 
 .PHONY: yarn-test
 yarn-test:
-	yarn test
+	yarn playwright test src/tests/user-journey.spec.ts --reporter=list
+
+## make yarn-test-e2e-external; - E2E without Playwright starting Vite (run `make yarn-dev` in another shell first, then this)
+.PHONY: yarn-test-e2e-external
+yarn-test-e2e-external:
+	PLAYWRIGHT_SKIP_WEB_SERVER=1 yarn test
+
+## make yarn-test-e2e; - run Playwright E2E (src/tests)
+.PHONY: yarn-test-e2e
+yarn-test-e2e:
+	yarn test:e2e
+
+## make yarn-test-journey; - run user journey spec only
+.PHONY: yarn-test-journey
+yarn-test-journey:
+	yarn test:e2e:journey
 
 .PHONY: yarn-test-ui
 yarn-test-ui:

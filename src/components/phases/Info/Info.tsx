@@ -14,10 +14,17 @@ export default function Info() {
       roomID: gameContext.roomCode,
       type: GameEvent.VOTE,
     });
-  }, []);
+  }, [
+    gameContext.playerID,
+    gameContext.roomCode,
+    gameContext.sendSocketMessage,
+  ]);
 
   return (
-    <div className="w-full flex flex-col items-center gap-2">
+    <div className="phase-layout">
+      <p className="phase-note">
+        Keep your role secret. Share a smart clue later.
+      </p>
       <Word wordSeen={wordSeen} />
       {!wordSeen && (
         <button

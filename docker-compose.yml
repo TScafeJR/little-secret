@@ -1,0 +1,76 @@
+name: little-secret
+
+services:
+  backend:
+    container_name: little-secret-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      POSTGRES_URL: postgres://postgres:postgres@host.docker.internal:54322/postgres?sslmode=disable
+      POSTGRES_PASSWORD: password
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - go-mod-cache:/go/pkg/mod
+      - go-build-cache:/root/.cache/go-build
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .git/
+            - node_modules/
+            - tmp/
+            - src/
+            - public/
+            - supabase/
+            - tests-examples/
+            - playwright-report/
+            - test-results/
+            - dist/
+            - "*.log"
+        - action: rebuild
+          path: go.mod
+        - action: rebuild
+          path: go.sum
+        - action: rebuild
+          path: Dockerfile
+
+  frontend:
+    container_name: little-secret-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    restart: unless-stopped
+    ports:
+      - "5174:5173"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+      - ./tsconfig.node.json:/app/tsconfig.node.json
+      - ./eslint.config.js:/app/eslint.config.js
+    develop:
+      watch:
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: yarn.lock
+        - action: rebuild
+          path: Dockerfile.frontend
+
+volumes:
+  go-mod-cache:
+  go-build-cache:

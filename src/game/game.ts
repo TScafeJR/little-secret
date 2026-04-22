@@ -3,10 +3,22 @@ import { Player } from "./player";
 import { Phase } from "../components/phases/phases";
 import { VoteRound } from "./vote";
 
+export type GameResultReason =
+  | "allImpostersOut"
+  | "impostersSurvived"
+  | "spyGuessedWord"
+  | "twoPlayersLeft";
+
+export interface GameResult {
+  winningRoles?: string[];
+  reason?: GameResultReason;
+}
+
 export interface GameState {
   players: Player[];
   phase: Phase;
   clues: Record<number, ClueRound>;
   round: number;
   votes: Record<number, VoteRound>;
+  result?: GameResult | null;
 }

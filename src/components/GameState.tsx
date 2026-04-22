@@ -4,12 +4,14 @@ import { OutboundMessage } from "../game/message.ts";
 import { Player } from "../game/player.ts";
 import { ClueRound } from "../game/clue.ts";
 import { VoteRound } from "../game/vote.ts";
+import { GameResult } from "../game/game.ts";
 
 export interface GameContextType {
   phase: Phase;
   playerName: string;
   roomCode: string;
   sendSocketMessage: (m: OutboundMessage) => void;
+  updatePlayerName: (name: string) => void;
   playerID: string;
   players: Player[];
   clearRoomCode: () => void;
@@ -18,6 +20,7 @@ export interface GameContextType {
   round: number;
   votes: Record<number, VoteRound | undefined>;
   roundWord: string;
+  gameResult: GameResult | null;
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -25,7 +28,8 @@ export const GameContext = createContext<GameContextType>({
   currentWord: "",
   playerName: "",
   roomCode: "",
-  sendSocketMessage: (_: OutboundMessage) => {},
+  sendSocketMessage: () => {},
+  updatePlayerName: () => {},
   playerID: "",
   players: [],
   clearRoomCode: () => {},
@@ -33,4 +37,5 @@ export const GameContext = createContext<GameContextType>({
   round: 0,
   votes: {},
   roundWord: "",
+  gameResult: null,
 });

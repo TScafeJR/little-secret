@@ -16,6 +16,11 @@ export default function Clue() {
     return gameContext.clues[gameContext.round];
   }, [gameContext.clues, gameContext.round]);
 
+  const isSpectator = useMemo(() => {
+    const me = gameContext.players.find((p) => p.id === gameContext.playerID);
+    return me ? me.alive === false : false;
+  }, [gameContext.players, gameContext.playerID]);
+
   const currentPlayerTurn = useMemo(() => {
     if (!clueRound) return getFirstAlivePlayer(gameContext.players);
     return getCurrentCluePlayer(gameContext.players, clueRound);
@@ -57,11 +62,23 @@ export default function Clue() {
     ],
   );
 
+  if (isSpectator) {
+    return (
+      <div className="phase-layout">
+        <h1>Clue</h1>
+        <h3 id="spectator-banner" className="fw-text text-center">
+          You've been eliminated — watch the rest of the round.
+        </h3>
+        <ClueDisplay />
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full flex flex-col items-center gap-4">
+    <div className="phase-layout">
       <h1>Clue</h1>
       {isTurn ? (
-        <div className="w-full flex flex-col items-center gap-4">
+        <div className="phase-layout">
           <h3>It's your turn to submit a clue</h3>
           <input
             type="text"

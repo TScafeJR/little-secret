@@ -2,7 +2,6 @@ import React from "react";
 import type { StoryContext } from "@storybook/react";
 import { GameContextType, GameContext } from "../components/GameState";
 import { Phase } from "../components/phases/phases";
-import { OutboundMessage } from "../game/message";
 
 interface GameStateMockProps {
   state: GameContextType;
@@ -34,10 +33,13 @@ export const baseContext = {
   currentWord: "",
   playerName: "",
   roomCode: "",
-  sendSocketMessage: (_: OutboundMessage) => {},
+  sendSocketMessage: () => {},
+  updatePlayerName: () => {},
   playerID: "",
   clearRoomCode: () => {},
   clues: {},
   round: 0,
   votes: {},
+  roundWord: "",
+  gameResult: null,
 } as GameContextType;

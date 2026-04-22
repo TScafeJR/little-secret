@@ -14,6 +14,7 @@ type VoteRound struct {
 	Submitted         *common.Set[id.PlayerID]    `json:"-"`
 	Votes             []Vote                      `json:"votes"`
 	VotedOutPlayerIDs []id.PlayerID               `json:"votedOutPlayerIDs"`
+	TiedPlayerIDs     []id.PlayerID               `json:"tiedPlayerIDs"`
 	VoteMap           map[id.PlayerID]id.PlayerID `json:"voteMap"`
 }
 
@@ -25,6 +26,7 @@ func NewVoteRound() *VoteRound {
 		Submitted:         s,
 		Votes:             []Vote{},
 		VotedOutPlayerIDs: []id.PlayerID{},
+		TiedPlayerIDs:     []id.PlayerID{},
 		VoteMap:           vm,
 	}
 }
@@ -42,8 +44,7 @@ func (vr *VoteRound) resolveVotes() map[id.PlayerID]int {
 	return voteCount
 }
 
-func (vr *VoteRound) getVotedOutMembers() []id.PlayerID {
-	// find maximum vote count, return all players with that count
+func (vr *VoteRound) getTopVoteGetters() []id.PlayerID {
 	voteCount := vr.resolveVotes()
 	maxVotes := 0
 
@@ -53,16 +54,35 @@ func (vr *VoteRound) getVotedOutMembers() []id.PlayerID {
 		}
 	}
 
-	var votedOutMembers []id.PlayerID
+	var top []id.PlayerID
 	for playerID, count := range voteCount {
 		if count == maxVotes {
-			votedOutMembers = append(votedOutMembers, playerID)
+			top = append(top, playerID)
 		}
 	}
 
-	return votedOutMembers
+	return top
 }
 
+// ResolveVotes decides who is eliminated. On a tie, one player is picked at
+// random from the tied set; the full tied list is preserved on TiedPlayerIDs
+// so the UI can surface it.
 func (vr *VoteRound) ResolveVotes() {
-	vr.VotedOutPlayerIDs = vr.getVotedOutMembers()
+	top := vr.getTopVoteGetters()
+	if len(top) == 0 {
+		vr.VotedOutPlayerIDs = nil
+		vr.TiedPlayerIDs = nil
+		return
+	}
+
+	if len(top) == 1 {
+		vr.VotedOutPlayerIDs = []id.PlayerID{top[0]}
+		vr.TiedPlayerIDs = nil
+		return
+	}
+
+	tied := append([]id.PlayerID(nil), top...)
+	common.Shuffle(top)
+	vr.VotedOutPlayerIDs = []id.PlayerID{top[0]}
+	vr.TiedPlayerIDs = tied
 }

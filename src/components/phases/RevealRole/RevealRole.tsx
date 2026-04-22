@@ -1,5 +1,6 @@
 import { useContext, useMemo, useState, useCallback } from "react";
 import { GameContext } from "../../GameState";
+import { GameEvent } from "../../../game/events.ts";
 
 export default function RevealRole() {
   const [guess, setGuess] = useState("");
@@ -13,11 +14,39 @@ export default function RevealRole() {
     return voteRound.votedOutPlayerIDs.some((vID) => {
       return vID === gameContext.playerID;
     });
-  }, [gameContext]);
+  }, [gameContext.votes, gameContext.round, gameContext.playerID]);
 
   const isSpy = useMemo(() => {
     return gameContext.currentWord === "";
-  }, [gameContext]);
+  }, [gameContext.currentWord]);
+
+  const sendRoleConfirmed = useCallback(
+    (text: string) => {
+      gameContext.sendSocketMessage({
+        type: GameEvent.ROLE_CONFIRMED,
+        playerID: gameContext.playerID,
+        roomID: gameContext.roomCode,
+        text,
+      });
+    },
+    [gameContext.sendSocketMessage, gameContext.playerID, gameContext.roomCode],
+  );
+
+  const tieNote = useMemo(() => {
+    const voteRound = gameContext.votes[gameContext.round];
+    const tied = voteRound?.tiedPlayerIDs ?? [];
+    if (tied.length < 2) return null;
+    const names = tied
+      .map(
+        (pid) =>
+          gameContext.players.find((p) => p.id === pid)?.displayName ?? pid,
+      )
+      .join(", ");
+    const picked = voteRound?.votedOutPlayerIDs[0];
+    const pickedName =
+      gameContext.players.find((p) => p.id === picked)?.displayName ?? picked;
+    return `Tie between ${names} — ${pickedName} was picked.`;
+  }, [gameContext.votes, gameContext.round, gameContext.players]);
 
   const headerText = useMemo(() => {
     if (wasVotedOut && isSpy) {
@@ -30,7 +59,7 @@ export default function RevealRole() {
       gameContext.votes[gameContext.round]?.votedOutPlayerIDs[0];
     const p = gameContext.players.find((p) => p.id === votedOutPlayerID);
 
-    return `${p?.displayName} was voted out!`;
+    return `${p?.displayName ?? "Someone"} was voted out!`;
   }, [wasVotedOut, isSpy, gameContext]);
 
   const displayWord = useMemo(() => {
@@ -39,24 +68,32 @@ export default function RevealRole() {
     } else {
       return "••••••••";
     }
-  }, [gameContext.currentWord, showWord]);
+  }, [gameContext.roundWord, showWord]);
 
   const submitGuess = useCallback(
-    (guess: string) => {
-      console.log("guess", guess);
+    (g: string) => {
+      sendRoleConfirmed(g);
+      setGuess("");
     },
-    [gameContext],
+    [sendRoleConfirmed],
   );
 
   const toggleShowWordText = useMemo(() => {
     return showWord ? "Hide Word" : "Show Word";
   }, [showWord]);
 
+  const showContinue = !wasVotedOut || (wasVotedOut && !isSpy);
+
   return (
-    <div className="w-full flex flex-col items-center gap-2">
+    <div className="phase-layout">
       <h3 className="text-center">{headerText}</h3>
+      {tieNote && (
+        <p id="tie-note" className="text-center">
+          {tieNote}
+        </p>
+      )}
       {isSpy && wasVotedOut && (
-        <div className="w-full flex flex-col items-center gap-4">
+        <div className="phase-layout">
           <input
             type="text"
             placeholder="Guess"
@@ -69,7 +106,8 @@ export default function RevealRole() {
           <button
             disabled={!guess}
             className="fw-button reg-button"
-            id="player-clue-submit"
+            id="spy-guess-submit"
+            type="button"
             onClick={() => {
               submitGuess(guess);
             }}
@@ -79,16 +117,27 @@ export default function RevealRole() {
         </div>
       )}
       {!isSpy && wasVotedOut && (
-        <div className="w-full flex flex-col items-center gap-4">
+        <div className="phase-layout">
           <h3 id="player-word">{displayWord}</h3>
           <button
+            type="button"
             className="fw-button reg-button"
-            id="confirm-word-btn"
+            id="reveal-toggle-word-btn"
             onClick={() => setShowWord((p) => !p)}
           >
             {toggleShowWordText}
           </button>
         </div>
+      )}
+      {showContinue && (
+        <button
+          type="button"
+          className="fw-button cta-button"
+          id="reveal-continue-btn"
+          onClick={() => sendRoleConfirmed("")}
+        >
+          Continue
+        </button>
       )}
     </div>
   );

@@ -5,9 +5,9 @@ export default function Players() {
   const gameContext = useContext(GameContext);
 
   return (
-    <div className="flex flex-col gap-4 my-4">
-      <h3 className="items-center">Players:</h3>
-      <ol className="list-decimal ml-4">
+    <div className="w-full max-w-sm flex flex-col gap-2 my-2">
+      <h3 className="items-center">Players</h3>
+      <ol className="list-decimal list-inside text-left">
         {gameContext.players.map((p) => {
           return <li key={`${p.id}-player-list`}>{p.displayName}</li>;
         })}

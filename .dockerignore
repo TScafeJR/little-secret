@@ -1,0 +1,15 @@
+.git
+.github
+.claude
+.vscode
+.idea
+node_modules
+dist
+dist-ssr
+tmp
+playwright-report
+test-results
+blob-report
+*.log
+.DS_Store
+.env-local

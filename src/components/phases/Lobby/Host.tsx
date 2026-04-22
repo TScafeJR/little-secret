@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { GameContext } from "../../GameState";
 import { GameEvent } from "../../../game/events.ts";
 import Players from "./Players.tsx";
@@ -12,18 +12,26 @@ export default function Host() {
     "Waiting for 3 players...",
   );
   const gameContext = useContext(GameContext);
+  const createRoomSentRef = useRef(false);
 
   useEffect(() => {
-    if (gameContext.roomCode === "") {
-      const m = {
-        type: GameEvent.CREATE_ROOM,
-        playerID: gameContext.playerID,
-        roomID: gameContext.roomCode,
-      };
-
-      gameContext.sendSocketMessage(m);
+    if (gameContext.roomCode !== "" || !gameContext.playerID) {
+      return;
     }
-  }, [gameContext]);
+    if (createRoomSentRef.current) {
+      return;
+    }
+    createRoomSentRef.current = true;
+    gameContext.sendSocketMessage({
+      type: GameEvent.CREATE_ROOM,
+      playerID: gameContext.playerID,
+      roomID: gameContext.roomCode,
+    });
+  }, [
+    gameContext.roomCode,
+    gameContext.playerID,
+    gameContext.sendSocketMessage,
+  ]);
 
   useEffect(() => {
     if (gameContext.players.length >= 3) {
@@ -45,7 +53,7 @@ export default function Host() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="phase-layout">
       <CodeDisplay />
       <Players />
       <div className="w-full flex flex-col items-center justify-items-end gap-4">

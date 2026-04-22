@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "user-journey-wizard": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tsx",
+        "/Users/tscafe/go/pro-juice/tools/visualizer-server.ts"
+      ]
+    },
+    "docker": {
+      "command": "docker",
+      "args": ["mcp", "gateway", "run"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {}
+    }
+  }
+}

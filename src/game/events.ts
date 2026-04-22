@@ -22,4 +22,7 @@ export enum GameEvent {
   WORD_SHARED = "wordShared",
   ROLE_CONFIRMED = "roleConfirmed",
   GAME_OVER = "gameOver",
+  REJOIN = "rejoin",
+  REJOIN_FAILED = "rejoinFailed",
+  REJOINED = "rejoined",
 }

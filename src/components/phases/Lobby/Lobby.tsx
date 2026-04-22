@@ -22,16 +22,19 @@ export default function Lobby() {
         return <Player />;
       default:
         return (
-          <div className="flex flex-col items-center justify-items-end gap-4">
+          <div className="phase-layout">
+            <p className="phase-note">
+              Gather your crew and pick your role for this round.
+            </p>
             <button
-              className="fw-button"
+              className="fw-button cta-button"
               id="host-btn"
               onClick={() => setRole(Role.HOST)}
             >
               New Game
             </button>
             <button
-              className="fw-button"
+              className="fw-button reg-button"
               id="player-btn"
               onClick={() => setRole(Role.PLAYER)}
             >
@@ -56,7 +59,7 @@ export default function Lobby() {
         },
       }}
     >
-      <div className="flex flex-col justify-end my-4">{body}</div>
+      <div className="phase-layout my-2">{body}</div>
     </LobbyContext.Provider>
   );
 }

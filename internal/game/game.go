@@ -190,7 +190,17 @@ func (g *Game) AllAlivePlayersSubmittedClue(round int) bool {
 	if !exists {
 		return false
 	}
-	return roundClue.SubmissionCount() == len(g.Players)
+	return roundClue.SubmissionCount() == g.NumberOfAlivePlayers()
+}
+
+// ResetConfirmedVoteForAlive sets confirmedVote to false for every alive player.
+// Info phase reuses the vote handler and leaves everyone at true; vote phase must start clean.
+func (g *Game) ResetConfirmedVoteForAlive() {
+	for _, player := range g.Players {
+		if player.Alive {
+			player.ConfirmedVote = false
+		}
+	}
 }
 
 func (g *Game) IncrementRound() {
@@ -211,20 +221,63 @@ func (g *Game) NumberOfAlivePlayers() int {
 	return count
 }
 
-func (g *Game) IsOver() bool {
-	// game is over if (confused + spy).alive >= good.alive
-	confusedOrSpy := 0
+func (g *Game) aliveByRole() (good, confused, spy int) {
 	for _, player := range g.Players {
-		if player.Role == ConfusedKittenRole || player.Role == SpyKittenRole {
-			if player.Alive {
-				confusedOrSpy++
-			}
+		if !player.Alive {
+			continue
+		}
+		switch player.Role {
+		case GoodKittenRole:
+			good++
+		case ConfusedKittenRole:
+			confused++
+		case SpyKittenRole:
+			spy++
+		}
+	}
+	return
+}
+
+func (g *Game) IsOver() bool {
+	good, confused, spy := g.aliveByRole()
+	impostersOut := confused == 0 && spy == 0
+	return impostersOut || (confused+spy) >= good
+}
+
+// DetermineWinners resolves who has won given current alive state plus, if
+// spyGuessedCorrectly is true, the spy's instant-win after being voted out.
+// Call this only when the game is actually over (after a spy guess or when
+// IsOver() is true).
+func (g *Game) DetermineWinners(spyGuessedCorrectly bool) *Result {
+	if spyGuessedCorrectly {
+		return &Result{
+			WinningRoles: []Role{SpyKittenRole},
+			Reason:       ReasonSpyGuessedWord,
 		}
 	}
 
-	good := g.NumberOfAlivePlayers() - confusedOrSpy
+	good, confused, spy := g.aliveByRole()
 
-	return confusedOrSpy >= good
+	if confused == 0 && spy == 0 {
+		return &Result{
+			WinningRoles: []Role{GoodKittenRole},
+			Reason:       ReasonAllImpostersOut,
+		}
+	}
+
+	winners := []Role{}
+	if confused > 0 {
+		winners = append(winners, ConfusedKittenRole)
+	}
+	if spy > 0 {
+		winners = append(winners, SpyKittenRole)
+	}
+
+	reason := ReasonImpostersSurvive
+	if good+confused+spy <= 2 {
+		reason = ReasonTwoPlayersLeft
+	}
+	return &Result{WinningRoles: winners, Reason: reason}
 }
 
 func (g *Game) ResolveVotes() {

@@ -5,9 +5,9 @@ export default function Players() {
   const gameContext = useContext(GameContext);
 
   return (
-    <div className="flex flex-col gap-4 my-4">
-      <h3 className="items-center">Players:</h3>
-      <ul className="items-center ml-4">
+    <div className="w-full max-w-sm flex flex-col gap-2 my-2">
+      <h3 className="items-center">Players</h3>
+      <ul className="items-center text-left">
         {gameContext.players.map((p) => {
           return (
             <div className="flex items-center gap-2" key={`${p.id}-indicator`}>
