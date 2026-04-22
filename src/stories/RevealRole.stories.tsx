@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
 import RevealRole from "../components/phases/RevealRole/RevealRole";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";
@@ -106,6 +106,54 @@ export const SpectatorClicksContinue: Story = {
         type: GameEvent.ROLE_CONFIRMED,
         text: "",
         roomID: "REV1",
+        playerID: players[0].id,
+      }),
+    );
+  },
+};
+
+export const TieBreakNote: Story = {
+  ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      currentWord: "word",
+      votes: {
+        "1": {
+          votedOutPlayerIDs: [players[1].id],
+          tiedPlayerIDs: [players[1].id, players[2].id],
+        },
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText(/tie between/i)).toBeInTheDocument();
+  },
+};
+
+const sendSpyGuess = fn();
+
+export const SpySubmitsGuess: Story = {
+  ...Spy,
+  parameters: {
+    ...Spy.parameters,
+    context: {
+      ...Spy.parameters?.context,
+      roomCode: "REV2",
+      sendSocketMessage: sendSpyGuess,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.type(canvas.getByPlaceholderText("Guess"), "lighthouse");
+    await userEvent.click(canvas.getByRole("button", { name: "Submit Guess" }));
+    await expect(sendSpyGuess).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: GameEvent.ROLE_CONFIRMED,
+        text: "lighthouse",
+        roomID: "REV2",
         playerID: players[0].id,
       }),
     );

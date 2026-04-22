@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import ClueDisplay from "../components/phases/Clue/ClueDisplay";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";
@@ -19,7 +19,7 @@ const players = getPlayers(5);
 
 const baseStory: Story = {
   parameters: {
-    layout: "centered",
+    layout: "padded",
     context: {
       ...baseContext,
       players: players,
@@ -37,6 +37,18 @@ export const Default: Story = {
     ...baseStory.parameters,
     context: {
       ...baseStory.parameters?.context,
+    },
+  },
+};
+
+export const EmptyRound: Story = {
+  ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      clues: {},
+      round: 1,
     },
   },
 };

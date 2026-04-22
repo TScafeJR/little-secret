@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
 import Vote from "../components/phases/Vote/Vote";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";
@@ -75,3 +75,49 @@ export const ClicksVote: Story = {
 };
 
 export const Base: Story = {};
+
+export const Spectator: Story = {
+  parameters: {
+    layout: "centered",
+    context: {
+      ...baseContext,
+      players: voteField.map<Player>((p, i) => ({
+        ...p,
+        alive: i !== 0,
+      })),
+      playerID: voteField[0].id,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(/you've been eliminated/i),
+    ).toBeInTheDocument();
+    await expect(canvas.queryAllByTestId(/vote-for-/i)).toHaveLength(0);
+  },
+};
+
+export const AlreadyVoted: Story = {
+  parameters: {
+    layout: "centered",
+    context: {
+      ...baseContext,
+      roomCode: "VOTE2",
+      sendSocketMessage: fn(),
+      players: voteField.map<Player>((p, i) => ({
+        ...p,
+        confirmedVote: i === 0,
+        alive: true,
+      })),
+      playerID: voteField[0].id,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const firstTarget = voteField
+      .filter((p) => p.id !== voteField[0].id && p.alive)
+      .sort((a, b) => a.id.localeCompare(b.id))[0];
+    await userEvent.click(canvas.getByTestId(`vote-for-${firstTarget.id}`));
+    await expect(canvas.getByText(/thank you for voting/i)).toBeInTheDocument();
+  },
+};

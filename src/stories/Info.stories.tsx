@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
 import Info from "../components/phases/Info/Info";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";

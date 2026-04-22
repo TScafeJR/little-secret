@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "storybook/test";
 import Clue from "../components/phases/Clue/Clue";
 import { GameStateDecorator, baseContext } from "./GameStateMock";
 import { getPlayers } from "./helpers/players";
@@ -100,5 +100,28 @@ export const SubmitsClue: Story = {
         playerID: cluePlayers[0].id,
       }),
     );
+  },
+};
+
+export const SpectatorView: Story = {
+  ...baseStory,
+  parameters: {
+    ...baseStory.parameters,
+    context: {
+      ...baseStory.parameters?.context,
+      round: 1,
+      players: cluePlayers.map((p, i) => ({
+        ...p,
+        alive: i !== 2,
+      })),
+      playerID: cluePlayers[2].id,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(
+      canvas.getByText(/you've been eliminated/i),
+    ).toBeInTheDocument();
+    await expect(canvas.queryByPlaceholderText("Clue")).toBeNull();
   },
 };

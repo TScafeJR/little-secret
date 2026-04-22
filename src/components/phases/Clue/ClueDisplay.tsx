@@ -16,38 +16,49 @@ export default function ClueDisplay() {
     [players],
   );
 
+  const submittedCount = clueRound?.clues.length ?? 0;
+
   const body = useMemo(() => {
-    if (!clueRound) return null;
+    if (!clueRound || clueRound.clues.length === 0) {
+      return (
+        <p className="clue-display-empty">
+          No clues submitted yet for this round.
+        </p>
+      );
+    }
 
     return (
-      <div className="w-full flex flex-col items-center gap-4">
-        <h3>Submitted Clues</h3>
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-2 py-1">Player</th>
-              <th className="border border-gray-300 px-2 py-1">Clue</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clueRound.clues.map((clue) => {
-              const p = clueInfoToPlayer(clue.playerID);
-              return (
-                <tr key={p.id}>
-                  <td className="border border-gray-300 px-2 py-1">
-                    {p.displayName}
-                  </td>
-                  <td className="border border-gray-300 px-2 py-1">
-                    {clue.word}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <table className="clue-display-table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Clue</th>
+          </tr>
+        </thead>
+        <tbody>
+          {clueRound.clues.map((clue) => {
+            const player = clueInfoToPlayer(clue.playerID);
+            return (
+              <tr key={`${clue.playerID}-${clue.word}`}>
+                <td>{player?.displayName ?? "Unknown player"}</td>
+                <td className="clue-word">{clue.word}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     );
   }, [clueRound, clueInfoToPlayer]);
 
-  return <div>{body}</div>;
+  return (
+    <section className="clue-display-card" aria-label="Submitted clues">
+      <div className="clue-display-header">
+        <h3 className="clue-display-title">Submitted Clues</h3>
+        <span className="clue-count-chip">
+          {submittedCount} {submittedCount === 1 ? "clue" : "clues"}
+        </span>
+      </div>
+      {body}
+    </section>
+  );
 }

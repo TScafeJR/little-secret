@@ -1,5 +1,5 @@
 import React from "react";
-import type { StoryContext } from "@storybook/react";
+import type { StoryContext } from "@storybook/react-vite";
 import { GameContextType, GameContext } from "../components/GameState";
 import { Phase } from "../components/phases/phases";
 
