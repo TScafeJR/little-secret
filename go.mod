@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	cloud.google.com/go/secretmanager v1.14.6
 	github.com/blendle/zapdriver v1.3.1
-	github.com/go-chi/chi/v5 v5.2.1
+	github.com/go-chi/chi/v5 v5.3.0
 	github.com/go-sql-driver/mysql v1.9.1
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
