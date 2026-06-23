@@ -46,7 +46,7 @@ RUN go build -trimpath -ldflags="-s -w" -o /out/server ./cmd/srv
 # Stage 3 — runtime. alpine gives us tzdata + ca-certificates + a shell for
 # debugging, and is tiny. Non-root for good measure.
 # ────────────────────────────────────────────────────────────────────────────
-FROM alpine:3.20
+FROM alpine:3.24
 
 RUN apk add --no-cache ca-certificates tzdata \
     && addgroup -S app && adduser -S app -G app
