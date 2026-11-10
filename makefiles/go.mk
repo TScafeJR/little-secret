@@ -53,6 +53,11 @@ go-build-cli:
 go-srv:
 	@scripts/with-env .env-local go run cmd/cli/main.go srv local
 
+## make go-debug; - run the debug server
+.PHONY: go-debug
+go-debug:
+	@scripts/with-env .env-local dlv debug cmd/cli/main.go srv local
+
 ## make go-srv-debug; - run the go server with the ability to query grpc server with grpc-web disabled
 .PHONY: go-srv-debug
 go-srv-debug:
