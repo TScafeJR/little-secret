@@ -1,6 +1,0 @@
----
-description: "UI patterns to follow"
-alwaysApply: true
----
-
-- Ensure after UI changes are applied that the page is not blank. Continue making fixes until the error is resolved.
